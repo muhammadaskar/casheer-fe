@@ -1,9 +1,10 @@
-import { NavLink } from 'react-router-dom';
-import { buttonActive, buttonGhost } from '@/styles';
+import { NavLink } from "react-router-dom";
+import { buttonActive, buttonGhost } from "@/styles";
 
 const Sidebar = () => {
   return (
-    <div className="hidden fixed sm:block drawer-side overflow-auto h-screen z-50 w-64 pt-10 border-r border-gray-200 p-4 pb-12 lg:block">
+    // <div className="hidden fixed scrollbar-hide sm:block overflow-auto h-screen z-50 w-64 pt-10 border-r border-gray-200 p-4 pb-12 lg:block">
+    <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide border-gray-200 overflow-auto hover:overflow-scroll h-screen sm:block lg:block">
       {/* Menu */}
       <div className="py-3">
         <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">Menu</h2>
