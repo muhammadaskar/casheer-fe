@@ -9,7 +9,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const PayComponent = () => {
+const PayForm = () => {
   return (
     <Card>
       <CardHeader>
@@ -41,4 +41,4 @@ const PayComponent = () => {
   );
 };
 
-export default PayComponent;
+export default PayForm;

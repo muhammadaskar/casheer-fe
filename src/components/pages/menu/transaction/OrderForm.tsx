@@ -49,7 +49,7 @@ const frameworks = [
   },
 ];
 
-const OrderComponent = () => {
+const OrderForm = () => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
@@ -234,4 +234,4 @@ const OrderComponent = () => {
   );
 };
 
-export default OrderComponent;
+export default OrderForm;
