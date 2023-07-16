@@ -1,9 +1,12 @@
-import Image from 'next/image';
-import { Inter } from 'next/font/google';
-import { Button } from '@/components/ui/button';
-import { UserIcon } from 'lucide-react';
 import OverviewComponent from '@/components/pages/dashboard/OverviewComponent';
 import ChartComponent from '@/components/pages/dashboard/ChartComponent';
+
+import {
+  FolderOutputIcon,
+  LineChartIcon,
+  UserIcon,
+  Wallet,
+} from 'lucide-react';
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -12,22 +15,25 @@ const dashboardData = [
     title: 'Keuntungan',
     value: 'Rp.500.000,00',
     desc: '1 bulan terakhir',
+    icon: <LineChartIcon className="w-4 h-4" />,
   },
   {
     title: 'Penjualan',
     value: 'Rp.1.500.000,00',
     desc: '1 bulan terakhir',
+    icon: <Wallet className="w-4 h-4" />,
   },
   {
     title: 'Barang keluar',
     value: '100/pcs',
     desc: '1 bulan terakhir',
+    icon: <FolderOutputIcon className="w-4 h-4" />,
   },
   {
     title: 'Pegawai',
     value: '2',
     desc: 'Kasir',
-    icon: <UserIcon />,
+    icon: <UserIcon className="h-4 w-4" />,
   },
 ];
 

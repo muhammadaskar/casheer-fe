@@ -1,5 +1,15 @@
-import DashboardIcon from '@/assets/icons/DashboardIcon';
+import { DashboardIcon } from '@/assets/icons';
 import { buttonStyle } from '@/styles/buttonStyle';
+import {
+  CalculatorIcon,
+  FileSpreadsheetIcon,
+  MonitorDotIcon,
+  PackageIcon,
+  PackageSearchIcon,
+  UserCogIcon,
+  UserSquareIcon,
+  UsersIcon,
+} from 'lucide-react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -28,13 +38,13 @@ const sidebarItem: Array<SidebarItemType> = [
         value: '',
       },
       {
-        icon: <DashboardIcon />,
+        icon: <CalculatorIcon className="mr-2 w-4 h-4" />,
         name: 'Pemesanan & Penjualan',
         path: '/transaction',
         value: 'transaction',
       },
       {
-        icon: <DashboardIcon />,
+        icon: <FileSpreadsheetIcon className="mr-2 w-4 h-4" />,
         name: 'Pelaporan & Analisis',
         path: '/report',
         value: 'report',
@@ -45,28 +55,45 @@ const sidebarItem: Array<SidebarItemType> = [
     title: 'Manajemen',
     submenu: [
       {
-        icon: <DashboardIcon />,
+        icon: <PackageIcon className="mr-2 w-4 h-4" />,
         name: 'Produk',
         path: '/product',
         value: 'product',
       },
       {
-        icon: <DashboardIcon />,
+        icon: <PackageSearchIcon className="mr-2 w-4 h-4" />,
         name: 'Stok',
         path: '/stock',
         value: 'stock',
       },
       {
-        icon: <DashboardIcon />,
+        icon: <UserSquareIcon className="mr-2 w-4 h-4" />,
         name: 'Customer',
         path: '/customer',
         value: 'customer',
       },
       {
-        icon: <DashboardIcon />,
+        icon: <UsersIcon className="mr-2 w-4 h-4" />,
         name: 'User',
         path: '/user',
         value: 'user',
+      },
+    ],
+  },
+  {
+    title: 'Settings',
+    submenu: [
+      {
+        icon: <MonitorDotIcon className="mr-2 w-4 h-4" />,
+        name: 'Customize',
+        path: '/customize',
+        value: 'customize',
+      },
+      {
+        icon: <UserCogIcon className="mr-2 w-4 h-4" />,
+        name: 'Profile',
+        path: '/profile',
+        value: 'profile',
       },
     ],
   },
@@ -78,7 +105,6 @@ const Sidebar: NextPage = () => {
 
   return (
     <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide border-gray-200 overflow-auto hover:overflow-scroll h-screen sm:block lg:block">
-      {/* Menu */}
       {sidebarItem.map((item) => (
         <div className="py-3" key={item.title}>
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
@@ -89,7 +115,7 @@ const Sidebar: NextPage = () => {
               <Link
                 key={subItem.path}
                 href={subItem.path}
-                className={`${
+                className={`flex items-center ${
                   pathNow === subItem.value
                     ? buttonStyle.buttonActive
                     : buttonStyle.buttonGhost
