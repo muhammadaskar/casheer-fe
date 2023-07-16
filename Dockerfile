@@ -1,31 +1,23 @@
-# Use a lightweight image of Node.js to build the app
-FROM node:16 as build
+# Gunakan node:alpine sebagai base image
+FROM node:alpine
 
-# # Set the working directory to /app
+# Set working directory di dalam container
 WORKDIR /app
 
-# # Copy package.json and package-lock.json to the working directory
+# Tambahkan package.json dan package-lock.json
 COPY package*.json ./
 
-# # Install dependencies
-RUN npm install --force
+# Install dependencies
+RUN npm install
 
-# # Copy the rest of the application code to the working directory
+# Tambahkan source code aplikasi
 COPY . .
 
-# # Build the Vue.js app for production
+# Build aplikasi Next.js
 RUN npm run build
 
-# Use a lightweight image of Nginx to serve the app
-FROM nginx:stable-alpine
+# Port yang akan digunakan untuk aplikasi
+EXPOSE 3000
 
-COPY nginx-conf/default.conf /etc/nginx/conf.d
-
-# Expose port 3000 for the app
-EXPOSE 3000/tcp
-
-# Copy the compiled from the build stage to the Nginx container
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Start the Nginx server
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# Perintah untuk menjalankan aplikasi saat container dijalankan
+CMD ["npm", "start"]
