@@ -21,8 +21,8 @@ FROM nginx:stable-alpine
 
 COPY nginx-conf/default.conf /etc/nginx/conf.d
 
-# Expose port 80 for the app
-EXPOSE 80/tcp
+# Expose port 3000 for the app
+EXPOSE 3000/tcp
 
 # Copy the compiled from the build stage to the Nginx container
 COPY --from=build /app/dist /usr/share/nginx/html
