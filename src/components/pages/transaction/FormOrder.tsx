@@ -63,7 +63,7 @@ const FormOrder = () => {
         <hr />
       </CardHeader>
       <CardContent className="flex flex-col space-y-3">
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-2 justify-between">
           <div className="flex flex-col space-y-2">
             <Label htmlFor="productName">Nama produk</Label>
             <Popover open={openName} onOpenChange={setOpenName}>
@@ -72,7 +72,7 @@ const FormOrder = () => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-56 justify-between"
+                  className="w-72 justify-between"
                 >
                   {valueName
                     ? frameworks.find(
@@ -82,7 +82,7 @@ const FormOrder = () => {
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-56 p-0">
+              <PopoverContent className="w-72 p-0">
                 <Command>
                   <CommandInput placeholder="Cari produk..." />
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
@@ -121,7 +121,7 @@ const FormOrder = () => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openId}
-                  className="w-[150px] justify-between"
+                  className="w-[180px] justify-between"
                 >
                   {valueId
                     ? frameworks.find(
@@ -131,7 +131,7 @@ const FormOrder = () => {
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[150px] p-0">
+              <PopoverContent className="w-[180px] p-0">
                 <Command>
                   <CommandInput placeholder="Cari ID..." />
                   <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
@@ -181,7 +181,7 @@ const FormOrder = () => {
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-full p-0">
+            <PopoverContent className="w-[480px] p-0">
               <Command>
                 <CommandInput placeholder="Kategori" />
                 <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
