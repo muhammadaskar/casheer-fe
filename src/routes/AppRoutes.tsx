@@ -1,7 +1,8 @@
 import LayoutIndex from '@/components/layout';
-import Customer from '@/pages/manajemen/customer';
-import Product from '@/pages/manajemen/product';
-import Stock from '@/pages/manajemen/stock';
+
+import Customer from '@/pages/management/customer';
+import Product from '@/pages/management/product';
+import Stock from '@/pages/management/stock';
 import Dashboard from '@/pages/menu/dashboard';
 import Report from '@/pages/menu/report';
 import Transaction from '@/pages/menu/transaction';
@@ -15,7 +16,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<LayoutIndex />}>
         {/* Menu */}
-        <Route path="/" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="transaction" element={<Transaction />} />
         <Route path="report" element={<Report />} />
 
