@@ -13,6 +13,8 @@ const useAuthentication = () => {
     username: string,
     password: string
   ) => {
+    console.log(username);
+    console.log(password);
     event.preventDefault();
     try {
       const response = await fetch(baseURL + 'auth/login', {

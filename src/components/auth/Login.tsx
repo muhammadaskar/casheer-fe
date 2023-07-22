@@ -43,6 +43,7 @@ const LoginTabs: FC<LoginProps> = ({
               <Input
                 id="username"
                 placeholder="@username"
+                name="username"
                 onChange={usernameOnChange}
               />
             </div>
@@ -51,6 +52,7 @@ const LoginTabs: FC<LoginProps> = ({
               <Input
                 id="password"
                 type="password"
+                name="password"
                 placeholder="*********"
                 onChange={passwordOnChange}
               />
