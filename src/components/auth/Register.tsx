@@ -11,7 +11,6 @@ import {
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { TabsContent } from '../ui/tabs';
-import { useToast } from '../ui/use-toast';
 
 type RegisterProps = {
   title: string;

@@ -1,6 +1,5 @@
 import LoginTabs from '@/components/auth/Login';
 import Register from '@/components/auth/Register';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ToastAction } from '@/components/ui/toast';
 import { Toaster } from '@/components/ui/toaster';
