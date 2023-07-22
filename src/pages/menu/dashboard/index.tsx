@@ -38,7 +38,7 @@ const Dashboard = () => {
   return (
     <main className="px-5 py-10">
       <div className="flex flex-col space-y-5">
-        <div className="grid lg:grid-cols-4 space-x-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {dashboardData.map((item) => (
             <OverviewComponent
               key={item.title}
