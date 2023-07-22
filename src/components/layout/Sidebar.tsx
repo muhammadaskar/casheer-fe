@@ -11,7 +11,7 @@ import {
   UsersIcon,
 } from 'lucide-react';
 
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
 type SidebarSubmenu = {

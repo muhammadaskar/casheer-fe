@@ -74,7 +74,7 @@ const OrderForm = () => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-56 justify-between hover:bg-[#F4F4F5]"
+                  className="w-56 justify-between"
                 >
                   {valueName
                     ? frameworks.find(

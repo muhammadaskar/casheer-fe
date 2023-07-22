@@ -1,4 +1,3 @@
-import Login from '@/pages/login';
 import { UserType } from '@/types/user-type';
 import { Navigate, Outlet } from 'react-router-dom';
 
