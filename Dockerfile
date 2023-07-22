@@ -4,6 +4,9 @@ FROM node:alpine
 # Set working directory di dalam container
 WORKDIR /app
 
+# Copy the .env.example file to the container
+COPY .env.example .env
+
 # Tambahkan package.json dan package-lock.json
 COPY package*.json ./
 
@@ -20,4 +23,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Perintah untuk menjalankan aplikasi saat container dijalankan
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
