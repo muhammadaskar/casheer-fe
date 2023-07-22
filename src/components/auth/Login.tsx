@@ -17,8 +17,11 @@ type LoginProps = {
   description: string;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   usernameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  usernameValue: string;
   passwordOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  passwordValue: string;
   buttonText: string;
+  disableButton: boolean;
 };
 
 const LoginTabs: FC<LoginProps> = ({
@@ -26,8 +29,11 @@ const LoginTabs: FC<LoginProps> = ({
   description,
   onSubmit,
   usernameOnChange,
+  usernameValue,
   passwordOnChange,
+  passwordValue,
   buttonText,
+  disableButton,
 }) => {
   return (
     <TabsContent value="signin">
@@ -44,6 +50,7 @@ const LoginTabs: FC<LoginProps> = ({
                 id="username"
                 placeholder="@username"
                 name="username"
+                value={usernameValue}
                 onChange={usernameOnChange}
               />
             </div>
@@ -53,13 +60,16 @@ const LoginTabs: FC<LoginProps> = ({
                 id="password"
                 type="password"
                 name="password"
+                value={passwordValue}
                 placeholder="*********"
                 onChange={passwordOnChange}
               />
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit">{buttonText}</Button>
+            <Button type="submit" disabled={disableButton}>
+              {buttonText}
+            </Button>
           </CardFooter>
         </form>
       </Card>
