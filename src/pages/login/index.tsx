@@ -1,27 +1,52 @@
 import LoginTabs from '@/components/auth/Login';
+import Register from '@/components/auth/Register';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ToastAction } from '@/components/ui/toast';
+import { Toaster } from '@/components/ui/toaster';
+import { useToast } from '@/components/ui/use-toast';
 import useAuthentication from '@/hooks/use-auth';
-import { ChangeEvent, useState } from 'react';
+import useRegistration from '@/hooks/use-registration';
+import { ChangeEvent, FormEvent, useEffect, useReducer, useState } from 'react';
+
+type RegisterType = {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+};
+
+const registerInitialState = {
+  name: '',
+  username: '',
+  email: '',
+  password: '',
+  confirm_password: '',
+};
 
 const Login = () => {
   const [loginInput, setLoginInput] = useState({
     username: '',
     password: '',
   });
-  const { authLogin } = useAuthentication();
+  const [disableLogin, setDisableLogin] = useState<boolean>(false);
+  const [disableRegisterButton, setDisableRegisterButton] =
+    useState<boolean>(false);
 
-  const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const [registerInput, setRegisterInput] = useReducer(
+    (current: RegisterType, update: Partial<RegisterType>) => ({
+      ...current,
+      ...update,
+    }),
+    registerInitialState
+  );
+
+  const { toast } = useToast();
+  const { authLogin } = useAuthentication();
+  const { onRegistration, message } = useRegistration();
+
+  const handleLoginInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
 
     setLoginInput({
@@ -30,6 +55,31 @@ const Login = () => {
     });
   };
 
+  useEffect(() => {
+    if (loginInput.username === '' || loginInput.password === '') {
+      return setDisableLogin(true);
+    }
+
+    return setDisableLogin(false);
+  }, [loginInput]);
+
+  useEffect(() => {
+    if (
+      registerInput.name === '' ||
+      registerInput.username === '' ||
+      registerInput.email === '' ||
+      registerInput.password === '' ||
+      registerInput.confirm_password === ''
+    ) {
+      return setDisableRegisterButton(true);
+    }
+    if (registerInput.password !== registerInput.confirm_password) {
+      return setDisableRegisterButton(true);
+    }
+
+    return setDisableRegisterButton(false);
+  }, [registerInput, loginInput]);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <Tabs defaultValue="signin" className="w-[400px]">
@@ -37,82 +87,74 @@ const Login = () => {
           <TabsTrigger value="signin">Sign in</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
-        {/* <TabsContent value="signin">
-          <Card>
-            <CardHeader>
-              <CardTitle>Sign in</CardTitle>
-              <CardDescription>Login with your caseer account.</CardDescription>
-            </CardHeader>
-            <form
-              onSubmit={(event: FormEvent<HTMLFormElement>) =>
-                authLogin(event, loginInput.username, loginInput.password)
-              }
-            >
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input
-                    id="username"
-                    placeholder="@indraganteng"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      handleInput(event)
-                    }
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="password">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    placeholder="*********"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                      handleInput(event)
-                    }
-                  />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Sign in</Button>
-              </CardFooter>
-            </form>
-          </Card>
-        </TabsContent> */}
+
         <LoginTabs
           title="Sign in"
           description="Login with your caseer account."
           onSubmit={(event) =>
             authLogin(event, loginInput.username, loginInput.password)
           }
-          usernameOnChange={(event) => handleInput(event)}
-          passwordOnChange={(event) => handleInput(event)}
+          usernameOnChange={(event) => handleLoginInput(event)}
+          usernameValue={loginInput.username}
+          passwordOnChange={(event) => handleLoginInput(event)}
+          passwordValue={loginInput.password}
           buttonText="Sign in"
+          disableButton={disableLogin}
         />
-        <TabsContent value="register">
-          <Card>
-            <CardHeader>
-              <CardTitle>Register</CardTitle>
-              <CardDescription>Register your account.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" placeholder="@indraganteng" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" placeholder="*********" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="confirm">Confirm password</Label>
-                <Input id="confirm" type="password" placeholder="*********" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save</Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
+
+        <Register
+          title="Register"
+          desc="Register your account"
+          nameValue={registerInput.name}
+          nameOnChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setRegisterInput({
+              name: event.target.value,
+            })
+          }
+          usernameValue={registerInput.username}
+          usernameOnChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setRegisterInput({
+              username: event.target.value,
+            })
+          }
+          emailValue={registerInput.email}
+          emailOnChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setRegisterInput({
+              email: event.target.value,
+            })
+          }
+          passwordValue={registerInput.password}
+          passwordOnChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setRegisterInput({
+              password: event.target.value,
+            })
+          }
+          confirmPasswordValue={registerInput.confirm_password}
+          confirmPasswordOnChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setRegisterInput({
+              confirm_password: event.target.value,
+            })
+          }
+          disableButton={disableRegisterButton}
+          onSubmit={(event: FormEvent<HTMLFormElement>) =>
+            onRegistration(
+              event,
+              registerInput.name,
+              registerInput.username,
+              registerInput.email,
+              registerInput.password
+            )
+          }
+          buttonClick={() =>
+            toast({
+              variant: 'destructive',
+              description: message,
+              action: <ToastAction altText="Try again">Try again</ToastAction>,
+            })
+          }
+        />
       </Tabs>
+      <Toaster />
     </div>
   );
 };

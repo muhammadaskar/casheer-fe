@@ -1,19 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { FormEvent, useState } from 'react';
 
-import { UserData } from '@/types/user-type';
-import { FormEvent } from 'react';
-
-const useAuthentication = () => {
+const useRegistration = () => {
+  const [message, setMessage] = useState('');
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
 
-  const authLogin = async (
+  const onRegistration = async (
     event: FormEvent<HTMLFormElement>,
+    name: string,
     username: string,
+    email: string,
     password: string
   ) => {
     event.preventDefault();
     try {
-      const response = await fetch(baseURL + 'auth/login', {
+      const response = await fetch(baseURL + 'auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,22 +21,25 @@ const useAuthentication = () => {
           'Access-Control-Allow-Origin': '*',
         },
         body: JSON.stringify({
+          name,
           username,
+          email,
           password,
         }),
       });
-      const result: UserData = await response.json();
+      //   const result: UserData = await response.json();
       if (response.status >= 200 && response.status < 300) {
-        localStorage.setItem('user', JSON.stringify(result.data));
+        setMessage('Registration Successfull');
       } else {
-        console.log('Login error');
+        setMessage('Registration Failed');
       }
     } catch (error) {
       console.log(error);
+      setMessage('Registration Failed');
     }
   };
 
-  return { authLogin };
+  return { onRegistration, message };
 };
 
-export default useAuthentication;
+export default useRegistration;
