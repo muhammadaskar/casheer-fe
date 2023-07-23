@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { UserType } from '@/types/user-type';
 import { Navigate, Outlet } from 'react-router-dom';
 

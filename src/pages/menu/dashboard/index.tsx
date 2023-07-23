@@ -1,5 +1,6 @@
 import ChartComponent from '@/components/menu/dashboard/ChartComponent';
 import OverviewComponent from '@/components/menu/dashboard/OverviewComponent';
+import { Separator } from '@/components/ui/separator';
 import {
   FolderOutputIcon,
   LineChartIcon,
@@ -36,7 +37,14 @@ const dashboardData = [
 
 const Dashboard = () => {
   return (
-    <main className="px-5 py-10">
+    <main className="px-5 py-2">
+      <div>
+        <h1 className="font-semibold tracking-tight text-2xl">Dashboard</h1>
+        <p className="text-sm text-muted-foreground">
+          This is your dashboard 😁
+        </p>
+      </div>
+      <Separator className="my-4" />
       <div className="flex flex-col space-y-5">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {dashboardData.map((item) => (
