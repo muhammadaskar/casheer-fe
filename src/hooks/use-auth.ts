@@ -30,7 +30,7 @@ const useAuthentication = () => {
       const result: UserData = await response.json();
       if (response.status >= 200 && response.status < 300) {
         localStorage.setItem('user', JSON.stringify(result.data));
-        navigate('/dashboard');
+        navigate('/', { replace: true });
       } else {
         console.log('Login error');
       }
