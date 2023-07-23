@@ -1,6 +1,4 @@
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
   Cloud,
   Github,
   LifeBuoy,
@@ -15,7 +13,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Button } from '../ui/button';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,9 +34,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../ui/tooltip';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { constants } from 'buffer';
 
 const Header = () => {
   return (
