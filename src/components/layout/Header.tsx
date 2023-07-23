@@ -34,8 +34,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '../ui/tooltip';
+import { UserType } from '@/types/user-type';
 
 const Header = () => {
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
   return (
     <div className="bg-white border-b border-t flex justify-end px-5 py-1">
       {/* <div className="flex space-x-2">
@@ -153,7 +156,7 @@ const Header = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </TooltipTrigger>
-          <TooltipContent className="font-sans">Muhammad Askar</TooltipContent>
+          <TooltipContent className="font-sans">{user.name}</TooltipContent>
         </Tooltip>
       </TooltipProvider>
     </div>
