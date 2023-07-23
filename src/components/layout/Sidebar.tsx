@@ -32,7 +32,7 @@ const sidebarItem: Array<SidebarItemType> = [
       {
         icon: <LayoutGridIcon className="mr-2 w-4 h-4" />,
         name: 'Dashboard',
-        path: 'dashboard',
+        path: '/',
       },
       {
         icon: <CalculatorIcon className="mr-2 w-4 h-4" />,
