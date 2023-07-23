@@ -17,7 +17,7 @@ import NotFound from '@/pages/NotFound';
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* <Route path="/" element={<ProtectedRoute />}> */}
+      <Route path="/" element={<ProtectedRoute />}>
       <Route path="/" element={<LayoutIndex />}>
         {/* Menu */}
         <Route path="/" element={<Dashboard />} />
@@ -36,9 +36,9 @@ const AppRoutes = () => {
       </Route>
       {/* </Route> */}
 
-      {/* <Route path="/" element={<PublicRoute />}>
+      <Route path="/" element={<PublicRoute />}>
         <Route path="login" element={<Login />} />
-      </Route> */}
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
