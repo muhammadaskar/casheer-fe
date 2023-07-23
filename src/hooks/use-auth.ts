@@ -2,10 +2,10 @@
 
 import { UserData } from '@/types/user-type';
 import { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const useAuthentication = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const authLogin = async (
@@ -30,7 +30,8 @@ const useAuthentication = () => {
       const result: UserData = await response.json();
       if (response.status >= 200 && response.status < 300) {
         localStorage.setItem('user', JSON.stringify(result.data));
-        navigate('/', { replace: true });
+        // navigate('/', { replace: true });
+        window.location.reload();
       } else {
         console.log('Login error');
       }
