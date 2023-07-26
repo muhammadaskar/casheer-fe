@@ -17,24 +17,24 @@ import NotFound from '@/pages/NotFound';
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRoute />}>
-        <Route path="/" element={<LayoutIndex />}>
-          {/* Menu */}
-          <Route path="/" element={<Dashboard />} />
-          <Route path="transaction" element={<Transaction />} />
-          <Route path="report" element={<Report />} />
+      {/* <Route path="/" element={<ProtectedRoute />}> */}
+      <Route path="/" element={<LayoutIndex />}>
+        {/* Menu */}
+        <Route path="/" element={<Dashboard />} />
+        <Route path="transaction" element={<Transaction />} />
+        <Route path="report" element={<Report />} />
 
-          {/* Management */}
-          <Route path="product" element={<Product />} />
-          <Route path="stock" element={<Stock />} />
-          <Route path="customer" element={<Customer />} />
-          <Route path="user" element={<User />} />
+        {/* Management */}
+        <Route path="product" element={<Product />} />
+        <Route path="stock" element={<Stock />} />
+        <Route path="customer" element={<Customer />} />
+        <Route path="user" element={<User />} />
 
-          {/* Settings */}
-          <Route path="profile" element={<Profile />} />
-          <Route path="customize" element={<Customize />} />
-        </Route>
+        {/* Settings */}
+        <Route path="profile" element={<Profile />} />
+        <Route path="customize" element={<Customize />} />
       </Route>
+      {/* </Route> */}
 
       <Route path="/" element={<PublicRoute />}>
         <Route path="login" element={<Login />} />
