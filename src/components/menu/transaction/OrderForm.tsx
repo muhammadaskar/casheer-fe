@@ -74,7 +74,7 @@ const OrderForm = () => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-72 justify-between hover:bg-[#F4F4F5]/80"
+                  className="w-72 justify-between "
                 >
                   {valueName
                     ? frameworks.find(
@@ -123,7 +123,7 @@ const OrderForm = () => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openId}
-                  className="w-[180px] justify-between hover:bg-[#F4F4F5]/80"
+                  className="w-[180px] justify-between "
                 >
                   {valueId
                     ? frameworks.find(
@@ -173,7 +173,7 @@ const OrderForm = () => {
                 variant="outline"
                 role="combobox"
                 aria-expanded={openCategory}
-                className="w-full justify-between hover:bg-[#F4F4F5]/80"
+                className="w-full justify-between "
               >
                 {valueCategory
                   ? frameworks.find(
