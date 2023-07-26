@@ -22,7 +22,7 @@ const PublicRoute = () => {
 
   const auth = useAuth();
 
-  return auth ? <Navigate to="dashboard" /> : <Outlet />;
+  return auth ? <Navigate to="/" /> : <Outlet />;
 };
 
 export default PublicRoute;

@@ -36,9 +36,9 @@ const AppRoutes = () => {
       </Route>
       {/* </Route> */}
 
-      {/* <Route path="/" element={<PublicRoute />}>
-        <Route path="login" element={<Login />} />
-      </Route> */}
+      {/* <Route path="/" element={<PublicRoute />}> */}
+      {/* <Route path="login" element={<Login />} /> */}
+      {/* </Route> */}
 
       <Route path="*" element={<NotFound />} />
     </Routes>
