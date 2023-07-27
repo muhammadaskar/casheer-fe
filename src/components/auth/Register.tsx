@@ -56,7 +56,12 @@ const Register: FC<RegisterProps> = (props) => {
           <CardTitle>{title}</CardTitle>
           <CardDescription>{desc}</CardDescription>
         </CardHeader>
-        <form onSubmit={onSubmit}>
+        <form
+          onSubmit={(e: FormEvent<HTMLFormElement>) => {
+            onSubmit(e);
+            buttonClick();
+          }}
+        >
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Nama</Label>
@@ -114,7 +119,7 @@ const Register: FC<RegisterProps> = (props) => {
             </div>
           </CardContent>
           <CardFooter>
-            <Button disabled={disableButton} onClick={buttonClick}>
+            <Button disabled={disableButton} type="submit">
               Save
             </Button>
           </CardFooter>

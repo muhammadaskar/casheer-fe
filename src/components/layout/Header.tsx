@@ -39,6 +39,7 @@ import {
 
 import { Button } from '../ui/button';
 import { FC } from 'react';
+import { UserType } from '@/types/user-type';
 
 type HeaderProps = {
   mode: string | null;
@@ -46,7 +47,7 @@ type HeaderProps = {
 };
 
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
-  // const { darkMode, toggleDarkMode } = useDarkMode();
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
   return (
     <div className=" border-b border-t flex justify-end px-5 py-1">
@@ -180,8 +181,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </TooltipTrigger>
-            {/* <TooltipContent className="font-sans">{user.name}</TooltipContent> */}
-            <TooltipContent className="font-sans">Askar</TooltipContent>
+            <TooltipContent className="font-sans">{user.name}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>

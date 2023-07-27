@@ -2,8 +2,13 @@ import OrderForm from '@/components/menu/transaction/OrderForm';
 import PayForm from '@/components/menu/transaction/PayForm';
 import TransactionTable from '@/components/menu/transaction/TransactionTable';
 import { Separator } from '@/components/ui/separator';
+import useOrder from '@/hooks/use-order';
 
 const Transaction = () => {
+  const { category } = useOrder();
+
+  console.log(category);
+
   return (
     <main className="px-5 py-2">
       <div>

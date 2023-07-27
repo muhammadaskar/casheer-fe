@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { FormEvent, useState } from 'react';
 
 const useRegistration = () => {
@@ -27,11 +28,11 @@ const useRegistration = () => {
           password,
         }),
       });
-      //   const result: UserData = await response.json();
+      const result = await response.json();
       if (response.status >= 200 && response.status < 300) {
-        setMessage('Registration Successfull');
+        console.log(result.meta.message);
       } else {
-        setMessage('Registration Failed');
+        console.log(result.meta.message);
       }
     } catch (error) {
       console.log(error);
