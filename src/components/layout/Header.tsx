@@ -38,7 +38,6 @@ import {
 } from '../ui/tooltip';
 
 import { Button } from '../ui/button';
-import useDarkMode from '@/hooks/use-darkmode';
 import { FC } from 'react';
 
 type HeaderProps = {
