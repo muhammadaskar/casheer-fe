@@ -38,10 +38,16 @@ import {
 } from '../ui/tooltip';
 
 import { Button } from '../ui/button';
-import useDarkMode from '@/hooks/use-darkmode';
+import { FC } from 'react';
+import { UserType } from '@/types/user-type';
 
-const Header = () => {
-  const { darkMode, toggleDarkMode } = useDarkMode();
+type HeaderProps = {
+  mode: string | null;
+  toggle: () => void;
+};
+
+const Header: FC<HeaderProps> = ({ mode, toggle }) => {
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
   return (
     <div className=" border-b border-t flex justify-end px-5 py-1">
@@ -66,9 +72,9 @@ const Header = () => {
           variant="outline"
           size="icon"
           className="h-8 w-8"
-          onClick={toggleDarkMode}
+          onClick={toggle}
         >
-          {darkMode === 'dark' ? (
+          {mode === 'dark' ? (
             <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           ) : (
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -175,8 +181,7 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </TooltipTrigger>
-            {/* <TooltipContent className="font-sans">{user.name}</TooltipContent> */}
-            <TooltipContent className="font-sans">Askar</TooltipContent>
+            <TooltipContent className="font-sans">{user.name}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>

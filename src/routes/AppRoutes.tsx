@@ -13,32 +13,38 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from '@/pages/login';
 import PublicRoute from './PublicRoute';
 import NotFound from '@/pages/NotFound';
+import useDarkMode from '@/hooks/use-darkmode';
 
 const AppRoutes = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   return (
     <Routes>
-      {/* <Route path="/" element={<ProtectedRoute />}> */}
-      <Route path="/" element={<LayoutIndex />}>
-        {/* Menu */}
-        <Route path="/" element={<Dashboard />} />
-        <Route path="transaction" element={<Transaction />} />
-        <Route path="report" element={<Report />} />
+      <Route path="/" element={<ProtectedRoute />}>
+        <Route
+          path="/"
+          element={<LayoutIndex mode={darkMode} toggle={toggleDarkMode} />}
+        >
+          {/* Menu */}
+          <Route path="/" element={<Dashboard />} />
+          <Route path="transaction" element={<Transaction />} />
+          <Route path="report" element={<Report />} />
 
-        {/* Management */}
-        <Route path="product" element={<Product />} />
-        <Route path="stock" element={<Stock />} />
-        <Route path="customer" element={<Customer />} />
-        <Route path="user" element={<User />} />
+          {/* Management */}
+          <Route path="product" element={<Product />} />
+          <Route path="stock" element={<Stock />} />
+          <Route path="customer" element={<Customer />} />
+          <Route path="user" element={<User />} />
 
-        {/* Settings */}
-        <Route path="profile" element={<Profile />} />
-        <Route path="customize" element={<Customize />} />
+          {/* Settings */}
+          <Route path="profile" element={<Profile />} />
+          <Route path="customize" element={<Customize />} />
+        </Route>
       </Route>
-      {/* </Route> */}
 
-      {/* <Route path="/" element={<PublicRoute />}> */}
-      {/* <Route path="login" element={<Login />} /> */}
-      {/* </Route> */}
+      <Route path="/" element={<PublicRoute />}>
+        <Route path="login" element={<Login />} />
+      </Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
