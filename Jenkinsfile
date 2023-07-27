@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Running the container...'
-                sh 'docker run -d --name dev-casheer-fe-container -p 3000:3000 dev-casheer-fe-image:latest'
+                sh 'docker run -d --name dev-casheer-fe-container -p 2000:2000 dev-casheer-fe-image:latest'
                 echo 'Container is now running.'
                 sh 'docker ps'
             }
