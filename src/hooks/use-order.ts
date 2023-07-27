@@ -19,7 +19,7 @@ const useOrder = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          'Access-Control-Allow-Headers': '*',
           'Access-Control-Allow-Methods': '*',
           Authorization: `Bearer ${user.token}`,
         },
