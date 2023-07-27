@@ -13,12 +13,18 @@ import ProtectedRoute from './ProtectedRoute';
 import Login from '@/pages/login';
 import PublicRoute from './PublicRoute';
 import NotFound from '@/pages/NotFound';
+import useDarkMode from '@/hooks/use-darkmode';
 
 const AppRoutes = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode();
+
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute />}>
-        <Route path="/" element={<LayoutIndex />}>
+        <Route
+          path="/"
+          element={<LayoutIndex mode={darkMode} toggle={toggleDarkMode} />}
+        >
           {/* Menu */}
           <Route path="/" element={<Dashboard />} />
           <Route path="transaction" element={<Transaction />} />
