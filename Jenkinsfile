@@ -11,8 +11,8 @@ pipeline {
         stage('Stop Container') {
             steps {
                 echo 'Stopping the running container...'
-                sh 'docker stop dev-casheer-fe-container || true'
-                sh 'docker rm dev-casheer-fe-container || true'
+                sh 'docker stop prod-casheer-fe-container || true'
+                sh 'docker rm prod-casheer-fe-container || true'
                 echo 'Container stopped.'
             }
         }
@@ -22,10 +22,10 @@ pipeline {
                 echo 'Building Docker images...'
                 
                 // Menghapus image sebelumnya
-                sh 'docker rmi dev-casheer-fe-image:latest || true'
+                sh 'docker rmi prod-casheer-fe-image:latest || true'
                 
                 echo 'Proses Build'
-                sh 'docker build -t dev-casheer-fe-image:latest .'
+                sh 'docker build -t prod-casheer-fe-image:latest .'
                 echo 'Menampilkan hasil images'
                 sh 'docker images'
             }
@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Running the container...'
-                sh 'docker run -d --name dev-casheer-fe-container -p 2000:2000 dev-casheer-fe-image:latest'
+                sh 'docker run -d --name prod-casheer-fe-container -p 3000:3000 prod-casheer-fe-image:latest'
                 echo 'Container is now running.'
                 sh 'docker ps'
             }
