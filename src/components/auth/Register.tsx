@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 import { ChangeEvent, FC, FormEvent } from 'react';
 import { Button } from '../ui/button';
 import {
@@ -28,6 +29,7 @@ type RegisterProps = {
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   disableButton: boolean;
   buttonClick: () => void;
+  responseStatus: number;
 };
 
 const Register: FC<RegisterProps> = (props) => {
@@ -47,7 +49,15 @@ const Register: FC<RegisterProps> = (props) => {
     onSubmit,
     disableButton,
     buttonClick,
+    responseStatus,
   } = props;
+
+  const clickSubmit = (e: FormEvent<HTMLFormElement>) => {
+    onSubmit(e);
+    if (responseStatus >= 200 && responseStatus < 300) {
+      buttonClick();
+    }
+  };
 
   return (
     <TabsContent value="register">
@@ -56,12 +66,7 @@ const Register: FC<RegisterProps> = (props) => {
           <CardTitle>{title}</CardTitle>
           <CardDescription>{desc}</CardDescription>
         </CardHeader>
-        <form
-          onSubmit={(e: FormEvent<HTMLFormElement>) => {
-            onSubmit(e);
-            buttonClick();
-          }}
-        >
+        <form onSubmit={clickSubmit}>
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Nama</Label>

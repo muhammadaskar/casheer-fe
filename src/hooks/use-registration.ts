@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { FormEvent, useState } from 'react';
 
 const useRegistration = () => {
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState<string>('');
+  const [responseStatus, setResponseStatus] = useState<any>('');
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const onRegistration = async (
@@ -29,18 +32,20 @@ const useRegistration = () => {
         }),
       });
       const result = await response.json();
+      setResponseStatus(response.status);
       if (response.status >= 200 && response.status < 300) {
-        console.log(result.meta.message);
+        setMessage(result.meta.message);
+        // console.log(result.meta.message);
       } else {
-        console.log(result.meta.message);
+        setMessage(result.meta.message);
+        // console.log(result.meta.message);
       }
     } catch (error) {
       console.log(error);
-      setMessage('Registration Failed');
     }
   };
 
-  return { onRegistration, message };
+  return { onRegistration, message, responseStatus };
 };
 
 export default useRegistration;

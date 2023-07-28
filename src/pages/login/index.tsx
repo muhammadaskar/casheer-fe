@@ -43,7 +43,7 @@ const Login = () => {
 
   const { toast } = useToast();
   const { authLogin } = useAuthentication();
-  const { onRegistration, message } = useRegistration();
+  const { onRegistration, message, responseStatus } = useRegistration();
 
   const handleLoginInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -151,6 +151,7 @@ const Login = () => {
               action: <ToastAction altText="Try again">Try again</ToastAction>,
             })
           }
+          responseStatus={responseStatus}
         />
       </Tabs>
       <Toaster />
