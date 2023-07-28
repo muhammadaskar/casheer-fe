@@ -52,11 +52,11 @@ const Register: FC<RegisterProps> = (props) => {
     responseStatus,
   } = props;
 
+  console.log(responseStatus);
+
   const clickSubmit = (e: FormEvent<HTMLFormElement>) => {
     onSubmit(e);
-    if (responseStatus >= 200 && responseStatus < 300) {
-      buttonClick();
-    }
+    buttonClick();
   };
 
   return (
