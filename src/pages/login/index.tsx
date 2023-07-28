@@ -145,11 +145,17 @@ const Login = () => {
             )
           }
           buttonClick={() =>
-            toast({
-              variant: 'destructive',
-              description: message,
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            })
+            responseStatus >= 200 && responseStatus < 300
+              ? toast({
+                  description: message,
+                })
+              : toast({
+                  variant: 'destructive',
+                  description: message,
+                  action: (
+                    <ToastAction altText="Try again">Try again</ToastAction>
+                  ),
+                })
           }
           responseStatus={responseStatus}
         />
