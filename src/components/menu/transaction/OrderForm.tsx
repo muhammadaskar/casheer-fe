@@ -23,8 +23,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { ProductCategory } from '@/types/product-type';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { useState } from 'react';
+import { FC, useState } from 'react';
+
+type OrderProps = {
+  category: ProductCategory[];
+};
 
 const frameworks = [
   {
@@ -49,7 +54,7 @@ const frameworks = [
   },
 ];
 
-const OrderForm = () => {
+const OrderForm: FC<OrderProps> = ({ category }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
   const [openCategory, setOpenCategory] = useState(false);
@@ -176,9 +181,7 @@ const OrderForm = () => {
                 className="w-full justify-between "
               >
                 {valueCategory
-                  ? frameworks.find(
-                      (framework) => framework.value === valueCategory
-                    )?.label
+                  ? category.find((item) => item.name === valueCategory)?.name
                   : 'Kategori'}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -188,9 +191,9 @@ const OrderForm = () => {
                 <CommandInput placeholder="Kategori" />
                 <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
                 <CommandGroup>
-                  {frameworks.map((framework) => (
+                  {category.map((item) => (
                     <CommandItem
-                      key={framework.value}
+                      key={item.id}
                       onSelect={(currentValue: any) => {
                         setValueCategory(
                           currentValue === valueCategory ? '' : currentValue
@@ -201,12 +204,12 @@ const OrderForm = () => {
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          valueCategory === framework.value
+                          valueCategory === item.name
                             ? 'opacity-100'
                             : 'opacity-0'
                         )}
                       />
-                      {framework.label}
+                      {item.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>

@@ -7,8 +7,6 @@ import useOrder from '@/hooks/use-order';
 const Transaction = () => {
   const { category } = useOrder();
 
-  console.log(category);
-
   return (
     <main className="px-5 py-2">
       <div>
@@ -20,7 +18,7 @@ const Transaction = () => {
       <Separator className="my-4" />
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="flex flex-col space-y-8">
-          <OrderForm />
+          <OrderForm category={category} />
           <PayForm />
         </div>
         <TransactionTable />
