@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { ChangeEvent, FC, FormEvent } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+} from 'react';
 import { Button } from '../ui/button';
 import {
   Card,
@@ -12,6 +19,8 @@ import {
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { TabsContent } from '../ui/tabs';
+import { useToast } from '../ui/use-toast';
+import { ToastAction } from '../ui/toast';
 
 type RegisterProps = {
   title: string;
@@ -28,6 +37,9 @@ type RegisterProps = {
   confirmPasswordOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   disableButton: boolean;
+  message: string;
+  response: number;
+  setResponse: Dispatch<SetStateAction<number>>;
 };
 
 const Register: FC<RegisterProps> = (props) => {
@@ -46,7 +58,29 @@ const Register: FC<RegisterProps> = (props) => {
     confirmPasswordOnChange,
     onSubmit,
     disableButton,
+    message,
+    response,
+    setResponse,
   } = props;
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (message !== '' && response !== 0) {
+      if (response >= 200 && response < 300) {
+        toast({
+          description: message,
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          description: message,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }
+      setResponse(0);
+    }
+  }, [message, response, setResponse, toast]);
 
   return (
     <TabsContent value="register">
