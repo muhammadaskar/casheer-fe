@@ -55,26 +55,26 @@ const invoices = [
 
 const TransactionTable = () => {
   return (
-    <Card>
+    <Card className="w-full">
       <CardContent>
-        <Table>
+        <Table className="w-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead className="lg:w-[100px]">Invoice</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              {/* <TableHead className="text-right">Amount</TableHead> */}
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="w-full">
             {invoices.map((invoice) => (
               <TableRow key={invoice.invoice}>
                 <TableCell className="font-medium">{invoice.invoice}</TableCell>
                 <TableCell>{invoice.paymentStatus}</TableCell>
                 <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">
+                {/* <TableCell className="text-right">
                   {invoice.totalAmount}
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

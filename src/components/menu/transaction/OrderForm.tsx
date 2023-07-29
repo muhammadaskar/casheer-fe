@@ -64,13 +64,13 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
   const [valueCategory, setValueCategory] = useState('');
 
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl pb-3">Pemesanan</CardTitle>
+        <CardTitle className="text-xl lg:text-2xl pb-3">Pemesanan</CardTitle>
         <hr />
       </CardHeader>
-      <CardContent className="flex flex-col space-y-3">
-        <div className="flex flex-row space-x-2 justify-between">
+      <CardContent className="flex flex-col space-y-3 d">
+        <div className="flex flex-row space-x-2">
           <div className="flex flex-col space-y-2">
             <Label htmlFor="productName">Nama produk</Label>
             <Popover open={openName} onOpenChange={setOpenName}>
@@ -79,7 +79,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-72 justify-between "
+                  className="w-full md:w-72 lg:w-72 justify-between "
                 >
                   {valueName
                     ? frameworks.find(
@@ -89,7 +89,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-72 p-0">
+              <PopoverContent className="w-36 md:w-72 lg:w-72 p-0">
                 <Command>
                   <CommandInput placeholder="Cari produk..." />
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
@@ -128,7 +128,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openId}
-                  className="w-[180px] justify-between "
+                  className="w-32 md:w-60 lg:w-[12.5rem] justify-between "
                 >
                   {valueId
                     ? frameworks.find(
@@ -138,7 +138,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[180px] p-0">
+              <PopoverContent className="w-32 md:w-60 lg:w-[12.5rem] p-0">
                 <Command>
                   <CommandInput placeholder="Cari ID..." />
                   <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
@@ -186,7 +186,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[480px] p-0">
+            <PopoverContent className=" w-[21rem] lg:w-[480px] p-0">
               <Command>
                 <CommandInput placeholder="Kategori" />
                 <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>

@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 
 const PayForm = () => {
   return (
-    <Card>
+    <Card className="w-full">
       <CardHeader>
         <CardTitle className="text-2xl pb-3">Pembayaran</CardTitle>
         <hr />
