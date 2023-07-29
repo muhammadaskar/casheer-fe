@@ -80,15 +80,19 @@ const Login = () => {
   }, [registerInput, loginInput]);
 
   useEffect(() => {
-    responseStatus >= 200 && responseStatus < 300
-      ? toast({
+    if (message !== '') {
+      if (responseStatus >= 200 && responseStatus < 300) {
+        toast({
           description: message,
-        })
-      : toast({
+        });
+      } else {
+        toast({
           variant: 'destructive',
           description: message,
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
+      }
+    }
   }, [message, responseStatus, toast]);
 
   return (
