@@ -1,9 +1,4 @@
-import {
-  CalculatorIcon,
-  FileSpreadsheetIcon,
-  LayoutGridIcon,
-  PackageIcon,
-} from 'lucide-react';
+import { BoxesIcon, LayoutGridIcon, Settings } from 'lucide-react';
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -15,13 +10,12 @@ type BottomBarType = {
 
 const bottomBarItems: Array<BottomBarType> = [
   { icon: <LayoutGridIcon />, name: 'Dashboard', path: '/' },
-  { icon: <CalculatorIcon />, name: 'Transaksi', path: '/transaction' },
+  { icon: <BoxesIcon />, name: 'Manajemen', path: '/product' },
   {
-    icon: <FileSpreadsheetIcon />,
-    name: 'Pelaporan & Analisis',
-    path: '/report',
+    icon: <Settings />,
+    name: 'Settings',
+    path: '/customize',
   },
-  { icon: <PackageIcon />, name: 'Produk', path: '/product' },
 ];
 
 const BottomTabBar = () => {

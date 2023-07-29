@@ -11,27 +11,27 @@ import {
 const dashboardData = [
   {
     title: 'Keuntungan',
-    value: 'Rp.500.000,00',
+    value: 'Rp.500.000',
     desc: '1 bulan terakhir',
-    icon: <LineChartIcon className="w-4 h-4" />,
+    icon: <LineChartIcon className="w-3 h-3 md:w-4 md:h-4" />,
   },
   {
     title: 'Penjualan',
-    value: 'Rp.1.500.000,00',
+    value: 'Rp.1.500.000',
     desc: '1 bulan terakhir',
-    icon: <Wallet className="w-4 h-4" />,
+    icon: <Wallet className="w-3 h-3 md:w-4 md:h-4" />,
   },
   {
     title: 'Barang keluar',
     value: '100/pcs',
     desc: '1 bulan terakhir',
-    icon: <FolderOutputIcon className="w-4 h-4" />,
+    icon: <FolderOutputIcon className="w-3 h-3 md:w-4 md:h-4" />,
   },
   {
     title: 'Pegawai',
     value: '2',
     desc: 'Kasir',
-    icon: <UserIcon className="h-4 w-4" />,
+    icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
   },
 ];
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
       </div>
       <Separator className="my-4" />
       <div className="flex flex-col space-y-5">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
           {dashboardData.map((item) => (
             <OverviewComponent
               key={item.title}
