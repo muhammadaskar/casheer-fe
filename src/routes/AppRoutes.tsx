@@ -14,6 +14,7 @@ import Login from '@/pages/login';
 import PublicRoute from './PublicRoute';
 import NotFound from '@/pages/NotFound';
 import useDarkMode from '@/hooks/use-darkmode';
+import { Toaster } from '@/components/ui/toaster';
 
 const AppRoutes = () => {
   const { darkMode, toggleDarkMode } = useDarkMode();

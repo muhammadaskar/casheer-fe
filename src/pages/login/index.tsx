@@ -2,7 +2,6 @@ import LoginTabs from '@/components/auth/Login';
 import Register from '@/components/auth/Register';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ToastAction } from '@/components/ui/toast';
-import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 import useAuthentication from '@/hooks/use-auth';
 import useRegistration from '@/hooks/use-registration';
@@ -162,7 +161,6 @@ const Login = () => {
           }
         />
       </Tabs>
-      <Toaster />
     </div>
   );
 };
