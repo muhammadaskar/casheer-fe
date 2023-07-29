@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { ChangeEvent, FC, FormEvent } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect } from 'react';
 import { Button } from '../ui/button';
 import {
   Card,
@@ -28,8 +28,6 @@ type RegisterProps = {
   confirmPasswordOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   disableButton: boolean;
-  buttonClick: () => void;
-  responseStatus: number;
 };
 
 const Register: FC<RegisterProps> = (props) => {
@@ -48,16 +46,7 @@ const Register: FC<RegisterProps> = (props) => {
     confirmPasswordOnChange,
     onSubmit,
     disableButton,
-    buttonClick,
-    responseStatus,
   } = props;
-
-  console.log(responseStatus);
-
-  const clickSubmit = (e: FormEvent<HTMLFormElement>) => {
-    onSubmit(e);
-    buttonClick();
-  };
 
   return (
     <TabsContent value="register">
@@ -66,7 +55,7 @@ const Register: FC<RegisterProps> = (props) => {
           <CardTitle>{title}</CardTitle>
           <CardDescription>{desc}</CardDescription>
         </CardHeader>
-        <form onSubmit={clickSubmit}>
+        <form onSubmit={onSubmit}>
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Nama</Label>

@@ -79,6 +79,18 @@ const Login = () => {
     return setDisableRegisterButton(false);
   }, [registerInput, loginInput]);
 
+  useEffect(() => {
+    responseStatus >= 200 && responseStatus < 300
+      ? toast({
+          description: message,
+        })
+      : toast({
+          variant: 'destructive',
+          description: message,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+  }, [message, responseStatus, toast]);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <Tabs defaultValue="signin" className="w-[400px]">
@@ -144,20 +156,6 @@ const Login = () => {
               registerInput.password
             )
           }
-          buttonClick={() =>
-            responseStatus >= 200 && responseStatus < 300
-              ? toast({
-                  description: message,
-                })
-              : toast({
-                  variant: 'destructive',
-                  description: message,
-                  action: (
-                    <ToastAction altText="Try again">Try again</ToastAction>
-                  ),
-                })
-          }
-          responseStatus={responseStatus}
         />
       </Tabs>
       <Toaster />
