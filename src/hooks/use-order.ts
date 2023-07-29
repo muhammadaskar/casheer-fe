@@ -9,8 +9,6 @@ const useOrder = () => {
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
-  console.log(user.token);
-
   const fetchCategory = useCallback(async () => {
     try {
       const response = await fetch(baseURL + 'category', {

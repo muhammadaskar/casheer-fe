@@ -90,7 +90,7 @@ const sidebarItem: Array<SidebarItemType> = [
 
 const Sidebar: FC = () => {
   return (
-    <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide overflow-auto hover:overflow-scroll h-screen sm:block lg:block transition-all">
+    <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block transition-all">
       {sidebarItem.map((item) => (
         <div className="py-3" key={item.title}>
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
