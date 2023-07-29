@@ -52,8 +52,10 @@ const Register: FC<RegisterProps> = (props) => {
     <TabsContent value="register">
       <Card>
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{desc}</CardDescription>
+          <CardTitle className="text-lg md:text-2xl">{title}</CardTitle>
+          <CardDescription className="text-xs md:text-sm">
+            {desc}
+          </CardDescription>
         </CardHeader>
         <form onSubmit={onSubmit}>
           <CardContent className="space-y-2">
