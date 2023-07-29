@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/await-thenable */
-import { ChangeEvent, FC, FormEvent, useEffect } from 'react';
+import { ChangeEvent, FC, FormEvent } from 'react';
 import { Button } from '../ui/button';
 import {
   Card,
