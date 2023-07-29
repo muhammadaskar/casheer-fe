@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 const useDarkMode = () => {
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light'
+    localStorage.getItem('theme') ? localStorage.getItem('theme') : 'dark'
   );
   const htmlClasses = document.querySelector('html');
 
   const toggleDarkMode = () => {
-    darkMode === 'light' ? setDarkMode('dark') : setDarkMode('light');
+    darkMode === 'dark' ? setDarkMode('light') : setDarkMode('dark');
   };
 
   useEffect(() => {
