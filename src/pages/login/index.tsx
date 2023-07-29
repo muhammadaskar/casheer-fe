@@ -42,7 +42,8 @@ const Login = () => {
 
   const { toast } = useToast();
   const { authLogin } = useAuthentication();
-  const { onRegistration, message, responseStatus } = useRegistration();
+  const { onRegistration, message, responseStatus, setResponseStatus } =
+    useRegistration();
 
   const handleLoginInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -84,15 +85,17 @@ const Login = () => {
         toast({
           description: message,
         });
+        setResponseStatus(0);
       } else {
         toast({
           variant: 'destructive',
           description: message,
           action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
+        setResponseStatus(0);
       }
     }
-  }, [message, responseStatus, toast]);
+  }, [message, responseStatus, setResponseStatus, toast]);
 
   return (
     <div className="flex justify-center items-center h-screen px-5 md:px-0">

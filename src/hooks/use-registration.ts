@@ -5,7 +5,7 @@ import { FormEvent, useState } from 'react';
 
 const useRegistration = () => {
   const [message, setMessage] = useState<string>('');
-  const [responseStatus, setResponseStatus] = useState<any>('');
+  const [responseStatus, setResponseStatus] = useState<number>(0);
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const onRegistration = async (
@@ -44,7 +44,7 @@ const useRegistration = () => {
     }
   };
 
-  return { onRegistration, message, responseStatus };
+  return { onRegistration, message, responseStatus, setResponseStatus };
 };
 
 export default useRegistration;
