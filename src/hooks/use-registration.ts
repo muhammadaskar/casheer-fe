@@ -34,10 +34,10 @@ const useRegistration = () => {
       setResponseStatus(response.status);
       if (response.status >= 200 && response.status < 300) {
         setMessage(result.meta.message);
-        // console.log(result.meta.message);
+        console.log(result);
       } else {
         setMessage(result.meta.message);
-        // console.log(result.meta.message);
+        console.log(result);
       }
     } catch (error) {
       console.log(error);
