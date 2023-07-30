@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { BaseType } from '@/types/base-type';
 import { ProductCategory } from '@/types/product-type';

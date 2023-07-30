@@ -45,7 +45,7 @@ const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
 
   return (
-    <main className="px-5 py-2 space-y-3 md:space-y-4">
+    <main className="px-2 md:px-5 py-2 space-y-3 md:space-y-4">
       <div>
         <h1 className="hidden font-semibold tracking-tight text-2xl md:block">
           Dashboard

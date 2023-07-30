@@ -1,5 +1,5 @@
 import OrderForm from '@/components/menu/transaction/OrderForm';
-import PayForm from '@/components/menu/transaction/PayForm';
+
 import TransactionTable from '@/components/menu/transaction/TransactionTable';
 import { Separator } from '@/components/ui/separator';
 import useOrder from '@/hooks/use-order';
@@ -19,7 +19,7 @@ const Transaction = () => {
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="flex flex-col space-y-8">
           <OrderForm category={category} />
-          <PayForm />
+          {/* <PayForm /> */}
         </div>
         <TransactionTable />
       </div>

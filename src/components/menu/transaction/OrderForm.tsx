@@ -22,10 +22,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { MyContext } from '@/context';
 import { cn } from '@/lib/utils';
 import { ProductCategory } from '@/types/product-type';
+import { Types } from '@/types/reducer-type';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useContext, useState } from 'react';
 
 type OrderProps = {
   category: ProductCategory[];
@@ -62,6 +64,21 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
   const [valueName, setValueName] = useState('');
   const [valueId, setValueId] = useState('');
   const [valueCategory, setValueCategory] = useState('');
+
+  const [input, setInput] = useState({
+    price: '',
+    qty: 0,
+    total: '',
+  });
+
+  const { dispatch } = useContext(MyContext);
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <Card className="w-full">
@@ -219,19 +236,51 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
         </div>
         <div className="flex flex-col space-y-2">
           <Label htmlFor="price">Harga</Label>
-          <Input type="text" placeholder="Rp.500,00-," />
+          <Input
+            name="price"
+            type="text"
+            placeholder="Rp.500,00-,"
+            onChange={handleInput}
+          />
         </div>
         <div className="flex flex-col space-y-2">
           <Label htmlFor="pcs">Jumlah</Label>
-          <Input type="text" placeholder="1 Pcs" />
+          <Input
+            name="qty"
+            type="text"
+            placeholder="1 Pcs"
+            onChange={handleInput}
+          />
         </div>
         <div className="flex flex-col space-y-2">
           <Label htmlFor="total">Total</Label>
-          <Input type="text" placeholder="Rp.500,00-," />
+          <Input
+            name="total"
+            type="text"
+            placeholder="Rp.500,00-,"
+            onChange={handleInput}
+          />
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Save</Button>
+        <Button
+          className="w-full"
+          onClick={() =>
+            dispatch({
+              type: Types.Order,
+              payload: {
+                product_name: valueName,
+                id: valueId,
+                category: valueCategory,
+                price: input.price,
+                qty: input.qty,
+                total: input.total,
+              },
+            })
+          }
+        >
+          Save
+        </Button>
       </CardFooter>
     </Card>
   );

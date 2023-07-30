@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseType {
   meta: MetaType;
-  data: [];
+  data: any;
 }
 
 interface MetaType {
