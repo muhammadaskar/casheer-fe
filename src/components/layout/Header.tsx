@@ -1,4 +1,5 @@
 import {
+  BellIcon,
   Cloud,
   Github,
   LifeBuoy,
@@ -40,6 +41,7 @@ import {
 import { Button } from '../ui/button';
 import { FC } from 'react';
 import { UserType } from '@/types/user-type';
+import { Badge } from '../ui/badge';
 
 type HeaderProps = {
   mode: string | null;
@@ -48,6 +50,10 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  const truncate = (str: string, max: number, len: number) => {
+    return str.length > max ? str.substring(0, len) + '...' : str;
+  };
 
   return (
     <div className=" border-b border-t flex justify-end px-5 py-1">
@@ -68,6 +74,33 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
         </Button>
       </div> */}
       <div className="flex items-center space-x-3">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div>
+              <Button variant="outline" className="h-8 w-8" size="icon">
+                <BellIcon className="h-[1.2rem] w-[1.2rem]" />
+              </Button>
+              <Badge className="absolute bg-red-500 h-5 w-1 text-xs top-0 text-white items-center justify-center right-24 hover:bg-red-500/80">
+                12
+              </Badge>
+            </div>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Notification</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="w-56 whitespace-break-spaces">
+              <p>
+                {truncate(
+                  'Telah menjalankan bla bla dan menghasilkan uang dari bla bla Telah menjalankan bla bla dan menghasilkan uang dari bla bla',
+                  100,
+                  52
+                )}
+              </p>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <Button
           variant="outline"
           size="icon"

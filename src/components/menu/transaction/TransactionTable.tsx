@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import {
   Sheet,
@@ -19,64 +19,97 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MyContext } from '@/context';
-import { useContext } from 'react';
+
 import PayForm from './PayForm';
 
-import { Types } from '@/types/reducer-type';
-
-// const invoices = [
-//   {
-//     invoice: 'INV001',
-//     paymentStatus: 'Paid',
-//     totalAmount: '$250.00',
-//     paymentMethod: 'Credit Card',
-//   },
-//   {
-//     invoice: 'INV002',
-//     paymentStatus: 'Pending',
-//     totalAmount: '$150.00',
-//     paymentMethod: 'PayPal',
-//   },
-//   {
-//     invoice: 'INV003',
-//     paymentStatus: 'Unpaid',
-//     totalAmount: '$350.00',
-//     paymentMethod: 'Bank Transfer',
-//   },
-//   {
-//     invoice: 'INV004',
-//     paymentStatus: 'Paid',
-//     totalAmount: '$450.00',
-//     paymentMethod: 'Credit Card',
-//   },
-//   {
-//     invoice: 'INV005',
-//     paymentStatus: 'Paid',
-//     totalAmount: '$550.00',
-//     paymentMethod: 'PayPal',
-//   },
-//   {
-//     invoice: 'INV006',
-//     paymentStatus: 'Pending',
-//     totalAmount: '$200.00',
-//     paymentMethod: 'Bank Transfer',
-//   },
-//   {
-//     invoice: 'INV007',
-//     paymentStatus: 'Unpaid',
-//     totalAmount: '$300.00',
-//     paymentMethod: 'Credit Card',
-//   },
-// ];
+const invoices = [
+  {
+    invoice: 'INV001',
+    paymentStatus: 'Paid',
+    totalAmount: '$250.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV002',
+    paymentStatus: 'Pending',
+    totalAmount: '$150.00',
+    paymentMethod: 'PayPal',
+  },
+  {
+    invoice: 'INV003',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$350.00',
+    paymentMethod: 'Bank Transfer',
+  },
+  {
+    invoice: 'INV004',
+    paymentStatus: 'Paid',
+    totalAmount: '$450.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV005',
+    paymentStatus: 'Paid',
+    totalAmount: '$550.00',
+    paymentMethod: 'PayPal',
+  },
+  {
+    invoice: 'INV006',
+    paymentStatus: 'Pending',
+    totalAmount: '$200.00',
+    paymentMethod: 'Bank Transfer',
+  },
+  {
+    invoice: 'INV007',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV008',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV009',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV010',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV011',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV012',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+  {
+    invoice: 'INV013',
+    paymentStatus: 'Unpaid',
+    totalAmount: '$300.00',
+    paymentMethod: 'Credit Card',
+  },
+];
 
 const TransactionTable = () => {
-  const { state, dispatch } = useContext(MyContext);
+  // const { state, dispatch } = useContext(MyContext);
 
   return (
-    <Card className="w-full">
-      <CardContent className="space-y-2">
-        <Sheet>
+    <Card className="w-full h-[34rem]">
+      <Sheet>
+        <CardContent className="space-y-2 h-[88%] overflow-scroll">
           <Table className="w-full">
             <TableHeader>
               <TableRow>
@@ -87,23 +120,31 @@ const TransactionTable = () => {
                 {/* <TableHead className="text-right">Amount</TableHead> */}
               </TableRow>
             </TableHeader>
-            <TableBody className="w-full">
-              <TableRow>
+            <TableBody className="w-full h-fit">
+              {/* <TableRow>
                 <TableCell className="font-medium">
                   {state.orderType.id}
                 </TableCell>
                 <TableCell>{state.orderType.product_name}</TableCell>
                 <TableCell>{state.orderType.price}</TableCell>
                 <TableCell>{state.orderType.total}</TableCell>
-              </TableRow>
-              {/* {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-              </TableRow>
-            ))} */}
+              </TableRow> */}
+              {invoices.map((invoice) => (
+                <TableRow key={invoice.invoice}>
+                  <TableCell className="font-medium">
+                    {invoice.invoice}
+                  </TableCell>
+                  <TableCell>{invoice.paymentStatus}</TableCell>
+                  <TableCell>{invoice.paymentMethod}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
+            <TableRow className="border-t">
+              <TableHead className="lg:w-[100px]">Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Total</TableHead>
+            </TableRow>
             {/* <TableHeader className="w-full">
               <TableRow>
                 <TableHead className="lg:w-[100px]">QTY</TableHead>
@@ -113,9 +154,6 @@ const TransactionTable = () => {
             {/* </TableRow>
             </TableHeader> */}
           </Table>
-          <SheetTrigger>
-            <Button className="w-full right-0">Click</Button>
-          </SheetTrigger>
 
           <SheetContent side={'bottom'} className="space-y-3">
             <SheetHeader>
@@ -129,19 +167,19 @@ const TransactionTable = () => {
               <SheetClose asChild>
                 <Button
                   type="button"
-                  onChange={() => {
-                    dispatch({
-                      type: Types.Order,
-                      payload: {
-                        product_name: '',
-                        id: '',
-                        category: '',
-                        price: '',
-                        qty: 0,
-                        total: '200000',
-                      },
-                    });
-                    console.log('aaa');
+                  onClick={() => {
+                    // dispatch({
+                    //   type: Types.Order,
+                    //   payload: {
+                    //     product_name: '',
+                    //     id: '',
+                    //     category: '',
+                    //     price: '',
+                    //     qty: 0,
+                    //     total: '',
+                    //   },
+                    // });
+                    console.log('Tes');
                   }}
                 >
                   Save changes
@@ -149,8 +187,13 @@ const TransactionTable = () => {
               </SheetClose>
             </SheetFooter>
           </SheetContent>
-        </Sheet>
-      </CardContent>
+        </CardContent>
+        <CardFooter>
+          <SheetTrigger className="w-full">
+            <Button className="w-full">Pembayaran</Button>
+          </SheetTrigger>
+        </CardFooter>
+      </Sheet>
     </Card>
   );
 };
