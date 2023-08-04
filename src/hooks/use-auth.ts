@@ -20,25 +20,12 @@ const useAuthentication = () => {
   ) => {
     event.preventDefault();
     try {
-      // const response = await fetch(baseURL + 'auth/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept: 'application/json',
-      //     'Access-Control-Allow-Origin': '*',
-      //   },
-      //   body: JSON.stringify({
-      //     username,
-      //     password,
-      //   }),
-
       const response = await axios.post(baseURL + 'auth/login', {
         username,
         password,
       });
       // });
       const result: BaseType = await response.data;
-      console.log(response.data);
       setResponseStatusAuth(response.status);
       if (response.status >= 200 && response.status < 300) {
         localStorage.setItem('user', JSON.stringify(result.data));

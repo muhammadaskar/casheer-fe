@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import axios from 'axios';
 import { FormEvent, useState } from 'react';
 
 const useRegistration = () => {
@@ -17,21 +18,28 @@ const useRegistration = () => {
   ) => {
     event.preventDefault();
     try {
-      const response = await fetch(baseURL + 'auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({
-          name,
-          username,
-          email,
-          password,
-        }),
+      // const response = await fetch(baseURL + 'auth/register', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json',
+      //     'Access-Control-Allow-Origin': '*',
+      //   },
+      //   body: JSON.stringify({
+      //     name,
+      //     username,
+      //     email,
+      //     password,
+      //   }),
+      // });
+      // const result = await response.json();
+      const response = await axios.post(baseURL + 'auth/register', {
+        name,
+        username,
+        email,
+        password,
       });
-      const result = await response.json();
+      const result = await response.data;
       setResponseStatus(response.status);
       if (response.status >= 200 && response.status < 300) {
         setMessage(result.meta.message);

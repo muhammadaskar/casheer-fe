@@ -40,8 +40,8 @@ const useOrder = () => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log(response.data);
-      const result: BaseType = await response.data();
+
+      const result: BaseType = await response.data;
       setCategory(result.data);
     } catch (error) {
       console.log(error);

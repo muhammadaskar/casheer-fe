@@ -77,12 +77,12 @@ const sidebarItem: Array<SidebarItemType> = [
       {
         icon: <MonitorDotIcon className="mr-2 w-4 h-4" />,
         name: 'Customize',
-        path: 'customize',
+        path: 'settings/customize',
       },
       {
         icon: <UserCogIcon className="mr-2 w-4 h-4" />,
         name: 'Profile',
-        path: 'profile',
+        path: 'settings/profile',
       },
     ],
   },
@@ -90,7 +90,7 @@ const sidebarItem: Array<SidebarItemType> = [
 
 const Sidebar: FC = () => {
   return (
-    <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block transition-all">
+    <div className="hidden w-64 border-r p-4 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block transition-all">
       {sidebarItem.map((item) => (
         <div className="py-3" key={item.title}>
           <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
