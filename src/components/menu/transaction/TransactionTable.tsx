@@ -139,12 +139,12 @@ const TransactionTable = () => {
                 </TableRow>
               ))}
             </TableBody>
-            <TableRow className="border-t">
+            {/* <TableRow className="border-t">
               <TableHead className="lg:w-[100px]">Invoice</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Total</TableHead>
-            </TableRow>
+            </TableRow> */}
             {/* <TableHeader className="w-full">
               <TableRow>
                 <TableHead className="lg:w-[100px]">QTY</TableHead>
@@ -166,7 +166,6 @@ const TransactionTable = () => {
             <SheetFooter>
               <SheetClose asChild>
                 <Button
-                  type="button"
                   onClick={() => {
                     // dispatch({
                     //   type: Types.Order,
@@ -190,7 +189,9 @@ const TransactionTable = () => {
         </CardContent>
         <CardFooter>
           <SheetTrigger className="w-full">
-            <Button className="w-full">Pembayaran</Button>
+            <Button type="button" className="w-full">
+              Pembayaran
+            </Button>
           </SheetTrigger>
         </CardFooter>
       </Sheet>

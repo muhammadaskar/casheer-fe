@@ -13,23 +13,6 @@ const useOrder = () => {
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
   const fetchCategory = useCallback(async () => {
-    // try {
-    //   const response = await fetch(baseURL + 'category', {
-    //     method: 'GET',
-    //     headers: {
-    // 'Content-Type': 'application/json',
-    // Accept: 'application/json',
-    // 'Access-Control-Allow-Origin': '*',
-    // 'Access-Control-Allow-Headers': '*',
-    // Authorization: `Bearer ${user.token}`,
-    //     },
-    //   });
-    // const result: BaseType = await response.json();
-    // setCategory(result.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
     try {
       const response = await axios.get(baseURL + 'category', {
         headers: {
@@ -42,6 +25,7 @@ const useOrder = () => {
       });
 
       const result: BaseType = await response.data;
+      console.log(result.data);
       setCategory(result.data);
     } catch (error) {
       console.log(error);
