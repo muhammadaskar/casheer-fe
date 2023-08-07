@@ -2,14 +2,20 @@ import Sidebar from './Sidebar';
 import { Outlet } from 'react-router-dom';
 import BottomTabBar from './BottomTabBar';
 import { ScrollArea } from '../ui/scroll-area';
+import { FC } from 'react';
 
-const LayoutIndex = () => {
+type LayoutProps = {
+  mode: string | null;
+  toggle: () => void;
+};
+
+const LayoutIndex: FC<LayoutProps> = ({ mode, toggle }) => {
   return (
     <>
       <div className="flex min-h-screen">
-        <Sidebar />
+        <Sidebar mode={mode} toggle={toggle} />
         <ScrollArea className="w-full flex-1 h-screen">
-          <div className="pb-24 px-1 md:px-0">
+          <div className="py-12 px-1 md:px-0">
             <Outlet />
           </div>
         </ScrollArea>

@@ -1,6 +1,6 @@
 import LayoutIndex from '@/components/layout';
 import Customer from '@/pages/management/customer';
-import Product from '@/pages/management/product';
+import { Product } from '@/pages/management/product';
 import Stock from '@/pages/management/stock';
 import Dashboard from '@/pages/menu/dashboard';
 import Report from '@/pages/menu/report';
@@ -14,7 +14,6 @@ import Login from '@/pages/login';
 import PublicRoute from './PublicRoute';
 import NotFound from '@/pages/NotFound';
 import useDarkMode from '@/hooks/use-darkmode';
-import Header from '@/components/layout/Header';
 import SettingLayout from '@/components/layout/SettingLayout';
 import Account from '@/pages/settings/account';
 
@@ -31,28 +30,33 @@ const AppRoutes = () => {
       <Route path="/" element={<ProtectedRoute />}>
         <Route
           path="/"
-          element={<Header mode={state.darkMode!} toggle={toggleDarkMode} />}
+          element={
+            <LayoutIndex mode={state.darkMode!} toggle={toggleDarkMode} />
+          }
         >
-          <Route path="/" element={<LayoutIndex />}>
-            {/* Menu */}
-            <Route path="/" element={<Dashboard />} />
-            <Route path="transaction" element={<Transaction />} />
-            <Route path="report" element={<Report />} />
+          {/* Menu */}
+          <Route path="/" element={<Dashboard />} />
+          <Route path="transaction" element={<Transaction />} />
+          <Route path="report" element={<Report />} />
 
-            {/* Management */}
-            <Route path="product" element={<Product />} />
-            <Route path="stock" element={<Stock />} />
-            <Route path="customer" element={<Customer />} />
-            <Route path="user" element={<User />} />
+          {/* Management */}
+          <Route path="product" element={<Product />} />
+          <Route path="stock" element={<Stock />} />
+          <Route path="customer" element={<Customer />} />
+          <Route path="user" element={<User />} />
 
-            <Route path="settings" element={<Settings />} />
-            {/* Settings */}
-          </Route>
-          <Route path="settings" element={<SettingLayout />}>
-            <Route path="profile" element={<Profile />} />
-            <Route path="account" element={<Account />} />
-            <Route path="customize" element={<Customize />} />
-          </Route>
+          <Route path="settings" element={<Settings />} />
+          {/* Settings */}
+        </Route>
+        <Route
+          path="settings"
+          element={
+            <SettingLayout mode={state.darkMode!} toggle={toggleDarkMode} />
+          }
+        >
+          <Route path="profile" element={<Profile />} />
+          <Route path="account" element={<Account />} />
+          <Route path="customize" element={<Customize />} />
         </Route>
       </Route>
 

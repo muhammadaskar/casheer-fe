@@ -30,7 +30,9 @@ const BottomTabBar = () => {
               isActive ? '' : 'text-muted-foreground/70'
             }
           >
-            {item.icon}
+            <div className="flex flex-col justify-center items-center">
+              {item.icon} <p className="text-[0.55rem]">{item.name}</p>
+            </div>
           </NavLink>
         ))}
       </div>
