@@ -17,9 +17,10 @@ import useDarkMode from '@/hooks/use-darkmode';
 import Header from '@/components/layout/Header';
 import SettingLayout from '@/components/layout/SettingLayout';
 import Account from '@/pages/settings/account';
-import Settings from '@/pages/settings';
+
 import { useContext } from 'react';
 import { MyContext } from '@/context';
+import Settings from '@/pages/settings';
 
 const AppRoutes = () => {
   const { state } = useContext(MyContext);

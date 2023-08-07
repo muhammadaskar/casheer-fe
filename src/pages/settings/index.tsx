@@ -2,10 +2,21 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Customize from './customize';
 import Account from './account';
 import Profile from './profile';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useDeviceCheck from '@/hooks/use-devicechek';
 
 const Settings = () => {
   const [value, setValue] = useState('Profile');
+  const mobile = useDeviceCheck();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (mobile) {
+      return navigate('/settings');
+    }
+    return navigate('/settings/profile');
+  }, [mobile, navigate]);
 
   return (
     <main className="px-2 py-2 pb-10 space-y-3 md:hidden">

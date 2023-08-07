@@ -6,11 +6,22 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
 import { MyContext } from '@/context';
 import useDarkMode from '@/hooks/use-darkmode';
-import { useContext } from 'react';
+import useDeviceCheck from '@/hooks/use-devicechek';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Customize = () => {
   const { state } = useContext(MyContext);
   const { toggleDarkMode } = useDarkMode();
+  const mobile = useDeviceCheck();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (mobile) {
+      return navigate('/settings');
+    }
+    return navigate('/settings/customize');
+  }, [mobile, navigate]);
 
   return (
     <main className="space-y-6">

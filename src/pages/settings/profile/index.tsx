@@ -8,8 +8,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import useDeviceCheck from '@/hooks/use-devicechek';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
+  const mobile = useDeviceCheck();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (mobile) {
+      return navigate('/settings');
+    }
+    return navigate('/settings/profile');
+  }, [mobile, navigate]);
+
   return (
     <main className="space-y-6">
       <div className="hidden md:block">
