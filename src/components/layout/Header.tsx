@@ -60,7 +60,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   };
 
   return (
-    <div className="block fixed bg-black w-full">
+    <div className="block fixed bg-background w-full">
       <div className="border-b border-t flex justify-between items-center px-5 py-1 top-0">
         <h1
           className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
@@ -218,7 +218,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
           </TooltipProvider>
         </div>
       </div>
-      <ScrollArea className="w-full flex-1 h-screen">
+      <ScrollArea className="w-full flex-1 h-screen ">
         <Outlet />
       </ScrollArea>
     </div>
