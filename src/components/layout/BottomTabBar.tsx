@@ -1,4 +1,4 @@
-import { BoxesIcon, LayoutGridIcon, Settings } from 'lucide-react';
+import { InspectIcon, LayoutGridIcon, Settings } from 'lucide-react';
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ type BottomBarType = {
 
 const bottomBarItems: Array<BottomBarType> = [
   { icon: <LayoutGridIcon />, name: 'Dashboard', path: '/' },
-  { icon: <BoxesIcon />, name: 'Manajemen', path: '/product' },
+  { icon: <InspectIcon />, name: 'Manajemen', path: '/product' },
   {
     icon: <Settings />,
     name: 'Settings',
