@@ -114,7 +114,6 @@ const TransactionTable = () => {
             <TableHeader>
               <TableRow>
                 <TableHead className="lg:w-[100px]">Invoice</TableHead>
-                <TableHead>Status</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Total</TableHead>
                 {/* <TableHead className="text-right">Amount</TableHead> */}
@@ -131,9 +130,6 @@ const TransactionTable = () => {
               </TableRow> */}
               {invoices.map((invoice) => (
                 <TableRow key={invoice.invoice}>
-                  <TableCell className="font-medium">
-                    {invoice.invoice}
-                  </TableCell>
                   <TableCell>{invoice.paymentStatus}</TableCell>
                   <TableCell>{invoice.paymentMethod}</TableCell>
                 </TableRow>

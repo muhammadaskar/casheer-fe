@@ -12,6 +12,7 @@ export type ActionMap<M extends { [index: string]: any }> = {
 
 export enum Types {
   Order = 'ORDER_FORM',
+  DarkMode = 'DARK_MODE',
 }
 
 export type OrderPayload = {
@@ -23,4 +24,8 @@ export type OrderPayload = {
     qty: number;
     total: string;
   };
+};
+
+export type DarkModePayload = {
+  [Types.DarkMode]: string | undefined;
 };

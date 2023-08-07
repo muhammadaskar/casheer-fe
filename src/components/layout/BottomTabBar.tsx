@@ -14,7 +14,7 @@ const bottomBarItems: Array<BottomBarType> = [
   {
     icon: <Settings />,
     name: 'Settings',
-    path: '/customize',
+    path: '/settings',
   },
 ];
 
@@ -33,10 +33,6 @@ const BottomTabBar = () => {
             {item.icon}
           </NavLink>
         ))}
-        {/* <LayoutGridIcon className="" />
-        <CalculatorIcon className=" text-muted-foreground/70" />
-        <FileSpreadsheetIcon className="text-muted-foreground/70" />
-        <PackageIcon className="text-muted-foreground/70" /> */}
       </div>
     </div>
   );

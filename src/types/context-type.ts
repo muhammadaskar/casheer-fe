@@ -7,6 +7,11 @@ export interface OrderContextType {
   total: string;
 }
 
+export interface DarkModeContextType {
+  dark_mode: string | undefined;
+}
+
 export interface InitialStateType {
   orderType: OrderContextType;
+  darkMode: string | undefined;
 }

@@ -9,7 +9,7 @@ const LayoutIndex = () => {
       <div className="flex min-h-screen">
         <Sidebar />
         <ScrollArea className="w-full flex-1 h-screen">
-          <div className="pb-16">
+          <div className="pb-16 px-1 md:px-0">
             <Outlet />
           </div>
         </ScrollArea>

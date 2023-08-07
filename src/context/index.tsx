@@ -2,7 +2,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { OrderActions, orderReducer } from '@/reducers';
+import {
+  DarkModeActions,
+  OrderActions,
+  darkModeReducer,
+  orderReducer,
+} from '@/reducers';
 import { InitialStateType } from '@/types/context-type';
 import {
   Dispatch,
@@ -26,15 +31,22 @@ const contextInitialState: InitialStateType = {
     qty: 0,
     total: '',
   },
+  darkMode: localStorage.getItem('theme')
+    ? localStorage.getItem('theme')!
+    : 'dark',
 };
 
 export const MyContext = createContext<{
   state: InitialStateType;
-  dispatch: Dispatch<OrderActions>;
+  dispatch: Dispatch<OrderActions | DarkModeActions>;
 }>({ state: contextInitialState, dispatch: () => {} });
 
-const mainReducer = ({ orderType }: InitialStateType, action: any) => ({
+const mainReducer = (
+  { orderType, darkMode }: InitialStateType,
+  action: any
+) => ({
   orderType: orderReducer(orderType, action),
+  darkMode: darkModeReducer(darkMode!, action),
 });
 
 const ContextProvider: FC<Props> = ({ children }) => {

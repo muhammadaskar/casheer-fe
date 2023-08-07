@@ -17,16 +17,20 @@ import useDarkMode from '@/hooks/use-darkmode';
 import Header from '@/components/layout/Header';
 import SettingLayout from '@/components/layout/SettingLayout';
 import Account from '@/pages/settings/account';
+import Settings from '@/pages/settings';
+import { useContext } from 'react';
+import { MyContext } from '@/context';
 
 const AppRoutes = () => {
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { state } = useContext(MyContext);
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute />}>
         <Route
           path="/"
-          element={<Header mode={darkMode} toggle={toggleDarkMode} />}
+          element={<Header mode={state.darkMode!} toggle={toggleDarkMode} />}
         >
           <Route path="/" element={<LayoutIndex />}>
             {/* Menu */}
@@ -40,6 +44,7 @@ const AppRoutes = () => {
             <Route path="customer" element={<Customer />} />
             <Route path="user" element={<User />} />
 
+            <Route path="settings" element={<Settings />} />
             {/* Settings */}
           </Route>
           <Route path="settings" element={<SettingLayout />}>

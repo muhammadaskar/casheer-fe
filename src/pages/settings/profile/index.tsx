@@ -12,13 +12,13 @@ import { Separator } from '@/components/ui/separator';
 const Profile = () => {
   return (
     <main className="space-y-6">
-      <div>
+      <div className="hidden md:block">
         <h3 className="text-lg font-medium">Profile</h3>
         <p className="text-sm text-muted-foreground">
           This is how others will see you on the site.
         </p>
       </div>
-      <Separator />
+      <Separator className="hidden md:block" />
       <form className="space-y-8">
         <div className="space-y-2">
           <Label>Username</Label>
@@ -39,8 +39,11 @@ const Profile = () => {
         <div className="space-y-2">
           <Label>Profile picture</Label>
           <ContextMenu>
-            <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+            <ContextMenuTrigger className="h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm hidden md:flex">
               Right click here
+            </ContextMenuTrigger>
+            <ContextMenuTrigger className="h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm flex md:hidden">
+              <Button variant="ghost">Browse Here</Button>
             </ContextMenuTrigger>
             <ContextMenuContent className="w-64">
               <ContextMenuItem inset>Upload picture</ContextMenuItem>
