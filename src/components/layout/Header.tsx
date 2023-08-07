@@ -43,6 +43,7 @@ import { UserType } from '@/types/user-type';
 import { Badge } from '../ui/badge';
 import useNotification from '@/hooks/use-notification';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { ScrollArea } from '../ui/scroll-area';
 
 type HeaderProps = {
   mode: string | null;
@@ -59,8 +60,8 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   };
 
   return (
-    <>
-      <div className=" border-b border-t flex justify-between items-center px-5 py-1">
+    <div className="block fixed bg-black w-full">
+      <div className="border-b border-t flex justify-between items-center px-5 py-1 top-0">
         <h1
           className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
           onClick={() => navigate('/')}
@@ -217,9 +218,10 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
           </TooltipProvider>
         </div>
       </div>
-
-      <Outlet />
-    </>
+      <ScrollArea className="w-full flex-1 h-screen">
+        <Outlet />
+      </ScrollArea>
+    </div>
   );
 };
 
