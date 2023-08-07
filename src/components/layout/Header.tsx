@@ -218,7 +218,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
           </TooltipProvider>
         </div>
       </div>
-      <ScrollArea className="w-full flex-1 h-screen ">
+      <ScrollArea className="w-full flex-1 h-screen pb-24">
         <Outlet />
       </ScrollArea>
     </div>
