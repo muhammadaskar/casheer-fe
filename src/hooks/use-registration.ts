@@ -18,21 +18,6 @@ const useRegistration = () => {
   ) => {
     event.preventDefault();
     try {
-      // const response = await fetch(baseURL + 'auth/register', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept: 'application/json',
-      //     'Access-Control-Allow-Origin': '*',
-      //   },
-      //   body: JSON.stringify({
-      //     name,
-      //     username,
-      //     email,
-      //     password,
-      //   }),
-      // });
-      // const result = await response.json();
       const response = await axios.post(baseURL + 'auth/register', {
         name,
         username,

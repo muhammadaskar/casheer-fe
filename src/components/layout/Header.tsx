@@ -41,8 +41,10 @@ import { Button } from '../ui/button';
 import { FC } from 'react';
 import { UserType } from '@/types/user-type';
 import { Badge } from '../ui/badge';
-import useNotification from '@/hooks/use-notification';
+// import useNotification from '@/hooks/use-notification';
 import { useNavigate } from 'react-router-dom';
+import { useNotificationQuery } from '@/hooks/use-notification';
+import { NotificationType } from '@/types/notification-type';
 
 type HeaderProps = {
   mode: string | null;
@@ -51,7 +53,9 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const navigate = useNavigate();
-  const { notification } = useNotification();
+  // const { notification } = useNotification();
+  const { data } = useNotificationQuery();
+  const notification: NotificationType[] = data?.data;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
   const truncate = (str: string, max: number, len: number) => {

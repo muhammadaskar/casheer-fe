@@ -16,7 +16,6 @@ import NotFound from '@/pages/NotFound';
 import useDarkMode from '@/hooks/use-darkmode';
 import SettingLayout from '@/components/layout/SettingLayout';
 import Account from '@/pages/settings/account';
-
 import { useContext } from 'react';
 import { MyContext } from '@/context';
 import Settings from '@/pages/settings';

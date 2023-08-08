@@ -98,7 +98,7 @@ const Sidebar: FC<LayoutProps> = ({ mode, toggle }) => {
   return (
     <>
       <Header mode={mode} toggle={toggle} />
-      <aside className="hidden w-64 border-r px-4 py-12 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block transition-all">
+      <aside className="hidden w-64 border-r px-4 py-12 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block ">
         {sidebarItem.map((item) => (
           <div className="py-3" key={item.title}>
             <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">

@@ -2,10 +2,12 @@ import OrderForm from '@/components/menu/transaction/OrderForm';
 
 import TransactionTable from '@/components/menu/transaction/TransactionTable';
 import { Separator } from '@/components/ui/separator';
-import useOrder from '@/hooks/use-order';
+import { useCategoryQuery } from '@/hooks/use-order';
+// import useOrder from '@/hooks/use-order';
 
 const Transaction = () => {
-  const { category } = useOrder();
+  // const { category } = useOrder();
+  const { data } = useCategoryQuery();
 
   return (
     <main className="md:px-5 md:py-2">
@@ -18,7 +20,7 @@ const Transaction = () => {
       <Separator className="my-4 hidden md:block" />
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="flex flex-col space-y-8">
-          <OrderForm category={category} />
+          <OrderForm category={data?.data} />
           {/* <PayForm /> */}
         </div>
         <TransactionTable />

@@ -30,7 +30,7 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { ChangeEvent, FC, useContext, useState } from 'react';
 
 type OrderProps = {
-  category: ProductCategory[];
+  category?: ProductCategory[];
 };
 
 const frameworks = [
@@ -198,7 +198,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                 className="w-full justify-between "
               >
                 {valueCategory
-                  ? category.find((item) => item.name === valueCategory)?.name
+                  ? category?.find((item) => item.name === valueCategory)?.name
                   : 'Kategori'}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -208,7 +208,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                 <CommandInput placeholder="Kategori" />
                 <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
                 <CommandGroup>
-                  {category.map((item) => (
+                  {category?.map((item) => (
                     <CommandItem
                       key={item.id}
                       onSelect={(currentValue: any) => {
