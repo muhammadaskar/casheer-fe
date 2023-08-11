@@ -1,6 +1,6 @@
 import LayoutIndex from '@/components/layout';
 import Customer from '@/pages/management/customer';
-import { Product } from '@/pages/management/product';
+import Product from '@/pages/management/product';
 import Stock from '@/pages/management/stock';
 import Dashboard from '@/pages/menu/dashboard';
 import Report from '@/pages/menu/report';
