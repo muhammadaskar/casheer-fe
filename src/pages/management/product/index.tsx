@@ -20,6 +20,12 @@ const Product = () => {
       <p className="text-sm text-muted-foreground">Lorem ipsum dolor amet.</p>
       <Separator className="my-4 hidden md:block" />
 
+      {data?.data === undefined ? (
+        <div> Loading brok</div>
+      ) : (
+        <DataTable columns={columns} data={data?.data} />
+      )}
+
       <Tabs className="block md:hidden space-y-3" defaultValue="product">
         <TabsList className="w-full grid grid-cols-4">
           <TabsTrigger value="product" onClick={() => setValue('product')}>
@@ -36,13 +42,11 @@ const Product = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="product">
-          <div>
-            {data?.data === undefined ? (
-              <div> Loading brok</div>
-            ) : (
-              <DataTable columns={columns} data={data?.data} />
-            )}
-          </div>
+          {data?.data === undefined ? (
+            <div> Loading brok</div>
+          ) : (
+            <DataTable columns={columns} data={data?.data} />
+          )}
         </TabsContent>
         <TabsContent value="stock">
           <Stock />
