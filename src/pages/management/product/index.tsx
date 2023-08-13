@@ -9,29 +9,29 @@ import Stock from '../stock';
 import User from '../user';
 
 const Product = () => {
-  const [value, setValue] = useState('Product');
+  const [value, setValue] = useState('product');
   const { data } = useProductQuery();
 
   return (
-    <main className="px-2 md:px-5 mx-auto py-5 space-y-3">
+    <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
       <h1 className="font-semibold tracking-tight text-2xl block md:hidden">
-        {value}
+        {value.charAt(0).toUpperCase() + value.slice(1)}
       </h1>
       <p className="text-sm text-muted-foreground">Lorem ipsum dolor amet.</p>
       <Separator className="my-4 hidden md:block" />
 
       <Tabs className="block md:hidden space-y-3" defaultValue="product">
         <TabsList className="w-full grid grid-cols-4">
-          <TabsTrigger value="product" onClick={() => setValue('Product')}>
+          <TabsTrigger value="product" onClick={() => setValue('product')}>
             Product
           </TabsTrigger>
-          <TabsTrigger value="stock" onClick={() => setValue('Stock')}>
+          <TabsTrigger value="stock" onClick={() => setValue('stock')}>
             Stock
           </TabsTrigger>
-          <TabsTrigger value="customer" onClick={() => setValue('Customer')}>
+          <TabsTrigger value="customer" onClick={() => setValue('customer')}>
             Customer
           </TabsTrigger>
-          <TabsTrigger value="user" onClick={() => setValue('User')}>
+          <TabsTrigger value="user" onClick={() => setValue('user')}>
             User
           </TabsTrigger>
         </TabsList>
