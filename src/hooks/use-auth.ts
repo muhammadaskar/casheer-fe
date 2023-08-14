@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { BaseType } from '@/types/base-type';
-import axios from 'axios';
+
 import { FormEvent, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
@@ -20,12 +20,16 @@ const useAuthentication = () => {
   ) => {
     event.preventDefault();
     try {
-      const response = await axios.post(baseURL + 'auth/login', {
-        username,
-        password,
+      const response = await fetch(baseURL + 'auth/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+        }),
       });
+
       // });
-      const result: BaseType = await response.data;
+      const result: BaseType = await response.json();
       setResponseStatusAuth(response.status);
       if (response.status >= 200 && response.status < 300) {
         localStorage.setItem('user', JSON.stringify(result.data));

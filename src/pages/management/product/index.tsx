@@ -7,7 +7,6 @@ import { useState } from 'react';
 import Customer from '../customer';
 import Stock from '../stock';
 import User from '../user';
-import { DataTableMobile } from '@/components/management/product/DataTableMobile';
 
 const Product = () => {
   const [value, setValue] = useState('product');
@@ -45,7 +44,7 @@ const Product = () => {
         </TabsList>
         <TabsContent value="product">
           {/* <DataTable columns={columns} data={data?.data} /> */}
-          <DataTableMobile columns={columnMobile} data={data?.data} />
+          <DataTable columns={columnMobile} data={data?.data} />
         </TabsContent>
         <TabsContent value="stock">
           <Stock />
