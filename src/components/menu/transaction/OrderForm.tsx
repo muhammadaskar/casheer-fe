@@ -86,9 +86,9 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
         <CardTitle className="text-xl lg:text-2xl pb-3">Pemesanan</CardTitle>
         <hr />
       </CardHeader>
-      <CardContent className="flex flex-col space-y-3 d">
+      <CardContent className="flex flex-col space-y-3">
         <div className="flex flex-row space-x-2">
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 w-full">
             <Label htmlFor="productName">Nama produk</Label>
             <Popover open={openName} onOpenChange={setOpenName}>
               <PopoverTrigger asChild>
@@ -96,7 +96,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-full md:w-72 lg:w-72 justify-between "
+                  className="w-full justify-between "
                 >
                   {valueName
                     ? frameworks.find(
@@ -145,7 +145,7 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openId}
-                  className="w-32 md:w-60 lg:w-[12.5rem] justify-between "
+                  className="w-36 md:w-[12.5rem] justify-between "
                 >
                   {valueId
                     ? frameworks.find(

@@ -1,4 +1,4 @@
-import { columns } from '@/components/management/product/Column';
+import { columnMobile, columns } from '@/components/management/product/Column';
 import { DataTable } from '@/components/management/product/DataTable';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Customer from '../customer';
 import Stock from '../stock';
 import User from '../user';
+import { DataTableMobile } from '@/components/management/product/DataTableMobile';
 
 const Product = () => {
   const [value, setValue] = useState('product');
@@ -43,11 +44,8 @@ const Product = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="product">
-          {data?.data === undefined ? (
-            <div> Loading brok</div>
-          ) : (
-            <DataTable columns={columns} data={data?.data} />
-          )}
+          {/* <DataTable columns={columns} data={data?.data} /> */}
+          <DataTableMobile columns={columnMobile} data={data?.data} />
         </TabsContent>
         <TabsContent value="stock">
           <Stock />
