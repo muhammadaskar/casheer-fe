@@ -27,7 +27,8 @@ export type ProductData = {
 export const columns: ColumnDef<ProductData>[] = [
   {
     accessorKey: 'id',
-    header: 'ID',
+    header: 'No',
+    enableHiding: false,
   },
 
   {
@@ -99,7 +100,8 @@ export const columns: ColumnDef<ProductData>[] = [
 export const columnMobile: ColumnDef<ProductData>[] = [
   {
     accessorKey: 'id',
-    header: 'ID',
+    header: 'No',
+    enableHiding: false,
   },
 
   {

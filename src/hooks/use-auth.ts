@@ -19,6 +19,7 @@ const useAuthentication = () => {
     password: string
   ) => {
     event.preventDefault();
+
     try {
       const response = await fetch(baseURL + 'auth/login', {
         method: 'POST',
