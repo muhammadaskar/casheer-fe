@@ -61,7 +61,7 @@ export function CustomerTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4">
+      <div className="flex items-center justify-between py-4 space-x-5">
         <Input
           placeholder="Filter nomor hp..."
           value={(table.getColumn('Phone')?.getFilterValue() as string) ?? ''}
