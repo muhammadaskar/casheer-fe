@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/table';
 
 import PayForm from './PayForm';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const invoices = [
   {
@@ -109,80 +110,74 @@ const TransactionTable = () => {
   return (
     <Card className="w-full h-[34rem]">
       <Sheet>
-        <CardContent className="space-y-2 h-[88%] overflow-scroll">
-          <Table className="w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="lg:w-[100px]">Invoice</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Total</TableHead>
-                {/* <TableHead className="text-right">Amount</TableHead> */}
-              </TableRow>
-            </TableHeader>
-            <TableBody className="w-full h-fit">
-              {/* <TableRow>
-                <TableCell className="font-medium">
-                  {state.orderType.id}
-                </TableCell>
-                <TableCell>{state.orderType.product_name}</TableCell>
-                <TableCell>{state.orderType.price}</TableCell>
-                <TableCell>{state.orderType.total}</TableCell>
-              </TableRow> */}
-              {invoices.map((invoice) => (
-                <TableRow key={invoice.invoice}>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.paymentMethod}</TableCell>
+        <ScrollArea className="space-y-2 h-[88%] overflow-hidden">
+          <CardContent>
+            <Table className="w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="lg:w-[100px]">Invoice</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>Total</TableHead>
+                  {/* <TableHead className="text-right">Amount</TableHead> */}
                 </TableRow>
-              ))}
-            </TableBody>
-            {/* <TableRow className="border-t">
+              </TableHeader>
+              <TableBody className="w-full h-fit">
+                {invoices.map((invoice) => (
+                  <TableRow key={invoice.invoice}>
+                    <TableCell>{invoice.paymentStatus}</TableCell>
+                    <TableCell>{invoice.paymentMethod}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+              {/* <TableRow className="border-t">
               <TableHead className="lg:w-[100px]">Invoice</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Total</TableHead>
             </TableRow> */}
-            {/* <TableHeader className="w-full">
+              {/* <TableHeader className="w-full">
               <TableRow>
                 <TableHead className="lg:w-[100px]">QTY</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Total</TableHead> */}
-            {/* <TableHead className="text-right">Amount</TableHead> */}
-            {/* </TableRow>
+              {/* <TableHead className="text-right">Amount</TableHead> */}
+              {/* </TableRow>
             </TableHeader> */}
-          </Table>
+            </Table>
 
-          <SheetContent side={'bottom'} className="space-y-3">
-            <SheetHeader>
-              <SheetTitle>Pembayaran</SheetTitle>
-              <SheetDescription>
-                Lakukan pembayaran untuk menyelesaikan transaksi.
-              </SheetDescription>
-            </SheetHeader>
-            <PayForm />
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button
-                  onClick={() => {
-                    // dispatch({
-                    //   type: Types.Order,
-                    //   payload: {
-                    //     product_name: '',
-                    //     id: '',
-                    //     category: '',
-                    //     price: '',
-                    //     qty: 0,
-                    //     total: '',
-                    //   },
-                    // });
-                    console.log('Tes');
-                  }}
-                >
-                  Save changes
-                </Button>
-              </SheetClose>
-            </SheetFooter>
-          </SheetContent>
-        </CardContent>
+            <SheetContent side={'bottom'} className="space-y-3">
+              <SheetHeader>
+                <SheetTitle>Pembayaran</SheetTitle>
+                <SheetDescription>
+                  Lakukan pembayaran untuk menyelesaikan transaksi.
+                </SheetDescription>
+              </SheetHeader>
+              <PayForm />
+              <SheetFooter>
+                <SheetClose asChild>
+                  <Button
+                    onClick={() => {
+                      // dispatch({
+                      //   type: Types.Order,
+                      //   payload: {
+                      //     product_name: '',
+                      //     id: '',
+                      //     category: '',
+                      //     price: '',
+                      //     qty: 0,
+                      //     total: '',
+                      //   },
+                      // });
+                      console.log('Tes');
+                    }}
+                  >
+                    Save changes
+                  </Button>
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </CardContent>
+        </ScrollArea>
         <CardFooter>
           <SheetTrigger className="w-full">
             <Button type="button" className="w-full">
