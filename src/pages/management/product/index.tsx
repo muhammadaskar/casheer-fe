@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   fetchProduct,
+  useProductCountQuery,
   useProductQuery,
   useSearchProduct,
 } from '@/hooks/use-product';
@@ -20,6 +21,7 @@ const Product = () => {
   const [value, setValue] = useState('product');
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
+  const { data: productCount } = useProductCountQuery();
   const { status, data, isPreviousData } = useProductQuery(page);
 
   const [query, setQuery] = useState('');
@@ -30,15 +32,13 @@ const Product = () => {
   }, [query]);
 
   useEffect(() => {
-    if (!isPreviousData && data?.data?.hasMore) {
+    if (!isPreviousData && productCount?.data >= 10) {
       queryClient.prefetchQuery({
         queryKey: ['product', page + 1],
         queryFn: () => fetchProduct(page + 1),
       });
     }
   }, [data, isPreviousData, page, queryClient]);
-
-  console.log(data);
 
   return (
     <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
@@ -71,7 +71,7 @@ const Product = () => {
             status={status}
             data={data?.data}
             onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-            disableNext={isPreviousData}
+            disableNext={isPreviousData || productCount?.data === 10}
             onPrev={() => setPage((old) => Math.max(old - 1, 0))}
             disablePrev={page === 1}
             onSearch={(event: ChangeEvent<HTMLInputElement>) =>

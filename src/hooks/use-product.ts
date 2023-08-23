@@ -23,7 +23,7 @@ const fetchProductCount = async () => {
 };
 
 export const useProductCountQuery = () =>
-  useQuery(['product-count'], fetchProductCount, {
+  useQuery(['product'], fetchProductCount, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
