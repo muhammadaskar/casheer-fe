@@ -29,7 +29,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ChevronDown, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  PlusIcon,
+} from 'lucide-react';
 import { ChangeEvent, useState } from 'react';
 import CreateProduct from './CreateProduct';
 
@@ -91,7 +96,7 @@ export function DataTable<TData, TValue>({
           onChange={onSearch}
         />
 
-        <div className="space-x-2">
+        <div className="flex space-x-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -120,7 +125,14 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
 
           <CreateProduct>
-            <Button variant="outline">Add Product</Button>
+            <div>
+              <Button variant="outline" className="hidden md:block">
+                Add Product
+              </Button>
+              <Button variant="outline" className="block md:hidden">
+                <PlusIcon className="h-4 w-4" />
+              </Button>
+            </div>
           </CreateProduct>
         </div>
       </div>
