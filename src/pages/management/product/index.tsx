@@ -1,16 +1,44 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { columnMobile, columns } from '@/components/management/product/Column';
 import { DataTable } from '@/components/management/product/DataTable';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useProductQuery } from '@/hooks/use-product';
-import { useState } from 'react';
+import {
+  fetchProduct,
+  useProductQuery,
+  useSearchProduct,
+} from '@/hooks/use-product';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Customer from '../customer';
 import Stock from '../stock';
 import User from '../user';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Product = () => {
   const [value, setValue] = useState('product');
-  const { data } = useProductQuery();
+  const [page, setPage] = useState(1);
+  const queryClient = useQueryClient();
+  const { status, data, isPreviousData } = useProductQuery(page);
+
+  const [query, setQuery] = useState('');
+  const { fetchSearch, searchData } = useSearchProduct();
+
+  useEffect(() => {
+    fetchSearch(query);
+  }, [query]);
+
+  useEffect(() => {
+    if (!isPreviousData && data?.data?.hasMore) {
+      queryClient.prefetchQuery({
+        queryKey: ['product', page + 1],
+        queryFn: () => fetchProduct(page + 1),
+      });
+    }
+  }, [data, isPreviousData, page, queryClient]);
+
+  console.log(data);
 
   return (
     <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
@@ -24,7 +52,33 @@ const Product = () => {
       <Separator className="my-4 hidden md:block" />
 
       <div className="hidden md:block">
-        <DataTable columns={columns} data={data?.data} />
+        {query ? (
+          <DataTable
+            columns={columns}
+            status={status}
+            data={searchData?.data}
+            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+            disableNext={isPreviousData}
+            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+            disablePrev={page === 1}
+            onSearch={(event: ChangeEvent<HTMLInputElement>) =>
+              setQuery(event.target.value)
+            }
+          />
+        ) : (
+          <DataTable
+            columns={columns}
+            status={status}
+            data={data?.data}
+            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+            disableNext={isPreviousData}
+            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+            disablePrev={page === 1}
+            onSearch={(event: ChangeEvent<HTMLInputElement>) =>
+              setQuery(event.target.value)
+            }
+          />
+        )}
       </div>
 
       <Tabs className="block md:hidden space-y-3" defaultValue="product">
@@ -43,8 +97,33 @@ const Product = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="product">
-          {/* <DataTable columns={columns} data={data?.data} /> */}
-          <DataTable columns={columnMobile} data={data?.data} />
+          {query ? (
+            <DataTable
+              columns={columnMobile}
+              status={status}
+              data={searchData?.data}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(event: ChangeEvent<HTMLInputElement>) =>
+                setQuery(event.target.value)
+              }
+            />
+          ) : (
+            <DataTable
+              columns={columnMobile}
+              status={status}
+              data={data?.data}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(event: ChangeEvent<HTMLInputElement>) =>
+                setQuery(event.target.value)
+              }
+            />
+          )}
         </TabsContent>
         <TabsContent value="stock">
           <Stock />
