@@ -50,6 +50,35 @@ export const useProductQuery = (page: number) =>
     refetchOnWindowFocus: false,
   });
 
+export const useCreateProductMutation = () => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (input: {
+      category_id: number;
+      name: string;
+      price: number;
+      quantity: number;
+      description: string;
+    }) => {
+      await axios.post(baseURL + 'product', input, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    },
+
+    onSuccess: async (addProduct) => {
+      await queryClient.invalidateQueries(['product']);
+      queryClient.setQueryData(['product'], addProduct);
+    },
+  });
+};
+
 export const useUpdateProductMutation = (id: number) => {
   const queryClient = useQueryClient();
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
