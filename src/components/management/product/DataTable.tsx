@@ -74,12 +74,6 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
 
-    // initialState: {
-    //   pagination: {
-    //     pageSize: 5,
-    //   },
-    // },
-
     state: {
       sorting,
       columnFilters,
@@ -190,9 +184,7 @@ export function DataTable<TData, TValue>({
               </TableBody>
             </Table>
           ) : (
-            <Button variant="ghost" className="m-5">
-              Add Product
-            </Button>
+            <p className="p-5">Produk tidak ditemukan</p>
           )
         ) : (
           <SkeletonTable />

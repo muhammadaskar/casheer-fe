@@ -32,7 +32,7 @@ import { useCategoryQuery } from '@/hooks/use-order';
 import { useCreateProductMutation } from '@/hooks/use-product';
 import { cn } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import React, { ChangeEvent, FC, useReducer, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
 
 type Props = {
   children: React.ReactNode;
@@ -53,6 +53,7 @@ const CreateProduct: FC<Props> = ({ children }) => {
   const { data: category } = useCategoryQuery();
   const createProduct = useCreateProductMutation();
 
+  const [disable, setDisable] = useState(true);
   const [input, setInput] = useReducer(
     (current: InputCreateProduct, update: Partial<InputCreateProduct>) => ({
       ...current,
@@ -66,6 +67,18 @@ const CreateProduct: FC<Props> = ({ children }) => {
       description: '',
     }
   );
+
+  useEffect(() => {
+    if (
+      input.name === '' &&
+      input.price === 0 &&
+      input.quantity === 0 &&
+      input.description === ''
+    ) {
+      return setDisable(true);
+    }
+    return setDisable(false);
+  }, [input]);
 
   return (
     <Sheet>
@@ -206,7 +219,11 @@ const CreateProduct: FC<Props> = ({ children }) => {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit" onClick={() => createProduct.mutate(input)}>
+            <Button
+              type="submit"
+              disabled={disable}
+              onClick={() => createProduct.mutate(input)}
+            >
               Save changes
             </Button>
           </SheetClose>

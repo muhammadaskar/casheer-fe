@@ -31,7 +31,17 @@ export type ProductData = {
 export const columns: ColumnDef<ProductData>[] = [
   {
     accessorKey: 'id',
-    header: 'No',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant={'ghost'}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          No
+          <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     enableHiding: false,
   },
 
@@ -111,7 +121,17 @@ export const columns: ColumnDef<ProductData>[] = [
 export const columnMobile: ColumnDef<ProductData>[] = [
   {
     accessorKey: 'id',
-    header: 'No',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant={'ghost'}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          No
+          <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     enableHiding: false,
   },
 
