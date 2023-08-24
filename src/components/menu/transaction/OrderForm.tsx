@@ -22,12 +22,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { MyContext } from '@/context';
 import { cn } from '@/lib/utils';
 import { Product } from '@/types/product-type';
 import { Types } from '@/types/reducer-type';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { ChangeEvent, FC, useContext, useReducer, useState } from 'react';
+import {
+  ChangeEvent,
+  FC,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 
 type OrderProps = {
   product?: Product[];
@@ -44,9 +52,7 @@ type OrderFormType = {
 const OrderForm: FC<OrderProps> = ({ product }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
-
-  // const [valueName, setValueName] = useState('');
-  // const [valueId, setValueId] = useState(0);
+  const [disable, setDisable] = useState(true);
 
   const [input, setInput] = useReducer(
     (current: OrderFormType, update: Partial<OrderFormType>) => ({
@@ -63,6 +69,13 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
   );
 
   const { dispatch } = useContext(MyContext);
+
+  useEffect(() => {
+    if (input.quantity === 0) {
+      return setDisable(true);
+    }
+    return setDisable(false);
+  }, [input.quantity]);
 
   return (
     <Card className="w-full">
@@ -92,29 +105,31 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                 <Command>
                   <CommandInput placeholder="Cari produk..." />
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
-                  <CommandGroup>
-                    {product?.map((item) => (
-                      <CommandItem
-                        key={item.id}
-                        onSelect={() => {
-                          setInput({
-                            name: item.name,
-                            price: item.price,
-                            id: item.id,
-                          });
-                          setOpenName(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4',
-                            input.id === item.id ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                        {item.name}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
+                  <ScrollArea className="h-52">
+                    <CommandGroup>
+                      {product?.map((item) => (
+                        <CommandItem
+                          key={item.id}
+                          onSelect={() => {
+                            setInput({
+                              name: item.name,
+                              price: item.price,
+                              id: item.id,
+                            });
+                            setOpenName(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              input.id === item.id ? 'opacity-100' : 'opacity-0'
+                            )}
+                          />
+                          {item.name}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </ScrollArea>
                 </Command>
               </PopoverContent>
             </Popover>
@@ -139,30 +154,31 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                 <Command>
                   <CommandInput placeholder="Cari ID..." />
                   <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
-                  <CommandGroup>
-                    {product?.map((item) => (
-                      <CommandItem
-                        key={item.id}
-                        onSelect={() => {
-                          // setValueId(item.id);
-                          setInput({
-                            name: item.name,
-                            price: item.price,
-                            id: item.id,
-                          });
-                          setOpenId(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4',
-                            input.id === item.id ? 'opacity-100' : 'opacity-0'
-                          )}
-                        />
-                        {item.id}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
+                  <ScrollArea className="h-52">
+                    <CommandGroup>
+                      {product?.map((item) => (
+                        <CommandItem
+                          key={item.id}
+                          onSelect={() => {
+                            setInput({
+                              name: item.name,
+                              price: item.price,
+                              id: item.id,
+                            });
+                            setOpenId(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              input.id === item.id ? 'opacity-100' : 'opacity-0'
+                            )}
+                          />
+                          {item.id}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </ScrollArea>
                 </Command>
               </PopoverContent>
             </Popover>
@@ -200,17 +216,13 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
             placeholder="Rp.500,00-,"
             value={input.price * input.quantity}
             readOnly
-            // onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            //   setInput({
-            //     total: Number(e.target.value),
-            //   })
-            // }
           />
         </div>
       </CardContent>
       <CardFooter>
         <Button
           className="w-full"
+          disabled={disable}
           onClick={() =>
             dispatch({
               type: Types.Order,

@@ -32,7 +32,7 @@ export const fetchAllProduct = async () => {
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
-  const response = await axios.get(baseURL + `product?page=1&limit=5`, {
+  const response = await axios.get(baseURL + `products`, {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',

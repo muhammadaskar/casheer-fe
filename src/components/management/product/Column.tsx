@@ -75,6 +75,8 @@ export const columns: ColumnDef<ProductData>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
+      console.log(product);
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -97,7 +99,8 @@ export const columns: ColumnDef<ProductData>[] = [
 
               <UpdateSheet
                 id={product.id}
-                category_id={product.category}
+                category={product.category}
+                category_id={product.category_id}
                 name={product.name}
                 price={product.price}
                 qty={product.quantity}
@@ -182,7 +185,8 @@ export const columnMobile: ColumnDef<ProductData>[] = [
 
               <UpdateSheet
                 id={product.id}
-                category_id={product.category}
+                category={product.category}
+                category_id={product.category_id}
                 name={product.name}
                 price={product.price}
                 qty={product.quantity}

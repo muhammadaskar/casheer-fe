@@ -33,7 +33,8 @@ import { ChangeEvent, FC, useReducer, useState } from 'react';
 
 type Props = {
   id: number;
-  category_id: string;
+  category_id: number;
+  category: string;
   name: string;
   price: number;
   qty: number;
@@ -63,7 +64,7 @@ const UpdateSheet: FC<Props> = ({
       ...update,
     }),
     {
-      category_id: 0,
+      category_id: category_id,
       name: name,
       price: price,
       quantity: qty,
@@ -98,7 +99,7 @@ const UpdateSheet: FC<Props> = ({
               >
                 {category_id
                   ? category?.data?.find(
-                      (item: any) => item.name === valueCategory
+                      (item: any) => item.id === valueCategory
                     )?.name
                   : 'Kategori'}
 
@@ -113,9 +114,9 @@ const UpdateSheet: FC<Props> = ({
                   {category?.data?.map((item: any) => (
                     <CommandItem
                       key={item.id}
-                      onSelect={(currentValue: any) => {
+                      onSelect={() => {
                         setValueCategory(
-                          currentValue === valueCategory ? '' : currentValue
+                          item.id === valueCategory ? '' : item.id
                         );
                         setInput({
                           category_id: item.id,
@@ -127,7 +128,7 @@ const UpdateSheet: FC<Props> = ({
                       <Check
                         className={cn(
                           'mr-2 h-4 w-4',
-                          valueCategory === item.name
+                          valueCategory === item.id
                             ? 'opacity-100'
                             : 'opacity-0'
                         )}
