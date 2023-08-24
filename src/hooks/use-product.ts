@@ -28,6 +28,28 @@ export const useProductCountQuery = () =>
     refetchOnWindowFocus: false,
   });
 
+export const fetchAllProduct = async () => {
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  const response = await axios.get(baseURL + `product?page=1&limit=5`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+
+  const result: BaseType = await response.data;
+  return result;
+};
+
+export const useAllProductQuery = () =>
+  useQuery(['product'], fetchAllProduct, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
 export const fetchProduct = async (page: number) => {
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');

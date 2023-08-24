@@ -19,6 +19,7 @@ import Account from '@/pages/settings/account';
 import { useContext } from 'react';
 import { MyContext } from '@/context';
 import Settings from '@/pages/settings';
+import NotificationPage from '@/pages/notification';
 
 const AppRoutes = () => {
   const { state } = useContext(MyContext);
@@ -38,14 +39,19 @@ const AppRoutes = () => {
           <Route path="transaction" element={<Transaction />} />
           <Route path="report" element={<Report />} />
 
+          {/* Notification */}
+          <Route path="notification">
+            <Route path=":id" element={<NotificationPage />} />
+          </Route>
+
           {/* Management */}
           <Route path="product" element={<Product />} />
           <Route path="stock" element={<Stock />} />
           <Route path="customer" element={<Customer />} />
           <Route path="user" element={<User />} />
 
-          <Route path="settings" element={<Settings />} />
           {/* Settings */}
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route
           path="settings"

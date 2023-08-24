@@ -18,11 +18,10 @@ export enum Types {
 export type OrderPayload = {
   [Types.Order]: {
     product_name: string;
-    id: string;
-    category: string;
-    price: string;
+    id: number;
+    price: number;
     qty: number;
-    total: string;
+    total: number;
   };
 };
 
