@@ -3,12 +3,6 @@ import { Label } from '@/components/ui/label';
 
 const PayForm = () => {
   return (
-    // <Card className="w-full">
-    //   <CardHeader>
-    //     <CardTitle className="text-2xl pb-3">Pembayaran</CardTitle>
-    //     <hr />
-    //   </CardHeader>
-    //   <CardContent className="flex flex-col space-y-3">
     <>
       <div className="flex flex-col space-y-2">
         <Label htmlFor="totals">Total Harga</Label>
@@ -26,13 +20,7 @@ const PayForm = () => {
         <Label htmlFor="payback">Kembalian</Label>
         <Input type="text" placeholder="Rp.50.000,00" />
       </div>
-      {/* </CardContent>
-      <CardFooter>
-        <Button className="w-full">Bayar</Button>
-      </CardFooter> */}
     </>
-
-    // </Card>
   );
 };
 

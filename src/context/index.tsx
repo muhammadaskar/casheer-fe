@@ -25,11 +25,10 @@ type Props = {
 const contextInitialState: InitialStateType = {
   orderType: {
     product_name: '',
-    id: '',
-    category: '',
-    price: '',
+    id: 0,
+    price: 0,
     qty: 0,
-    total: '',
+    total: 0,
   },
   darkMode: localStorage.getItem('theme')
     ? localStorage.getItem('theme')!

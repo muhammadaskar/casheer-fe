@@ -11,7 +11,6 @@ export const orderReducer = (state: OrderContextType, action: OrderActions) => {
         ...state,
         product_name: action.payload.product_name,
         id: action.payload.id,
-        category: action.payload.category,
         price: action.payload.price,
         qty: action.payload.qty,
         total: action.payload.total,

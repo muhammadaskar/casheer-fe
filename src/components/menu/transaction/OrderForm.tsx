@@ -24,61 +24,45 @@ import {
 } from '@/components/ui/popover';
 import { MyContext } from '@/context';
 import { cn } from '@/lib/utils';
-import { ProductCategory } from '@/types/product-type';
+import { Product } from '@/types/product-type';
 import { Types } from '@/types/reducer-type';
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { ChangeEvent, FC, useContext, useState } from 'react';
+import { ChangeEvent, FC, useContext, useReducer, useState } from 'react';
 
 type OrderProps = {
-  category?: ProductCategory[];
+  product?: Product[];
 };
 
-const frameworks = [
-  {
-    value: 'next.js',
-    label: 'Next.js',
-  },
-  {
-    value: 'sveltekit',
-    label: 'SvelteKit',
-  },
-  {
-    value: 'nuxt.js',
-    label: 'Nuxt.js',
-  },
-  {
-    value: 'remix',
-    label: 'Remix',
-  },
-  {
-    value: 'astro',
-    label: 'Astro',
-  },
-];
+type OrderFormType = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  total: number;
+};
 
-const OrderForm: FC<OrderProps> = ({ category }) => {
+const OrderForm: FC<OrderProps> = ({ product }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
-  const [openCategory, setOpenCategory] = useState(false);
 
-  const [valueName, setValueName] = useState('');
-  const [valueId, setValueId] = useState('');
-  const [valueCategory, setValueCategory] = useState('');
+  // const [valueName, setValueName] = useState('');
+  // const [valueId, setValueId] = useState(0);
 
-  const [input, setInput] = useState({
-    price: '',
-    qty: 0,
-    total: '',
-  });
+  const [input, setInput] = useReducer(
+    (current: OrderFormType, update: Partial<OrderFormType>) => ({
+      ...current,
+      ...update,
+    }),
+    {
+      id: 0,
+      name: '',
+      price: 0,
+      quantity: 0,
+      total: 0,
+    }
+  );
 
   const { dispatch } = useContext(MyContext);
-
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
     <Card className="w-full">
@@ -98,10 +82,8 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   aria-expanded={openName}
                   className="w-full justify-between "
                 >
-                  {valueName
-                    ? frameworks.find(
-                        (framework) => framework.value === valueName
-                      )?.label
+                  {input.name
+                    ? product?.find((item) => item.id === input.id)?.name
                     : 'Cari produk...'}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -111,25 +93,25 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   <CommandInput placeholder="Cari produk..." />
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
                   <CommandGroup>
-                    {frameworks.map((framework) => (
+                    {product?.map((item) => (
                       <CommandItem
-                        key={framework.value}
-                        onSelect={(currentValue: any) => {
-                          setValueName(
-                            currentValue === valueName ? '' : currentValue
-                          );
+                        key={item.id}
+                        onSelect={() => {
+                          setInput({
+                            name: item.name,
+                            price: item.price,
+                            id: item.id,
+                          });
                           setOpenName(false);
                         }}
                       >
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            valueName === framework.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
+                            input.id === item.id ? 'opacity-100' : 'opacity-0'
                           )}
                         />
-                        {framework.label}
+                        {item.name}
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -147,10 +129,8 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   aria-expanded={openId}
                   className="w-36 md:w-[12.5rem] justify-between "
                 >
-                  {valueId
-                    ? frameworks.find(
-                        (framework) => framework.value === valueId
-                      )?.label
+                  {input.id
+                    ? product?.find((item) => item.id === input.id)?.id
                     : 'Cari ID...'}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -160,25 +140,26 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
                   <CommandInput placeholder="Cari ID..." />
                   <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
                   <CommandGroup>
-                    {frameworks.map((framework) => (
+                    {product?.map((item) => (
                       <CommandItem
-                        key={framework.value}
-                        onSelect={(currentValue: any) => {
-                          setValueId(
-                            currentValue === valueId ? '' : currentValue
-                          );
+                        key={item.id}
+                        onSelect={() => {
+                          // setValueId(item.id);
+                          setInput({
+                            name: item.name,
+                            price: item.price,
+                            id: item.id,
+                          });
                           setOpenId(false);
                         }}
                       >
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            valueId === framework.value
-                              ? 'opacity-100'
-                              : 'opacity-0'
+                            input.id === item.id ? 'opacity-100' : 'opacity-0'
                           )}
                         />
-                        {framework.label}
+                        {item.id}
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -187,60 +168,15 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
             </Popover>
           </div>
         </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="productCategory">Kategori</Label>
-          <Popover open={openCategory} onOpenChange={setOpenCategory}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={openCategory}
-                className="w-full justify-between "
-              >
-                {valueCategory
-                  ? category?.find((item) => item.name === valueCategory)?.name
-                  : 'Kategori'}
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className=" w-[21rem] lg:w-[480px] p-0">
-              <Command>
-                <CommandInput placeholder="Kategori" />
-                <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
-                <CommandGroup>
-                  {category?.map((item) => (
-                    <CommandItem
-                      key={item.id}
-                      onSelect={(currentValue: any) => {
-                        setValueCategory(
-                          currentValue === valueCategory ? '' : currentValue
-                        );
-                        setOpenCategory(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          valueCategory === item.name
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {item.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
+
         <div className="flex flex-col space-y-2">
           <Label htmlFor="price">Harga</Label>
           <Input
             name="price"
             type="text"
             placeholder="Rp.500,00-,"
-            onChange={handleInput}
+            value={input.price}
+            readOnly
           />
         </div>
         <div className="flex flex-col space-y-2">
@@ -249,7 +185,11 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
             name="qty"
             type="text"
             placeholder="1 Pcs"
-            onChange={handleInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInput({
+                quantity: Number(e.target.value),
+              })
+            }
           />
         </div>
         <div className="flex flex-col space-y-2">
@@ -258,7 +198,13 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
             name="total"
             type="text"
             placeholder="Rp.500,00-,"
-            onChange={handleInput}
+            value={input.price * input.quantity}
+            readOnly
+            // onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            //   setInput({
+            //     total: Number(e.target.value),
+            //   })
+            // }
           />
         </div>
       </CardContent>
@@ -269,12 +215,11 @@ const OrderForm: FC<OrderProps> = ({ category }) => {
             dispatch({
               type: Types.Order,
               payload: {
-                product_name: valueName,
-                id: valueId,
-                category: valueCategory,
+                id: input.id,
+                product_name: input.name,
                 price: input.price,
-                qty: input.qty,
-                total: input.total,
+                qty: input.quantity,
+                total: input.price * input.quantity,
               },
             })
           }

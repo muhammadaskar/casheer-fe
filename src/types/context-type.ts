@@ -1,10 +1,9 @@
 export interface OrderContextType {
   product_name: string;
-  id: string;
-  category: string;
-  price: string;
+  id: number;
+  price: number;
   qty: number;
-  total: string;
+  total: number;
 }
 
 export interface DarkModeContextType {
