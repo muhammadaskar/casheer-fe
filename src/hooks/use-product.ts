@@ -62,8 +62,10 @@ export const fetchProduct = async (page: number) => {
     },
   });
 
-  const result: BaseType = await response.data;
-  return result;
+  if (response.status >= 200 && response.status < 300) {
+    const result: BaseType = await response.data;
+    return result;
+  }
 };
 
 export const useProductQuery = (page: number) =>

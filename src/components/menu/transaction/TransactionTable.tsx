@@ -32,10 +32,9 @@ const TransactionTable = () => {
   const [invoice, setInvoice] = useState<Array<OrderContextType>>([]);
 
   useEffect(() => {
-    setInvoice([...invoice, state.orderType]);
+    const newData = [...invoice, state.orderType];
+    setInvoice(newData.filter((item) => item.id !== 0));
   }, [state.orderType]);
-
-  console.log(invoice);
 
   return (
     <Card className="w-full h-[29.5rem]">
@@ -52,16 +51,14 @@ const TransactionTable = () => {
                 </TableRow>
               </TableHeader>
               <TableBody className="w-full h-fit">
-                {invoice
-                  .filter((item) => item.id !== 0)
-                  .map((invoices) => (
-                    <TableRow key={invoices.id}>
-                      <TableCell>{invoices.product_name}</TableCell>
-                      <TableCell>{invoices.qty}</TableCell>
-                      <TableCell>{invoices.price}</TableCell>
-                      <TableCell>{invoices.total}</TableCell>
-                    </TableRow>
-                  ))}
+                {invoice.map((invoices) => (
+                  <TableRow key={invoices.id}>
+                    <TableCell>{invoices.product_name}</TableCell>
+                    <TableCell>{invoices.qty}</TableCell>
+                    <TableCell>{invoices.price}</TableCell>
+                    <TableCell>{invoices.total}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
 
@@ -72,7 +69,10 @@ const TransactionTable = () => {
                   Lakukan pembayaran untuk menyelesaikan transaksi.
                 </SheetDescription>
               </SheetHeader>
-              <PayForm />
+
+              <PayForm
+                total={invoice.reduce((acc, current) => acc + current.total, 0)}
+              />
               <SheetFooter>
                 <SheetClose asChild>
                   <Button
@@ -89,7 +89,12 @@ const TransactionTable = () => {
         </ScrollArea>
         <CardFooter>
           <SheetTrigger asChild className="w-full">
-            <Button className="w-full">Pembayaran</Button>
+            <Button
+              className="w-full"
+              disabled={invoice.length >= 1 ? false : true}
+            >
+              Pembayaran
+            </Button>
           </SheetTrigger>
         </CardFooter>
       </Sheet>
