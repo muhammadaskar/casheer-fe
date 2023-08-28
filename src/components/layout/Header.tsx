@@ -48,6 +48,7 @@ import {
   useNotificationQuery,
 } from '@/hooks/use-notification';
 import { NotificationType } from '@/types/notification-type';
+import { ScrollArea } from '../ui/scroll-area';
 
 type HeaderProps = {
   mode: string | null;
@@ -113,24 +114,30 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
             <DropdownMenuContent>
               <DropdownMenuLabel>Notification</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {notification
-                ?.sort((a, b) => b.id - a.id)
-                .map((item) => (
-                  <DropdownMenuItem
-                    key={item.id}
-                    onClick={() => {
-                      setNotifId(item.id);
-                      setRead(item.is_read);
-                      notificationRead();
-                      navigate(`notification/${item.id}`, {
-                        state: { notification: item },
-                      });
-                    }}
-                    className="w-56 whitespace-break-spaces"
-                  >
-                    <p>{truncate(item.name, 100, 52)}</p>
-                  </DropdownMenuItem>
-                ))}
+              <ScrollArea className="h-52">
+                {notification
+                  ?.sort((a, b) => b.id - a.id)
+                  .map((item) => (
+                    <DropdownMenuItem
+                      key={item.id}
+                      onClick={() => {
+                        setNotifId(item.id);
+                        setRead(item.is_read);
+                        notificationRead();
+                        navigate(`notification/${item.id}`, {
+                          state: { notification: item },
+                        });
+                      }}
+                      className={
+                        item.is_read == true
+                          ? 'w-56 whitespace-break-spaces bg-accent'
+                          : 'w-56 whitespace-break-spaces'
+                      }
+                    >
+                      <p>{truncate(item.name, 100, 52)}</p>
+                    </DropdownMenuItem>
+                  ))}
+              </ScrollArea>
             </DropdownMenuContent>
           </DropdownMenu>
 
