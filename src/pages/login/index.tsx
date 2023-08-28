@@ -2,7 +2,7 @@ import LoginTabs from '@/components/auth/Login';
 import Register from '@/components/auth/Register';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useAuthentication from '@/hooks/use-auth';
-import useRegistration from '@/hooks/use-registration';
+import { useRegistration } from '@/hooks/use-registration';
 import { ChangeEvent, FormEvent, useEffect, useReducer, useState } from 'react';
 
 type RegisterType = {

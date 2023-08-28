@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/sheet';
 import { useCategoryQuery } from '@/hooks/use-order';
 import { useCreateProductMutation } from '@/hooks/use-product';
-import { cn } from '@/lib/utils';
+import { cn, numericValue, rupiahFormat } from '@/lib/utils';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import React, { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
 
@@ -174,12 +174,14 @@ const CreateProduct: FC<Props> = ({ children }) => {
               id="price"
               name="price"
               placeholder="2000"
+              type="text"
+              value={rupiahFormat(input.price)}
               className="col-span-3"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 setInput({
-                  price: Number(e.target.value),
-                })
-              }
+                  price: Number(numericValue(e.target.value)),
+                });
+              }}
             />
           </div>
 
@@ -192,11 +194,12 @@ const CreateProduct: FC<Props> = ({ children }) => {
               name="quantity"
               placeholder="10"
               className="col-span-3"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              value={input.quantity}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 setInput({
-                  quantity: Number(e.target.value),
-                })
-              }
+                  quantity: Number(numericValue(e.target.value)),
+                });
+              }}
             />
           </div>
 

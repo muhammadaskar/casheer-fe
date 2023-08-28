@@ -21,7 +21,7 @@ const fetchSale = async () => {
 
 export const useSaleQuery = () =>
   useQuery(['sale'], fetchSale, {
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
 
@@ -42,7 +42,29 @@ const fetchItemOut = async () => {
 };
 
 export const useItemOutQuery = () =>
-  useQuery(['item-out'], fetchItemOut, {
-    refetchOnMount: false,
+  useQuery(['transaction'], fetchItemOut, {
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+  });
+
+const fetchCasheerTotal = async () => {
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  const response = await axios.get(baseURL + 'member', {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+  const result: BaseType = await response.data;
+
+  return result;
+};
+
+export const useCasheerTotalQuery = () =>
+  useQuery(['casheer'], fetchCasheerTotal, {
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });

@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
@@ -37,10 +36,12 @@ import { ChangeEvent, useEffect, useReducer, useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Invoice } from '@/types/product-type';
-import { rupiahFormat } from '@/lib/utils';
+import { numericValue, rupiahFormat } from '@/lib/utils';
+import { XIcon } from 'lucide-react';
 
 type PayInput = {
   member_code: string;
+  price_total: number;
   product_id: number;
   discount: number;
   total_pay: number;
@@ -57,7 +58,7 @@ const TransactionTable = () => {
     {
       member_code: '',
       product_id: 0,
-
+      price_total: 0,
       discount: 0,
       total_pay: 0,
     }
@@ -102,6 +103,11 @@ const TransactionTable = () => {
     setInvoiceForm([]);
   }
 
+  function deleteInvoiceItem(id: number) {
+    const updatedItems = invoiceForm.filter((item: Invoice) => item.id !== id);
+    return setInvoiceForm(updatedItems);
+  }
+
   useEffect(() => {
     if (input.total_pay !== 0) {
       return setDisable(false);
@@ -121,6 +127,7 @@ const TransactionTable = () => {
                   <TableHead>Qty</TableHead>
                   <TableHead>Price</TableHead>
                   <TableHead>Total</TableHead>
+                  <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="w-full h-fit">
@@ -130,6 +137,14 @@ const TransactionTable = () => {
                     <TableCell>{invoices.quantity}</TableCell>
                     <TableCell>{rupiahFormat(invoices.price)}</TableCell>
                     <TableCell>{rupiahFormat(invoices.total)}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant={'ghost'}
+                        onClick={() => deleteInvoiceItem(invoices.id)}
+                      >
+                        <XIcon className="h-4 w-4 text-red-500" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -146,7 +161,9 @@ const TransactionTable = () => {
                 <Label htmlFor="totals">Total Harga</Label>
                 <Input
                   type="text"
-                  value={total}
+                  value={rupiahFormat(
+                    input.discount !== 0 ? total - input.discount : total
+                  )}
                   readOnly
                   placeholder="Rp.500.000,00"
                 />
@@ -168,9 +185,10 @@ const TransactionTable = () => {
                 <Input
                   type="text"
                   placeholder="Rp.100.000,00 (Optional)"
+                  value={rupiahFormat(input.discount)}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setInput({
-                      discount: Number(e.target.value),
+                      discount: Number(numericValue(e.target.value)),
                     })
                   }
                 />
@@ -180,9 +198,10 @@ const TransactionTable = () => {
                 <Input
                   type="text"
                   placeholder="Rp.550.000,00"
+                  value={rupiahFormat(input.total_pay)}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     setInput({
-                      total_pay: Number(e.target.value),
+                      total_pay: Number(numericValue(e.target.value)),
                     })
                   }
                 />
@@ -193,7 +212,9 @@ const TransactionTable = () => {
                   type="text"
                   placeholder="Rp.50.000,00"
                   value={rupiahFormat(
-                    input.total_pay === 0 ? 0 : input.total_pay - total
+                    input.total_pay === 0
+                      ? 0
+                      : input.total_pay - (total - input.discount)
                   )}
                   readOnly
                 />

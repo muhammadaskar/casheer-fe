@@ -17,7 +17,11 @@ import {
 import Transaction from '../transaction';
 import Report from '../report';
 import { useState } from 'react';
-import { useItemOutQuery, useSaleQuery } from '@/hooks/use-dashboard';
+import {
+  useCasheerTotalQuery,
+  useItemOutQuery,
+  useSaleQuery,
+} from '@/hooks/use-dashboard';
 import { rupiahFormat } from '@/lib/utils';
 import SkeletonCard from '@/components/skeleton-loader/SkeletonCard';
 // import { useTransactionQuery } from '@/hooks/use-transaction';
@@ -36,6 +40,7 @@ const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
   const { data: sale, status } = useSaleQuery();
   const { data: itemOut } = useItemOutQuery();
+  const { data: casheer } = useCasheerTotalQuery();
 
   const dashboardData = [
     {
@@ -58,7 +63,7 @@ const Dashboard = () => {
     },
     {
       title: 'Pegawai',
-      value: '2',
+      value: casheer?.data.length,
       desc: 'Kasir',
       icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
     },

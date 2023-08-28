@@ -16,3 +16,9 @@ export const rupiahFormat = (num: number) => {
 
   return rupiah;
 };
+
+export const numericValue = (str: string) => {
+  const numericValue = str.replace(/[^0-9]/g, '');
+
+  return numericValue;
+};

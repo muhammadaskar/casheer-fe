@@ -7,7 +7,6 @@ import Report from '@/pages/menu/report';
 import Transaction from '@/pages/menu/transaction';
 import Customize from '@/pages/settings/customize';
 import Profile from '@/pages/settings/profile';
-import { User } from 'lucide-react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Login from '@/pages/login';
@@ -19,6 +18,7 @@ import Account from '@/pages/settings/account';
 import Settings from '@/pages/settings';
 import NotificationPage from '@/pages/notification';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
+import User from '@/pages/management/user';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();

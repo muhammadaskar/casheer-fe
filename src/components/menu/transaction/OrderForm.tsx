@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-import { cn, rupiahFormat } from '@/lib/utils';
+import { cn, numericValue, rupiahFormat } from '@/lib/utils';
 import { useInvoiceStore } from '@/store/useInvoiceStore';
 import { useOrderStore } from '@/store/useOrderStore';
 import { Invoice, Product } from '@/types/product-type';
@@ -107,6 +107,8 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
     } else {
       setInvoiceForm(data);
     }
+
+    setInput({ quantity: 0 });
   }, [invoiceForm, setInvoiceForm, orderForm]);
 
   useEffect(() => {
@@ -254,11 +256,12 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
             name="qty"
             type="text"
             placeholder="1 Pcs"
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            value={input.quantity}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setInput({
-                quantity: Number(e.target.value),
-              })
-            }
+                quantity: Number(numericValue(e.target.value)),
+              });
+            }}
           />
         </div>
         <div className="flex flex-col space-y-2">
