@@ -7,7 +7,6 @@ import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   fetchProduct,
-  useProductCountQuery,
   useProductQuery,
   useSearchProduct,
 } from '@/hooks/use-product';
@@ -21,7 +20,6 @@ const Product = () => {
   const [value, setValue] = useState('product');
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
-  const { data: productCount } = useProductCountQuery();
   const { status, data, isPreviousData } = useProductQuery(page);
 
   const [query, setQuery] = useState('');
@@ -32,7 +30,7 @@ const Product = () => {
   }, [query]);
 
   useEffect(() => {
-    if (!isPreviousData && productCount?.data >= 10) {
+    if (!isPreviousData && !data?.data.is_last_page) {
       queryClient.prefetchQuery({
         queryKey: ['product', page + 1],
         queryFn: () => fetchProduct(page + 1),
@@ -56,9 +54,9 @@ const Product = () => {
           <DataTable
             columns={columns}
             status={status}
-            data={searchData?.data}
+            data={searchData?.data.products}
             onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-            disableNext={isPreviousData}
+            disableNext={isPreviousData || data?.data.is_last_page}
             onPrev={() => setPage((old) => Math.max(old - 1, 0))}
             disablePrev={page === 1}
             onSearch={(event: ChangeEvent<HTMLInputElement>) =>
@@ -69,9 +67,9 @@ const Product = () => {
           <DataTable
             columns={columns}
             status={status}
-            data={data?.data}
+            data={data?.data.products}
             onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-            disableNext={isPreviousData || productCount?.data === 10}
+            disableNext={isPreviousData || data?.data.is_last_page}
             onPrev={() => setPage((old) => Math.max(old - 1, 0))}
             disablePrev={page === 1}
             onSearch={(event: ChangeEvent<HTMLInputElement>) =>
@@ -101,9 +99,9 @@ const Product = () => {
             <DataTable
               columns={columnMobile}
               status={status}
-              data={searchData?.data}
+              data={searchData?.data.products}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-              disableNext={isPreviousData}
+              disableNext={isPreviousData || data?.data.is_last_page}
               onPrev={() => setPage((old) => Math.max(old - 1, 0))}
               disablePrev={page === 1}
               onSearch={(event: ChangeEvent<HTMLInputElement>) =>
@@ -114,9 +112,9 @@ const Product = () => {
             <DataTable
               columns={columnMobile}
               status={status}
-              data={data?.data}
+              data={data?.data.products}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-              disableNext={isPreviousData}
+              disableNext={isPreviousData || data?.data.is_last_page}
               onPrev={() => setPage((old) => Math.max(old - 1, 0))}
               disablePrev={page === 1}
               onSearch={(event: ChangeEvent<HTMLInputElement>) =>

@@ -4,14 +4,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { MyContext } from '@/context';
 import useDarkMode from '@/hooks/use-darkmode';
 import useDeviceCheck from '@/hooks/use-devicechek';
-import { useContext, useEffect } from 'react';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Customize = () => {
-  const { state } = useContext(MyContext);
+  const { darkMode } = useDarkModeStore();
   const { toggleDarkMode } = useDarkMode();
   const mobile = useDeviceCheck();
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Customize = () => {
 
         <RadioGroup
           onValueChange={toggleDarkMode}
-          defaultValue={state.darkMode}
+          defaultValue={darkMode}
           className="grid max-w-md grid-cols-2 gap-8 pt-2"
         >
           <Label>
@@ -54,7 +54,7 @@ const Customize = () => {
               </div>
               <div
                 className={`items-center rounded-md border-2 ${
-                  state.darkMode === 'light'
+                  darkMode === 'light'
                     ? 'border-primary'
                     : 'border-muted hover:border-accent'
                 } p-1 `}
@@ -87,7 +87,7 @@ const Customize = () => {
               </div>
               <div
                 className={`items-center rounded-md border-2 bg-popover p-1 ${
-                  state.darkMode === 'dark'
+                  darkMode === 'dark'
                     ? 'border-primary'
                     : 'border-muted hover:bg-accent hover:text-accent-foreground'
                 }`}

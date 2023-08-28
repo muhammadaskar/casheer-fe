@@ -1,3 +1,5 @@
+import { Invoice } from './product-type';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type ActionMap<M extends { [index: string]: any }> = {
   [Key in keyof M]: M[Key] extends undefined
@@ -13,6 +15,7 @@ export type ActionMap<M extends { [index: string]: any }> = {
 export enum Types {
   Order = 'ORDER_FORM',
   DarkMode = 'DARK_MODE',
+  Invoice = 'INVOICE',
 }
 
 export type OrderPayload = {
@@ -27,4 +30,10 @@ export type OrderPayload = {
 
 export type DarkModePayload = {
   [Types.DarkMode]: string | undefined;
+};
+
+export type InvoicePayload = {
+  [Types.Invoice]: {
+    invoice: any;
+  };
 };

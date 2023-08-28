@@ -6,28 +6,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 
-const fetchProductCount = async () => {
-  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
-  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
-
-  const response = await axios.get(baseURL + 'product/count', {
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      Authorization: `Bearer ${user.token}`,
-    },
-  });
-
-  const result: BaseType = await response.data;
-  return result;
-};
-
-export const useProductCountQuery = () =>
-  useQuery(['product'], fetchProductCount, {
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  });
-
 export const fetchAllProduct = async () => {
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');

@@ -1,25 +1,16 @@
-import { MyContext } from '@/context';
-import { Types } from '@/types/reducer-type';
-import { useContext, useEffect } from 'react';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { useEffect } from 'react';
 
 const useDarkMode = () => {
-  const { state, dispatch } = useContext(MyContext);
+  const { darkMode, setDarkMode } = useDarkModeStore();
   const htmlClasses = document.querySelector('html');
 
   const toggleDarkMode = () => {
-    state.darkMode === 'dark'
-      ? dispatch({
-          type: Types.DarkMode,
-          payload: 'light',
-        })
-      : dispatch({
-          type: Types.DarkMode,
-          payload: 'dark',
-        });
+    darkMode === 'dark' ? setDarkMode('light') : setDarkMode('dark');
   };
 
   useEffect(() => {
-    if (state.darkMode === 'dark') {
+    if (darkMode === 'dark') {
       document.documentElement.classList.add('dark');
       localStorage.setItem('theme', 'dark');
       htmlClasses?.classList.add('dark');
@@ -28,7 +19,7 @@ const useDarkMode = () => {
       localStorage.setItem('theme', 'light');
       htmlClasses?.classList.remove('dark');
     }
-  }, [state.darkMode, htmlClasses]);
+  }, [darkMode, htmlClasses]);
 
   return {
     toggleDarkMode,

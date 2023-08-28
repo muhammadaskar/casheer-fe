@@ -75,8 +75,6 @@ export const columns: ColumnDef<ProductData>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
-      console.log(product);
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
