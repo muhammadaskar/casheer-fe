@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createWithEqualityFn } from 'zustand/traditional';
 
 export interface InvoiceFormValue {
@@ -9,21 +10,13 @@ export interface InvoiceFormValue {
 }
 
 interface InvoiceStore {
-  invoiceForm: [InvoiceFormValue];
-  setInvoiceForm: (value: [InvoiceFormValue]) => void;
+  invoiceForm: any;
+  setInvoiceForm: (value: any) => void;
 }
 
 export const useInvoiceStore = createWithEqualityFn<InvoiceStore>(
   (set) => ({
-    invoiceForm: [
-      {
-        id: 0,
-        name: '',
-        price: 0,
-        quantity: 0,
-        total: 0,
-      },
-    ],
+    invoiceForm: [],
     setInvoiceForm: (value: [InvoiceFormValue]) => set({ invoiceForm: value }),
   }),
   Object.is

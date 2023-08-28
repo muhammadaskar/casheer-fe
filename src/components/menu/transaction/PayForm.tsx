@@ -98,23 +98,7 @@ const PayForm: FC<Props> = ({ total, onClick }) => {
       </div>
       <SheetFooter>
         <SheetClose asChild>
-          <Button
-            // onClick={() => {
-            //   // transactionMutation.mutate()
-            //   setInvoiceForm([
-            //     {
-            //       id: 0,
-            //       name: '',
-            //       price: 0,
-            //       quantity: 0,
-            //       total: 0,
-            //     },
-            //   ]);
-            // }}
-            onClick={onClick}
-          >
-            Save changes
-          </Button>
+          <Button onClick={onClick}>Save changes</Button>
         </SheetClose>
       </SheetFooter>
     </SheetContent>

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from '@/components/ui/button';
@@ -24,10 +26,10 @@ import {
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-import { cn } from '@/lib/utils';
+import { cn, rupiahFormat } from '@/lib/utils';
 import { useInvoiceStore } from '@/store/useInvoiceStore';
 import { useOrderStore } from '@/store/useOrderStore';
-import { Product } from '@/types/product-type';
+import { Invoice, Product } from '@/types/product-type';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
 import {
@@ -89,12 +91,14 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
   );
 
   const saveToTable = useCallback(() => {
-    const existingItem = invoiceForm?.find((item) => item.id === orderForm.id);
+    const existingItem = invoiceForm?.find(
+      (item: Invoice) => item.id === orderForm.id
+    );
     const newData = [...invoiceForm, orderForm];
     const data: any = newData.filter((item) => item.id !== 0);
 
     if (existingItem) {
-      const updateInvoiceItem: any = invoiceForm.map((item) =>
+      const updateInvoiceItem: any = invoiceForm.map((item: Invoice) =>
         item.id === orderForm.id
           ? { ...item, quantity: item.quantity + orderForm.quantity }
           : item
@@ -240,7 +244,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
             name="price"
             type="text"
             placeholder="Rp.500,00-,"
-            value={input.price}
+            value={rupiahFormat(input.price)}
             readOnly
           />
         </div>
@@ -263,7 +267,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
             name="total"
             type="text"
             placeholder="Rp.500,00-,"
-            value={input.price * input.quantity}
+            value={rupiahFormat(input.price * input.quantity)}
             readOnly
           />
         </div>
