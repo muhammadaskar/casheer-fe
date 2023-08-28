@@ -21,6 +21,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { shallow } from 'zustand/shallow';
 import { useInvoiceStore } from '@/store/useInvoiceStore';
 import { useTransactionMutation } from '@/hooks/use-transaction';
+import { toast } from '@/components/ui/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 const TransactionTable = () => {
   const transactionMutation = useTransactionMutation();
@@ -65,13 +67,34 @@ const TransactionTable = () => {
                 0
               )}
               onClick={() => {
-                transactionMutation.mutate({
-                  member_code: '',
-                  transactions: `{${invoiceForm.map(({ id, quantity }) => [
-                    `{${id}`,
-                    `${quantity}}`,
-                  ])}}`,
-                });
+                transactionMutation.mutate(
+                  {
+                    member_code: '',
+                    transactions: `{${invoiceForm.map(({ id, quantity }) => [
+                      `{${id}`,
+                      `${quantity}}`,
+                    ])}}`,
+                  },
+                  {
+                    onSuccess: () => {
+                      toast({
+                        variant: 'default',
+                        description: 'Transaksi berhasil',
+                      });
+                    },
+                    onError: () => {
+                      toast({
+                        variant: 'destructive',
+                        description: 'Transaksi gagal',
+                        action: (
+                          <ToastAction altText="Try again">
+                            Try again
+                          </ToastAction>
+                        ),
+                      });
+                    },
+                  }
+                );
                 setInvoiceForm([
                   {
                     id: 0,

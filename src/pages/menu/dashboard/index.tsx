@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -16,34 +17,10 @@ import {
 import Transaction from '../transaction';
 import Report from '../report';
 import { useState } from 'react';
+import { useItemOutQuery, useSaleQuery } from '@/hooks/use-dashboard';
+import { rupiahFormat } from '@/lib/utils';
+import SkeletonCard from '@/components/skeleton-loader/SkeletonCard';
 // import { useTransactionQuery } from '@/hooks/use-transaction';
-
-const dashboardData = [
-  {
-    title: 'Keuntungan',
-    value: 'Rp.500.000',
-    desc: '1 bulan terakhir',
-    icon: <LineChartIcon className="w-3 h-3 md:w-4 md:h-4" />,
-  },
-  {
-    title: 'Penjualan',
-    value: 'Rp.1.500.000',
-    desc: '1 bulan terakhir',
-    icon: <Wallet className="w-3 h-3 md:w-4 md:h-4" />,
-  },
-  {
-    title: 'Barang keluar',
-    value: '100/pcs',
-    desc: '1 bulan terakhir',
-    icon: <FolderOutputIcon className="w-3 h-3 md:w-4 md:h-4" />,
-  },
-  {
-    title: 'Pegawai',
-    value: '2',
-    desc: 'Kasir',
-    icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
-  },
-];
 
 // type DataType = {
 //   id: number;
@@ -57,6 +34,35 @@ const dashboardData = [
 
 const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
+  const { data: sale, status } = useSaleQuery();
+  const { data: itemOut } = useItemOutQuery();
+
+  const dashboardData = [
+    {
+      title: 'Keuntungan',
+      value: rupiahFormat(sale?.data.amount),
+      desc: '1 bulan terakhir',
+      icon: <LineChartIcon className="w-3 h-3 md:w-4 md:h-4" />,
+    },
+    {
+      title: 'Penjualan',
+      value: rupiahFormat(sale?.data.amount),
+      desc: '1 bulan terakhir',
+      icon: <Wallet className="w-3 h-3 md:w-4 md:h-4" />,
+    },
+    {
+      title: 'Barang keluar',
+      value: `${itemOut?.data.total_quantity}`,
+      desc: '1 bulan terakhir',
+      icon: <FolderOutputIcon className="w-3 h-3 md:w-4 md:h-4" />,
+    },
+    {
+      title: 'Pegawai',
+      value: '2',
+      desc: 'Kasir',
+      icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
+    },
+  ];
   // const { data, status } = useTransactionQuery();
   // const [transaction, setTransaction] = useState([]);
 
@@ -104,15 +110,24 @@ const Dashboard = () => {
 
       <div className="hidden md:flex flex-col space-y-5">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {dashboardData.map((item) => (
-            <OverviewComponent
-              key={item.title}
-              title={item.title}
-              total={item.value}
-              desc={item.desc}
-              icon={item.icon}
-            />
-          ))}
+          {dashboardData.map((item) =>
+            status !== 'loading' ? (
+              <OverviewComponent
+                key={item.title}
+                title={item.title}
+                total={item.value}
+                desc={item.desc}
+                icon={item.icon}
+              />
+            ) : (
+              <SkeletonCard
+                key={item.title}
+                title={item.title}
+                desc={item.desc}
+                icon={item.icon}
+              />
+            )
+          )}
         </div>
         <ChartComponent />
       </div>

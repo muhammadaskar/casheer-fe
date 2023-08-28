@@ -30,7 +30,14 @@ import { useOrderStore } from '@/store/useOrderStore';
 import { Product } from '@/types/product-type';
 
 import { Check, ChevronsUpDown } from 'lucide-react';
-import { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 import { shallow } from 'zustand/shallow';
 
 type OrderProps = {
@@ -81,15 +88,36 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
     }
   );
 
+  const saveToTable = useCallback(() => {
+    const existingItem = invoiceForm?.find((item) => item.id === orderForm.id);
+    const newData = [...invoiceForm, orderForm];
+    const data: any = newData.filter((item) => item.id !== 0);
+
+    if (existingItem) {
+      const updateInvoiceItem: any = invoiceForm.map((item) =>
+        item.id === orderForm.id
+          ? { ...item, quantity: item.quantity + orderForm.quantity }
+          : item
+      );
+      setInvoiceForm(updateInvoiceItem);
+    } else {
+      setInvoiceForm(data);
+    }
+  }, [invoiceForm, setInvoiceForm, orderForm]);
+
   useEffect(() => {
     if (isClicked) {
       setClick(false);
-      const newData = [...invoiceForm, orderForm];
-      const data: any = newData.filter((item) => item.id !== 0);
-
-      return setInvoiceForm(data);
+      saveToTable();
     }
-  }, [isClicked, orderForm, invoiceForm, setClick, setInvoiceForm]);
+  }, [
+    isClicked,
+    orderForm,
+    invoiceForm,
+    setClick,
+    setInvoiceForm,
+    saveToTable,
+  ]);
 
   useEffect(() => {
     if (input.quantity === 0) {

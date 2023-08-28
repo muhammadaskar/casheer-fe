@@ -1,6 +1,6 @@
 import { createWithEqualityFn } from 'zustand/traditional';
 
-interface InvoiceFormValue {
+export interface InvoiceFormValue {
   id: number;
   name: string;
   price: number;
