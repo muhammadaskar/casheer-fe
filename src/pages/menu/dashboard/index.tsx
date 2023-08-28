@@ -15,8 +15,8 @@ import {
 } from 'lucide-react';
 import Transaction from '../transaction';
 import Report from '../report';
-import { useEffect, useState } from 'react';
-import { useTransactionQuery } from '@/hooks/use-transaction';
+import { useState } from 'react';
+// import { useTransactionQuery } from '@/hooks/use-transaction';
 
 const dashboardData = [
   {
@@ -45,41 +45,41 @@ const dashboardData = [
   },
 ];
 
-type DataType = {
-  id: number;
-  member_code: string;
-  transaction_code: string;
-  product_and_quantity: string;
-  total_quantity: number;
-  amount: number;
-  casheer_name: string;
-};
+// type DataType = {
+//   id: number;
+//   member_code: string;
+//   transaction_code: string;
+//   product_and_quantity: string;
+//   total_quantity: number;
+//   amount: number;
+//   casheer_name: string;
+// };
 
 const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
-  const { data, status } = useTransactionQuery();
-  const [transaction, setTransaction] = useState([]);
+  // const { data, status } = useTransactionQuery();
+  // const [transaction, setTransaction] = useState([]);
 
-  const parseToJSON = (str: string) => {
-    try {
-      return JSON.parse(str);
-    } catch (error) {
-      console.error('Error parsing product_and_quantity:', error);
-      return [];
-    }
-  };
+  // const parseToJSON = (str: string) => {
+  //   try {
+  //     return JSON.parse(str);
+  //   } catch (error) {
+  //     console.error('Error parsing product_and_quantity:', error);
+  //     return [];
+  //   }
+  // };
 
-  useEffect(() => {
-    const newData = data?.data.map((item: DataType) => {
-      const parsedProducts = parseToJSON(item.product_and_quantity);
-      return {
-        ...item,
-        product_and_quantity: parsedProducts,
-      };
-    });
+  // useEffect(() => {
+  //   const newData = data?.data.map((item: DataType) => {
+  //     const parsedProducts = parseToJSON(item.product_and_quantity);
+  //     return {
+  //       ...item,
+  //       product_and_quantity: parsedProducts,
+  //     };
+  //   });
 
-    setTransaction(newData);
-  }, [data]);
+  //   setTransaction(newData);
+  // }, [data]);
 
   // console.log(
   //   data?.data.map((item: any) =>
