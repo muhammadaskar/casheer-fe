@@ -16,13 +16,12 @@ import NotFound from '@/pages/NotFound';
 import useDarkMode from '@/hooks/use-darkmode';
 import SettingLayout from '@/components/layout/SettingLayout';
 import Account from '@/pages/settings/account';
-import { useContext } from 'react';
-import { MyContext } from '@/context';
 import Settings from '@/pages/settings';
 import NotificationPage from '@/pages/notification';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
 
 const AppRoutes = () => {
-  const { state } = useContext(MyContext);
+  const { darkMode } = useDarkModeStore();
   const { toggleDarkMode } = useDarkMode();
 
   return (
@@ -30,9 +29,7 @@ const AppRoutes = () => {
       <Route path="/" element={<ProtectedRoute />}>
         <Route
           path="/"
-          element={
-            <LayoutIndex mode={state.darkMode!} toggle={toggleDarkMode} />
-          }
+          element={<LayoutIndex mode={darkMode!} toggle={toggleDarkMode} />}
         >
           {/* Menu */}
           <Route path="/" element={<Dashboard />} />
@@ -55,9 +52,7 @@ const AppRoutes = () => {
         </Route>
         <Route
           path="settings"
-          element={
-            <SettingLayout mode={state.darkMode!} toggle={toggleDarkMode} />
-          }
+          element={<SettingLayout mode={darkMode!} toggle={toggleDarkMode} />}
         >
           <Route path="profile" element={<Profile />} />
           <Route path="account" element={<Account />} />

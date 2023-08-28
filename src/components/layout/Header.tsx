@@ -38,12 +38,15 @@ import {
 } from '../ui/tooltip';
 
 import { Button } from '../ui/button';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { UserType } from '@/types/user-type';
 import { Badge } from '../ui/badge';
 // import useNotification from '@/hooks/use-notification';
 import { useNavigate } from 'react-router-dom';
-import { useNotificationQuery } from '@/hooks/use-notification';
+import {
+  useNotificationMutation,
+  useNotificationQuery,
+} from '@/hooks/use-notification';
 import { NotificationType } from '@/types/notification-type';
 
 type HeaderProps = {
@@ -53,13 +56,24 @@ type HeaderProps = {
 
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const navigate = useNavigate();
-  // const { notification } = useNotification();
   const { data } = useNotificationQuery();
+  const [notifId, setNotifId] = useState(0);
+  const [read, setRead] = useState(true);
+
+  const notificationMutation = useNotificationMutation(notifId);
   const notification: NotificationType[] = data?.data;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
 
   const truncate = (str: string, max: number, len: number) => {
     return str.length > max ? str.substring(0, len) + '...' : str;
+  };
+
+  const notificationRead = () => {
+    if (read == true) {
+      return notificationMutation.mutate({
+        is_read: 0,
+      });
+    }
   };
 
   return (
@@ -83,9 +97,13 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                 >
                   <BellIcon className="h-[1.2rem] w-[1.2rem]" />
 
-                  {notification?.length ? (
+                  {notification?.filter((item) => item.is_read == true)
+                    .length ? (
                     <Badge className=" absolute z-20 bg-red-500 h-5 w-1 text-xs top-[-0.25rem] text-white items-center justify-center left-5 hover:bg-red-500/80">
-                      {notification?.length}
+                      {
+                        notification?.filter((item) => item.is_read == true)
+                          .length
+                      }
                     </Badge>
                   ) : null}
                 </Button>
@@ -95,14 +113,24 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
             <DropdownMenuContent>
               <DropdownMenuLabel>Notification</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {notification?.map((item) => (
-                <DropdownMenuItem
-                  key={item.id}
-                  className="w-56 whitespace-break-spaces"
-                >
-                  <p>{truncate(item.name, 100, 52)}</p>
-                </DropdownMenuItem>
-              ))}
+              {notification
+                ?.sort((a, b) => b.id - a.id)
+                .map((item) => (
+                  <DropdownMenuItem
+                    key={item.id}
+                    onClick={() => {
+                      setNotifId(item.id);
+                      setRead(item.is_read);
+                      notificationRead();
+                      navigate(`notification/${item.id}`, {
+                        state: { notification: item },
+                      });
+                    }}
+                    className="w-56 whitespace-break-spaces"
+                  >
+                    <p>{truncate(item.name, 100, 52)}</p>
+                  </DropdownMenuItem>
+                ))}
             </DropdownMenuContent>
           </DropdownMenu>
 

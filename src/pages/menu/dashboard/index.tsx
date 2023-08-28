@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ChartComponent from '@/components/menu/dashboard/ChartComponent';
 import OverviewComponent from '@/components/menu/dashboard/OverviewComponent';
@@ -12,7 +15,8 @@ import {
 } from 'lucide-react';
 import Transaction from '../transaction';
 import Report from '../report';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTransactionQuery } from '@/hooks/use-transaction';
 
 const dashboardData = [
   {
@@ -41,8 +45,47 @@ const dashboardData = [
   },
 ];
 
+type DataType = {
+  id: number;
+  member_code: string;
+  transaction_code: string;
+  product_and_quantity: string;
+  total_quantity: number;
+  amount: number;
+  casheer_name: string;
+};
+
 const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
+  const { data, status } = useTransactionQuery();
+  const [transaction, setTransaction] = useState([]);
+
+  const parseToJSON = (str: string) => {
+    try {
+      return JSON.parse(str);
+    } catch (error) {
+      console.error('Error parsing product_and_quantity:', error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const newData = data?.data.map((item: DataType) => {
+      const parsedProducts = parseToJSON(item.product_and_quantity);
+      return {
+        ...item,
+        product_and_quantity: parsedProducts,
+      };
+    });
+
+    setTransaction(newData);
+  }, [data]);
+
+  // console.log(
+  //   data?.data.map((item: any) =>
+  //     console.log(JSON.parse(item.product_and_quantity))
+  //   )
+  // );
 
   return (
     <main className="px-2 md:px-5 py-2 md:py-5 space-y-3 md:space-y-5">

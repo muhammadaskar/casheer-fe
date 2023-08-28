@@ -23,19 +23,15 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { MyContext } from '@/context';
+
 import { cn } from '@/lib/utils';
+import { useInvoiceStore } from '@/store/useInvoiceStore';
+import { useOrderStore } from '@/store/useOrderStore';
 import { Product } from '@/types/product-type';
-import { Types } from '@/types/reducer-type';
+
 import { Check, ChevronsUpDown } from 'lucide-react';
-import {
-  ChangeEvent,
-  FC,
-  useContext,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
+import { shallow } from 'zustand/shallow';
 
 type OrderProps = {
   product?: Product[];
@@ -54,6 +50,23 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
   const [openId, setOpenId] = useState(false);
   const [disable, setDisable] = useState(true);
 
+  const { orderForm, setOrderForm, isClicked, setClick } = useOrderStore(
+    (state) => ({
+      orderForm: state.orderForm,
+      setOrderForm: state.setOrderForm,
+      isClicked: state.isClicked,
+      setClick: state.setClick,
+    }),
+    shallow
+  );
+  const { invoiceForm, setInvoiceForm } = useInvoiceStore(
+    (state) => ({
+      invoiceForm: state.invoiceForm,
+      setInvoiceForm: state.setInvoiceForm,
+    }),
+    shallow
+  );
+
   const [input, setInput] = useReducer(
     (current: OrderFormType, update: Partial<OrderFormType>) => ({
       ...current,
@@ -68,7 +81,15 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
     }
   );
 
-  const { dispatch } = useContext(MyContext);
+  useEffect(() => {
+    if (isClicked) {
+      setClick(false);
+      const newData = [...invoiceForm, orderForm];
+      const data: any = newData.filter((item) => item.id !== 0);
+
+      return setInvoiceForm(data);
+    }
+  }, [isClicked, orderForm, invoiceForm, setClick, setInvoiceForm]);
 
   useEffect(() => {
     if (input.quantity === 0) {
@@ -223,18 +244,27 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
         <Button
           className="w-full"
           disabled={disable}
-          onClick={() =>
-            dispatch({
-              type: Types.Order,
-              payload: {
-                id: input.id,
-                product_name: input.name,
-                price: input.price,
-                qty: input.quantity,
-                total: input.price * input.quantity,
-              },
-            })
-          }
+          onClick={() => {
+            // dispatch({
+            //   type: Types.Order,
+            //   payload: {
+            //     id: input.id,
+            //     product_name: input.name,
+            //     price: input.price,
+            //     qty: input.quantity,
+            //     total: input.price * input.quantity,
+            //   },
+            // });
+            setOrderForm({
+              id: input.id,
+              name: input.name,
+              price: input.price,
+              quantity: input.quantity,
+              total: input.price * input.quantity,
+            });
+
+            setClick(true);
+          }}
         >
           Save
         </Button>
