@@ -63,7 +63,7 @@ const Dashboard = () => {
     },
     {
       title: 'Pegawai',
-      value: casheer?.data.length,
+      value: casheer?.data.total_casheer,
       desc: 'Kasir',
       icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
     },

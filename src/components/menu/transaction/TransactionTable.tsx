@@ -101,6 +101,10 @@ const TransactionTable = () => {
       }
     );
     setInvoiceForm([]);
+    setInput({
+      discount: 0,
+      total_pay: 0,
+    });
   }
 
   function deleteInvoiceItem(id: number) {

@@ -52,13 +52,17 @@ export const useAcceptRegistrationMutation = () => {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      await axios.put(baseURL + `user/activate/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      await axios.put(
+        baseURL + `user/activate/${id}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
     },
 
     onSuccess: async (accept) => {
@@ -75,13 +79,17 @@ export const useRejectRegistrationMutation = () => {
 
   return useMutation({
     mutationFn: async (id: number) => {
-      await axios.put(baseURL + `user/reject/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      await axios.put(
+        baseURL + `user/reject/${id}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
     },
 
     onSuccess: async (reject) => {
