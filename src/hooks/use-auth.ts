@@ -37,7 +37,7 @@ const useAuthentication = () => {
         // navigate('/', { replace: true });
         window.location.reload();
       } else {
-        setMessageAuth(result.meta.message);
+        setMessageAuth(result.data.errors);
       }
     } catch (error) {
       console.log(error);

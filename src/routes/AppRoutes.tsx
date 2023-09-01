@@ -19,6 +19,7 @@ import Settings from '@/pages/settings';
 import NotificationPage from '@/pages/notification';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
 import User from '@/pages/management/user';
+import InvoicePage from '@/pages/invoice';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();
@@ -50,6 +51,9 @@ const AppRoutes = () => {
           {/* Settings */}
           <Route path="settings" element={<Settings />} />
         </Route>
+
+        <Route path="invoice" element={<InvoicePage />} />
+
         <Route
           path="settings"
           element={<SettingLayout mode={darkMode!} toggle={toggleDarkMode} />}

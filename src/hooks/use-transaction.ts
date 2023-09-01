@@ -11,13 +11,15 @@ export const useTransactionMutation = () => {
 
   return useMutation({
     mutationFn: async (input: { member_code: string; transactions: any }) => {
-      await axios.post(baseURL + 'transaction', input, {
+      const response = await axios.post(baseURL + 'transaction', input, {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           Authorization: `Bearer ${user.token}`,
         },
       });
+
+      return response.data as BaseType;
     },
 
     onSuccess: async (addTransaction) => {
@@ -44,7 +46,7 @@ const fetchTransactions = async () => {
 };
 
 export const useTransactionQuery = () =>
-  useQuery(['transaction'], fetchTransactions, {
+  useQuery(['transaction-list'], fetchTransactions, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });

@@ -52,6 +52,29 @@ export const useProductQuery = (page: number) =>
     refetchOnWindowFocus: false,
   });
 
+export const useCreateCategoryMutation = () => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (input: { name: string }) => {
+      await axios.post(baseURL + 'category', input, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    },
+
+    onSuccess: async (addCategory) => {
+      await queryClient.invalidateQueries(['category']);
+      queryClient.setQueryData(['category'], addCategory);
+    },
+  });
+};
+
 export const useCreateProductMutation = () => {
   const queryClient = useQueryClient();
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
@@ -171,4 +194,29 @@ export const useSearchProduct = () => {
     fetchSearch,
     searchData,
   };
+};
+
+export const useUpdateQuantityMutation = (id: number) => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (input: { quantity: number }) => {
+      await axios.put(baseURL + `product/quantity/${id}`, input, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(['product']);
+    },
+    onError: (er) => {
+      console.log(er);
+    },
+  });
 };

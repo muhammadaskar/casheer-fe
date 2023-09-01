@@ -171,6 +171,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                               price: item.price,
                               id: item.id,
                             });
+
                             setOpenName(false);
                           }}
                         >
@@ -220,6 +221,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                               price: item.price,
                               id: item.id,
                             });
+
                             setOpenId(false);
                           }}
                         >
@@ -280,16 +282,6 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
           className="w-full"
           disabled={disable}
           onClick={() => {
-            // dispatch({
-            //   type: Types.Order,
-            //   payload: {
-            //     id: input.id,
-            //     product_name: input.name,
-            //     price: input.price,
-            //     qty: input.quantity,
-            //     total: input.price * input.quantity,
-            //   },
-            // });
             setOrderForm({
               id: input.id,
               name: input.name,

@@ -7,6 +7,7 @@ export interface Product {
   id: number;
   name: string;
   price: number;
+  quantity: number;
 }
 
 export interface CombineInvoice {
@@ -23,3 +24,23 @@ export interface Invoice {
   quantity: number;
   total: number;
 }
+
+export type TransactionType = {
+  id: number;
+  member_code: string;
+  transaction_code: string;
+  product_and_quantity: string;
+  total_quantity: number;
+  amount: number;
+  casheer_name: string;
+};
+
+export type TransactionParseType = {
+  id: number;
+  member_code: string;
+  transaction_code: string;
+  product_and_quantity: [];
+  total_quantity: number;
+  amount: number;
+  casheer_name: string;
+};

@@ -38,6 +38,7 @@ import { Input } from '@/components/ui/input';
 import { Invoice } from '@/types/product-type';
 import { numericValue, rupiahFormat } from '@/lib/utils';
 import { XIcon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type PayInput = {
   member_code: string;
@@ -50,6 +51,7 @@ type PayInput = {
 const TransactionTable = () => {
   const transactionMutation = useTransactionMutation();
   const [disable, setDisable] = useState(true);
+  const navigate = useNavigate();
   const [input, setInput] = useReducer(
     (current: PayInput, update: Partial<PayInput>) => ({
       ...current,
@@ -75,6 +77,29 @@ const TransactionTable = () => {
     0
   );
 
+  useEffect(() => {
+    if (transactionMutation.isSuccess) {
+      toast({
+        variant: 'default',
+        description: 'Transaksi berhasil',
+        action: (
+          <ToastAction
+            altText="Check Invoice"
+            onClick={() =>
+              navigate('/invoice', {
+                state: {
+                  data: transactionMutation.data?.data,
+                },
+              })
+            }
+          >
+            Cek Invoice
+          </ToastAction>
+        ),
+      });
+    }
+  }, [transactionMutation.isSuccess, navigate, transactionMutation.data?.data]);
+
   function submitTransaction() {
     transactionMutation.mutate(
       {
@@ -85,16 +110,12 @@ const TransactionTable = () => {
         ])}}`,
       },
       {
-        onSuccess: () => {
-          toast({
-            variant: 'default',
-            description: 'Transaksi berhasil',
-          });
-        },
-        onError: () => {
+        onError: (error: any) => {
+          const message = JSON.parse(error?.response?.request.response);
+
           toast({
             variant: 'destructive',
-            description: 'Transaksi gagal',
+            description: message?.data.errors,
             action: <ToastAction altText="Try again">Try again</ToastAction>,
           });
         },
@@ -102,10 +123,13 @@ const TransactionTable = () => {
     );
     setInvoiceForm([]);
     setInput({
+      member_code: '',
       discount: 0,
       total_pay: 0,
     });
   }
+
+  console.log(transactionMutation.isSuccess);
 
   function deleteInvoiceItem(id: number) {
     const updatedItems = invoiceForm.filter((item: Invoice) => item.id !== id);

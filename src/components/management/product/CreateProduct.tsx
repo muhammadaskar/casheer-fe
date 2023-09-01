@@ -11,6 +11,7 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -31,8 +32,9 @@ import {
 import { useCategoryQuery } from '@/hooks/use-order';
 import { useCreateProductMutation } from '@/hooks/use-product';
 import { cn, numericValue, rupiahFormat } from '@/lib/utils';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown, PlusIcon } from 'lucide-react';
 import React, { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
+import AddCategory from './AddCategory';
 
 type Props = {
   children: React.ReactNode;
@@ -47,7 +49,7 @@ type InputCreateProduct = {
 };
 
 const CreateProduct: FC<Props> = ({ children }) => {
-  const [valueCategory, setValueCategory] = useState('');
+  const [valueCategory, setValueCategory] = useState(0);
   const [openCategory, setOpenCategory] = useState(false);
 
   const { data: category } = useCategoryQuery();
@@ -91,64 +93,73 @@ const CreateProduct: FC<Props> = ({ children }) => {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label className="text-right" htmlFor="productCategory">
-            Kategori
-          </Label>
-          <Popover open={openCategory} onOpenChange={setOpenCategory}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={openCategory}
-                className="col-span-3 flex justify-start"
-              >
-                {valueCategory
-                  ? category?.data?.find(
-                      (item: any) => item.name === valueCategory
-                    )?.name
-                  : 'Kategori'}
-
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="col-span-3">
-              <Command>
-                <CommandInput placeholder="Kategori" />
-                <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
-                <CommandGroup>
-                  {category?.data?.map((item: any) => (
-                    <CommandItem
-                      key={item.id}
-                      onSelect={(currentValue: any) => {
-                        setValueCategory(
-                          currentValue === valueCategory ? '' : currentValue
-                        );
-                        setInput({
-                          category_id: item.id,
-                        });
-
-                        setOpenCategory(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4',
-                          valueCategory === item.name
-                            ? 'opacity-100'
-                            : 'opacity-0'
-                        )}
-                      />
-                      {item.name}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </Command>
-            </PopoverContent>
-          </Popover>
-        </div>
-
         <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right" htmlFor="productCategory">
+              Kategori
+            </Label>
+            <Popover open={openCategory} onOpenChange={setOpenCategory}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={openCategory}
+                  className="col-span-2 flex justify-start"
+                >
+                  {valueCategory
+                    ? category?.data?.find(
+                        (item: any) => item.id === valueCategory
+                      )?.name
+                    : 'Kategori'}
+
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="col-span-2">
+                <Command>
+                  <CommandInput placeholder="Kategori" />
+                  <CommandEmpty>Kategori tidak ditemukan.</CommandEmpty>
+                  <CommandGroup>
+                    {category?.data?.map((item: any) => (
+                      <CommandItem
+                        key={item.id}
+                        onSelect={() => {
+                          setValueCategory(
+                            item.id === valueCategory ? '' : item.id
+                          );
+                          setInput({
+                            category_id: item.id,
+                          });
+
+                          setOpenCategory(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            valueCategory === item.id
+                              ? 'opacity-100'
+                              : 'opacity-0'
+                          )}
+                        />
+                        {item.name}
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
+            <div className="grid">
+              <AddCategory>
+                <Button variant="outline" className="w-full">
+                  <PlusIcon className="h-4 w-4" />
+                  <span className="pl-2 hidden md:block">Tambah Kategori</span>
+                </Button>
+              </AddCategory>
+            </div>
+          </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Nama Produk

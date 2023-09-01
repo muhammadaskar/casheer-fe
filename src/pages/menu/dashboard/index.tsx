@@ -68,35 +68,6 @@ const Dashboard = () => {
       icon: <UserIcon className="w-3 h-3 md:h-4 md:w-4" />,
     },
   ];
-  // const { data, status } = useTransactionQuery();
-  // const [transaction, setTransaction] = useState([]);
-
-  // const parseToJSON = (str: string) => {
-  //   try {
-  //     return JSON.parse(str);
-  //   } catch (error) {
-  //     console.error('Error parsing product_and_quantity:', error);
-  //     return [];
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const newData = data?.data.map((item: DataType) => {
-  //     const parsedProducts = parseToJSON(item.product_and_quantity);
-  //     return {
-  //       ...item,
-  //       product_and_quantity: parsedProducts,
-  //     };
-  //   });
-
-  //   setTransaction(newData);
-  // }, [data]);
-
-  // console.log(
-  //   data?.data.map((item: any) =>
-  //     console.log(JSON.parse(item.product_and_quantity))
-  //   )
-  // );
 
   return (
     <main className="px-2 md:px-5 py-2 md:py-5 space-y-3 md:space-y-5">

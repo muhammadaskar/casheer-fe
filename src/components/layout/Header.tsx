@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   BellIcon,
   Cloud,
@@ -49,6 +50,7 @@ import {
 } from '@/hooks/use-notification';
 import { NotificationType } from '@/types/notification-type';
 import { ScrollArea } from '../ui/scroll-area';
+import { useCasheerInfoQuery } from '@/hooks/use-casheer';
 
 type HeaderProps = {
   mode: string | null;
@@ -58,6 +60,7 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const navigate = useNavigate();
   const { data } = useNotificationQuery();
+  const { data: storeInfo } = useCasheerInfoQuery();
   const [notifId, setNotifId] = useState(0);
   const [read, setRead] = useState(true);
 
@@ -84,7 +87,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
           className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
           onClick={() => navigate('/')}
         >
-          Casher App
+          {storeInfo?.data.Name}
         </h1>
 
         <div className="flex space-x-3">
