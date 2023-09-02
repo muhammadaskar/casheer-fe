@@ -32,10 +32,11 @@ export const useRegistration = () => {
       });
 
       const result = await response.json();
-      console.log(response.status);
       setResponseStatus(response.status);
       if (response.status >= 200 && response.status < 300) {
         setMessage(result.meta.message);
+      } else {
+        setMessage(result.data.errors);
       }
     } catch (error: any) {
       setMessage(error);

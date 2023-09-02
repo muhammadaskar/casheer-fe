@@ -54,15 +54,10 @@ const Customize = () => {
             <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
               Right click here
             </ContextMenuTrigger>
-
+            <Input type="file" id="picture" />
             <ContextMenuContent className="w-64">
-              <ContextMenuItem inset>
-                <Input
-                  type="file"
-                  id="picture"
-                  className="border-0 text-white"
-                />
-              </ContextMenuItem>
+              <ContextMenuItem inset>Upload image...</ContextMenuItem>
+              <Input type="file" id="picture" />
             </ContextMenuContent>
           </ContextMenu>
         </div>
