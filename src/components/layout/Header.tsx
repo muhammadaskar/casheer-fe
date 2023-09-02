@@ -83,12 +83,19 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   return (
     <div className="fixed w-full bg-background z-50">
       <div className="border-b border-t flex justify-between items-center px-3 py-1 top-0">
-        <h1
-          className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
-          onClick={() => navigate('/')}
-        >
-          {storeInfo?.data.Name}
-        </h1>
+        <div className="flex items-center space-x-2">
+          <img
+            className="h-6 w-6"
+            src={storeInfo?.data.Image}
+            alt="Casheer APP"
+          />
+          <h1
+            className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
+            onClick={() => navigate('/')}
+          >
+            {storeInfo?.data.Name}
+          </h1>
+        </div>
 
         <div className="flex space-x-3">
           <DropdownMenu>

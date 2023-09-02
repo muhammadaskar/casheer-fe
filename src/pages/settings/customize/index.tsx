@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Button } from '@/components/ui/button';
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from '@/components/ui/context-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -40,6 +46,25 @@ const Customize = () => {
           <p className="text-sm text-muted-foreground">
             This is your app name. It can be your real name or a pseudonym.
           </p>
+        </div>
+
+        <div className="space-y-2">
+          <Label>App Icon</Label>
+          <ContextMenu>
+            <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
+              Right click here
+            </ContextMenuTrigger>
+
+            <ContextMenuContent className="w-64">
+              <ContextMenuItem inset>
+                <Input
+                  type="file"
+                  id="picture"
+                  className="border-0 text-white"
+                />
+              </ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
         </div>
 
         <RadioGroup

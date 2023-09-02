@@ -48,7 +48,7 @@ export const fetchProduct = async (page: number) => {
 
 export const useProductQuery = (page: number) =>
   useQuery(['product', page], () => fetchProduct(page), {
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
 
