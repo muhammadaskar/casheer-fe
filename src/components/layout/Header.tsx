@@ -51,6 +51,7 @@ import {
 import { NotificationType } from '@/types/notification-type';
 import { ScrollArea } from '../ui/scroll-area';
 import { useCasheerInfoQuery } from '@/hooks/use-casheer';
+import { Skeleton } from '../ui/skeleton';
 
 type HeaderProps = {
   mode: string | null;
@@ -60,7 +61,7 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const navigate = useNavigate();
   const { data } = useNotificationQuery();
-  const { data: storeInfo } = useCasheerInfoQuery();
+  const { data: storeInfo, status } = useCasheerInfoQuery();
   const [notifId, setNotifId] = useState(0);
   const [read, setRead] = useState(true);
 
@@ -83,19 +84,26 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   return (
     <div className="fixed w-full bg-background z-50">
       <div className="border-b border-t flex justify-between items-center px-3 py-1 top-0">
-        <div className="flex items-center space-x-2">
-          <img
-            className="h-6 w-6"
-            src={storeInfo?.data.Image}
-            alt="Casheer APP"
-          />
-          <h1
-            className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
-            onClick={() => navigate('/')}
-          >
-            {storeInfo?.data.Name}
-          </h1>
-        </div>
+        {status !== 'loading' ? (
+          <div className="flex items-center space-x-2">
+            <img
+              className="h-6 w-6"
+              src={storeInfo?.data.Image}
+              alt="Casheer APP"
+            />
+            <h1
+              className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
+              onClick={() => navigate('/')}
+            >
+              {storeInfo?.data.Name}
+            </h1>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-2">
+            <Skeleton className="h-8 w-8 rounded-full" />
+            <Skeleton className="h-4 w-[100px]" />
+          </div>
+        )}
 
         <div className="flex space-x-3">
           <DropdownMenu>

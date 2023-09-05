@@ -1,26 +1,80 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Button } from '@/components/ui/button';
 import {
   ContextMenu,
   ContextMenuContent,
-  ContextMenuItem,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
+import { useCasheerMutation } from '@/hooks/use-casheer';
 import useDarkMode from '@/hooks/use-darkmode';
 import useDeviceCheck from '@/hooks/use-devicechek';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
-import { useEffect } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
+type CustomizeInputType = {
+  name: string;
+  image: string;
+};
+
 const Customize = () => {
+  const [isImage, setImage] = useState<string>();
+  const imageInput = useRef<HTMLInputElement | null>(null);
+  const [input, setInput] = useReducer(
+    (current: CustomizeInputType, update: Partial<CustomizeInputType>) => ({
+      ...current,
+      ...update,
+    }),
+    {
+      name: '',
+      image: '',
+    }
+  );
   const { darkMode } = useDarkModeStore();
   const { toggleDarkMode } = useDarkMode();
+  const storeInfoMutation = useCasheerMutation();
   const mobile = useDeviceCheck();
   const navigate = useNavigate();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    convertToBase64(selectedFile);
+    if (selectedFile) {
+      setImage(selectedFile.name);
+    }
+  };
+
+  const convertToBase64 = (file: any) => {
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Data = reader.result as string;
+        const getBase64 = base64Data.split('base64,')[1];
+
+        setInput({
+          image: getBase64,
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    storeInfoMutation.mutate(input);
+  };
 
   useEffect(() => {
     if (mobile) {
@@ -39,10 +93,19 @@ const Customize = () => {
         </p>
       </div>
       <Separator className="hidden md:block" />
-      <form className="space-y-8">
+      <form className="space-y-8" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <Label>App name</Label>
-          <Input type="text" name="appname" placeholder="Casher App" />
+          <Input
+            type="text"
+            name="appname"
+            placeholder="Casher App"
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInput({
+                name: e.target.value,
+              })
+            }
+          />
           <p className="text-sm text-muted-foreground">
             This is your app name. It can be your real name or a pseudonym.
           </p>
@@ -52,12 +115,57 @@ const Customize = () => {
           <Label>App Icon</Label>
           <ContextMenu>
             <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
-              Right click here
+              {isImage === undefined ? (
+                <>
+                  <p className="hidden md:block">Right click here</p>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    onClick={() => imageInput.current?.click()}
+                    className="block md:hidden"
+                  >
+                    Upload image...
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <p className="hidden md:block">{isImage}</p>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    onClick={() => imageInput.current?.click()}
+                    className="block md:hidden"
+                  >
+                    {isImage}
+                  </Button>
+                </>
+              )}
+
+              <Input
+                type="file"
+                ref={imageInput}
+                onChange={handleFileChange}
+                className="flex md:hidden"
+                style={{ display: 'none' }}
+                id="picture"
+              />
             </ContextMenuTrigger>
-            <Input type="file" id="picture" />
+
             <ContextMenuContent className="w-64">
-              <ContextMenuItem inset>Upload image...</ContextMenuItem>
-              <Input type="file" id="picture" />
+              <div
+                className="relative flex cursor-default hover:bg-accent select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 space-x-2"
+                onClick={() => imageInput.current?.click()}
+              >
+                Upload image...
+              </div>
+              <Input
+                type="file"
+                ref={imageInput}
+                onChange={handleFileChange}
+                className="hidden md:flex"
+                style={{ display: 'none' }}
+                id="picture"
+              />
             </ContextMenuContent>
           </ContextMenu>
         </div>

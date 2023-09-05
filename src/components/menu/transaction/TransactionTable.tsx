@@ -51,6 +51,7 @@ type PayInput = {
 const TransactionTable = () => {
   const transactionMutation = useTransactionMutation();
   const [disable, setDisable] = useState(true);
+  const [invoice, setInvoice] = useState<any>([]);
   const navigate = useNavigate();
   const [input, setInput] = useReducer(
     (current: PayInput, update: Partial<PayInput>) => ({
@@ -88,7 +89,8 @@ const TransactionTable = () => {
             onClick={() =>
               navigate('/invoice', {
                 state: {
-                  data: transactionMutation.data?.data,
+                  data: invoice,
+                  amount: transactionMutation?.data?.data,
                 },
               })
             }
@@ -98,7 +100,12 @@ const TransactionTable = () => {
         ),
       });
     }
-  }, [transactionMutation.isSuccess, navigate, transactionMutation.data?.data]);
+  }, [
+    transactionMutation.isSuccess,
+    navigate,
+    transactionMutation.data?.data,
+    invoice,
+  ]);
 
   function submitTransaction() {
     transactionMutation.mutate(
@@ -121,6 +128,7 @@ const TransactionTable = () => {
         },
       }
     );
+    setInvoice(invoiceForm);
     setInvoiceForm([]);
     setInput({
       member_code: '',
@@ -128,8 +136,6 @@ const TransactionTable = () => {
       total_pay: 0,
     });
   }
-
-  console.log(transactionMutation.isSuccess);
 
   function deleteInvoiceItem(id: number) {
     const updatedItems = invoiceForm.filter((item: Invoice) => item.id !== id);

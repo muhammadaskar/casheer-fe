@@ -3,6 +3,7 @@ import {
   TableBody,
   TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -12,29 +13,21 @@ import { rupiahFormat } from '@/lib/utils';
 import { useLocation } from 'react-router-dom';
 
 type InvoiceListType = {
-  ID: number;
-  MemberCode: string;
-  TransactionCode: string;
-  Transactions: string;
-  TotalQuantity: number;
-  Amount: number;
-  UserID: number;
-  CreatedAt: string;
-  UpdatedAt: string;
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  total: number;
 };
 
-type ItemListType = {
-  product_id: string;
-  product_name: string;
-  quantity: string;
+type AmountType = {
+  Amount: number;
 };
 
 const InvoicePage = () => {
-  const { data } = useLocation().state;
-  const invoiceList: InvoiceListType = data;
-  const itemList: [ItemListType] = JSON.parse(invoiceList.Transactions);
-
-  console.log(invoiceList);
+  const { data, amount } = useLocation().state;
+  const invoiceList: [InvoiceListType] = data;
+  const amountPrice: AmountType = amount;
 
   return (
     <Table>
@@ -44,21 +37,32 @@ const InvoicePage = () => {
           <TableHead className="w-[100px]">Invoice</TableHead>
           <TableHead>Nama Barang</TableHead>
           <TableHead>Jumlah</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead>Harga</TableHead>
+          <TableHead className="text-right">Total</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {itemList?.map((item) => (
-          <TableRow key={item.product_id}>
-            <TableCell className="font-medium">{item.product_id}</TableCell>
-            <TableCell>{item.product_name}</TableCell>
+        {invoiceList?.map((item) => (
+          <TableRow key={item.id}>
+            <TableCell className="font-medium">{item.id}</TableCell>
+            <TableCell>{item.name}</TableCell>
             <TableCell>{item.quantity}</TableCell>
+            <TableCell>{rupiahFormat(item.price)}</TableCell>
             <TableCell className="text-right">
-              {rupiahFormat(invoiceList.Amount)}
+              {rupiahFormat(item.total)}
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
+      <TableFooter>
+        <TableCell>Amount</TableCell>
+        <TableCell></TableCell>
+        <TableCell></TableCell>
+        <TableCell></TableCell>
+        <TableCell className="text-right">
+          {rupiahFormat(amountPrice?.Amount)}
+        </TableCell>
+      </TableFooter>
     </Table>
   );
 };

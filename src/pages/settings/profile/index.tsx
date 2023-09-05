@@ -62,7 +62,10 @@ const Profile = () => {
           <Label>Profile picture</Label>
           <ContextMenu>
             <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
-              Right click here
+              <p className="hidden md:block">Right click here</p>
+              <Button variant="ghost" type="button" className="block md:hidden">
+                Upload image...
+              </Button>
             </ContextMenuTrigger>
             <ContextMenuContent className="w-64">
               <ContextMenuItem inset>

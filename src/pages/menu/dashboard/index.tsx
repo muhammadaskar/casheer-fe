@@ -24,17 +24,7 @@ import {
 } from '@/hooks/use-dashboard';
 import { rupiahFormat } from '@/lib/utils';
 import SkeletonCard from '@/components/skeleton-loader/SkeletonCard';
-// import { useTransactionQuery } from '@/hooks/use-transaction';
 
-// type DataType = {
-//   id: number;
-//   member_code: string;
-//   transaction_code: string;
-//   product_and_quantity: string;
-//   total_quantity: number;
-//   amount: number;
-//   casheer_name: string;
-// };
 
 const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
