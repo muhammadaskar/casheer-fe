@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { toast } from '@/components/ui/use-toast';
 import { UserType } from '@/types/user-type';
 import { Navigate, Outlet } from 'react-router-dom';
 
