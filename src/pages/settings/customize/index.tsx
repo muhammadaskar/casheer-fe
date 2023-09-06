@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
+import { toast } from '@/components/ui/use-toast';
 import { useCasheerMutation } from '@/hooks/use-casheer';
 import useDarkMode from '@/hooks/use-darkmode';
 import useDeviceCheck from '@/hooks/use-devicechek';
@@ -73,7 +74,15 @@ const Customize = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    storeInfoMutation.mutate(input);
+    storeInfoMutation.mutate(input, {
+      onSuccess: () => {
+        toast({
+          variant: 'default',
+          description: 'Change appearance success',
+        });
+        setTimeout(() => window.location.reload(), 1000);
+      },
+    });
   };
 
   useEffect(() => {
@@ -168,6 +177,9 @@ const Customize = () => {
               />
             </ContextMenuContent>
           </ContextMenu>
+          <p className="text-sm text-muted-foreground">
+            The icon/logo png only.
+          </p>
         </div>
 
         <RadioGroup

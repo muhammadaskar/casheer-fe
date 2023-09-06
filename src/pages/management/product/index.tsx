@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -21,7 +24,6 @@ const Product = () => {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
   const { status, data, isPreviousData } = useProductQuery(page);
-
   const [query, setQuery] = useState('');
   const { fetchSearch, searchData } = useSearchProduct();
 

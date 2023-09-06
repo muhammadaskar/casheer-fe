@@ -85,16 +85,16 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
     <div className="fixed w-full bg-background z-50">
       <div className="border-b border-t flex justify-between items-center px-3 py-1 top-0">
         {status !== 'loading' ? (
-          <div className="flex items-center space-x-2">
+          <div
+            className="flex items-center space-x-2 hover:cursor-pointer"
+            onClick={() => navigate('/')}
+          >
             <img
               className="h-6 w-6"
               src={storeInfo?.data.Image}
               alt="Casheer APP"
             />
-            <h1
-              className="font-semibold text-lg tracking-tighter hover:cursor-pointer"
-              onClick={() => navigate('/')}
-            >
+            <h1 className="font-semibold text-lg tracking-tighter ">
               {storeInfo?.data.Name}
             </h1>
           </div>
