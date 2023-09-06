@@ -11,6 +11,7 @@ import {
 } from '@/hooks/use-product';
 import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 const Stock = () => {
   const [page, setPage] = useState(1);
@@ -33,42 +34,47 @@ const Stock = () => {
   }, [data, isPreviousData, page, queryClient]);
 
   return (
-    <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
-      <h1 className="hidden md:block font-semibold tracking-tight text-2xl">
-        Stock
-      </h1>
-      <p className="hidden text-sm md:block text-muted-foreground">
-        Lorem ipsum dolor amet.
-      </p>
-      <Separator className="my-4 hidden md:block" />
-      {query ? (
-        <StockTable
-          columns={columns}
-          data={searchData?.data.products}
-          status={status}
-          onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-          disableNext={isPreviousData || data?.data.is_last_page}
-          onPrev={() => setPage((old) => Math.max(old - 1, 0))}
-          disablePrev={page === 1}
-          onSearch={(e: ChangeEvent<HTMLInputElement>) =>
-            setQuery(e.target.value)
-          }
-        />
-      ) : (
-        <StockTable
-          columns={columns}
-          data={data?.data.products}
-          status={status}
-          onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-          disableNext={isPreviousData || data?.data.is_last_page}
-          onPrev={() => setPage((old) => Math.max(old - 1, 0))}
-          disablePrev={page === 1}
-          onSearch={(e: ChangeEvent<HTMLInputElement>) =>
-            setQuery(e.target.value)
-          }
-        />
-      )}
-    </main>
+    <>
+      <Helmet>
+        <title>Stok</title>
+      </Helmet>
+      <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
+        <h1 className="hidden md:block font-semibold tracking-tight text-2xl">
+          Stock
+        </h1>
+        <p className="hidden text-sm md:block text-muted-foreground">
+          Lorem ipsum dolor amet.
+        </p>
+        <Separator className="my-4 hidden md:block" />
+        {query ? (
+          <StockTable
+            columns={columns}
+            data={searchData?.data.products}
+            status={status}
+            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+            disableNext={isPreviousData || data?.data.is_last_page}
+            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+            disablePrev={page === 1}
+            onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+              setQuery(e.target.value)
+            }
+          />
+        ) : (
+          <StockTable
+            columns={columns}
+            data={data?.data.products}
+            status={status}
+            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+            disableNext={isPreviousData || data?.data.is_last_page}
+            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+            disablePrev={page === 1}
+            onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+              setQuery(e.target.value)
+            }
+          />
+        )}
+      </main>
+    </>
   );
 };
 

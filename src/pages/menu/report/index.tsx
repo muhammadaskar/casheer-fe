@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 import { useTransactionQuery } from '@/hooks/use-transaction';
 import { TransactionType } from '@/types/product-type';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 const Report = () => {
   const { data, status } = useTransactionQuery();
@@ -40,18 +41,24 @@ const Report = () => {
   }, [data, status]);
 
   return (
-    <main className="px-2 md:px-5 py-2 md:py-5 space-y-3 md:space-y-5">
-      <div className="hidden md:block">
-        <h1 className="font-semibold tracking-tight text-2xl">
-          Pelaporan & Analisis
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          This is your transaction page 🤑
-        </p>
-      </div>
-      <Separator className="my-4 hidden md:block" />
-      <ReportTable data={transaction} columns={columns} />
-    </main>
+    <>
+      <Helmet>
+        <title>Laporan</title>
+      </Helmet>
+
+      <main className="px-2 md:px-5 py-2 md:py-5 space-y-3 md:space-y-5">
+        <div className="hidden md:block">
+          <h1 className="font-semibold tracking-tight text-2xl">
+            Pelaporan & Analisis
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            This is your transaction page 🤑
+          </p>
+        </div>
+        <Separator className="my-4 hidden md:block" />
+        <ReportTable data={transaction} columns={columns} />
+      </main>
+    </>
   );
 };
 

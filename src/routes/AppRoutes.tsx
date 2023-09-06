@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import LayoutIndex from '@/components/layout';
 import Customer from '@/pages/management/customer';
 import Product from '@/pages/management/product';
