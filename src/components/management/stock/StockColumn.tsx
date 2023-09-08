@@ -20,7 +20,7 @@ export const columns: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant={'ghost'}
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           No
@@ -37,7 +37,7 @@ export const columns: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant="ghost"
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nama
@@ -53,7 +53,7 @@ export const columns: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant="ghost"
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Qty
@@ -108,7 +108,7 @@ export const stockColumnMobile: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant="ghost"
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nama
@@ -124,7 +124,7 @@ export const stockColumnMobile: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant="ghost"
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Qty

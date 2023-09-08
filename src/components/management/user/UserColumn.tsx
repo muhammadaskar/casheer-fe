@@ -19,7 +19,7 @@ export const columns: ColumnDef<UserDataType>[] = [
       return (
         <Button
           variant={'ghost'}
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           No
@@ -53,7 +53,7 @@ export const userColumnMobile: ColumnDef<UserDataType>[] = [
       return (
         <Button
           variant={'ghost'}
-          className="text-xs sm:text-base"
+          className="text-xs sm:text-sm"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           No

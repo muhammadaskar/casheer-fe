@@ -56,8 +56,8 @@ export const reportColumnMobile: ColumnDef<TransactionParseType>[] = [
   },
 
   {
-    accessorKey: 'member_code',
-    header: 'Member',
+    accessorKey: 'transaction_code',
+    header: 'Kode Transaksi',
   },
 
   {

@@ -155,7 +155,7 @@ const TransactionTable = () => {
         <ScrollArea className="space-y-2 h-[86%] overflow-hidden">
           <CardContent>
             <Table className="w-full">
-              <TableHeader className="text-xs sm:text-base">
+              <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Qty</TableHead>
@@ -166,7 +166,7 @@ const TransactionTable = () => {
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="w-full h-fit text-xs sm:text-base">
+              <TableBody className="w-full h-fit text-xs sm:text-sm">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
                     <TableCell>{invoices.name}</TableCell>

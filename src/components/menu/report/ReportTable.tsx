@@ -74,9 +74,9 @@ export default function ReportTable<TData, TValue>({
       />
       <div className="rounded-md border">
         <Table>
-          <TableHeader className="text-xs sm:text-base">
+          <TableHeader className="text-xs sm:text-sm">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="text-xs sm:text-base">
+              <TableRow key={headerGroup.id} className="text-xs sm:text-sm">
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -97,7 +97,7 @@ export default function ReportTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  className="text-xs sm:text-base"
+                  className="text-xs sm:text-sm"
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (

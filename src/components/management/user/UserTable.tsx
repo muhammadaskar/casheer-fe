@@ -74,7 +74,7 @@ export function UserTable<TData, TValue>({
 
       <div className="rounded-md border">
         <Table>
-          <TableHeader className="text-xs sm:text-base">
+          <TableHeader className="text-xs sm:text-sm">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -92,7 +92,7 @@ export function UserTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="text-xs sm:text-base">
+          <TableBody className="text-xs sm:text-sm">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
