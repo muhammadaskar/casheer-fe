@@ -90,7 +90,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
             onClick={() => navigate('/')}
           >
             <img
-              className="h-6 w-6"
+              className="h-6 w-auto"
               src={storeInfo?.data.Image}
               alt="Casheer APP"
             />
