@@ -83,7 +83,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
 
   return (
     <div className="fixed w-full bg-background z-50">
-      <div className="border-b border-t flex justify-between items-center px-3 py-1 top-0">
+      <div className="border-b border-t flex justify-between items-center px-5 py-1 top-0">
         {status !== 'loading' ? (
           <div
             className="flex items-center space-x-2 hover:cursor-pointer"

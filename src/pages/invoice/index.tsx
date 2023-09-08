@@ -43,8 +43,15 @@ const InvoicePage = () => {
       </Helmet>
 
       {/* <div>{status !== 'loading' ? <h1>{storeInfo?.data.Name}</h1> : ''}</div> */}
-      <div className="px-2">
-        <h1 className="text-xl font-semibold">{storeInfo?.data.Name}</h1>
+      <div className="flex items-center space-x-2 hover:cursor-pointer">
+        <img
+          className="h-6 w-auto"
+          src={storeInfo?.data.Image}
+          alt="Casheer APP"
+        />
+        <h1 className="font-semibold text-lg tracking-tighter ">
+          {storeInfo?.data.Name}
+        </h1>
         {/* <p className="">{Date(amountPrice?.UpdatedAt)}</p> */}
       </div>
 
