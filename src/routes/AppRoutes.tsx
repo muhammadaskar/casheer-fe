@@ -19,8 +19,9 @@ import Account from '@/pages/settings/account';
 import Settings from '@/pages/settings';
 import NotificationPage from '@/pages/notification';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
-import User from '@/pages/management/user';
+
 import InvoicePage from '@/pages/invoice';
+import User from '@/pages/management/user';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();

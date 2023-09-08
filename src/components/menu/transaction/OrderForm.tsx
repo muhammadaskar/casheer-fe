@@ -162,28 +162,32 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
                   <ScrollArea className="h-52">
                     <CommandGroup>
-                      {product?.map((item) => (
-                        <CommandItem
-                          key={item.id}
-                          onSelect={() => {
-                            setInput({
-                              name: item.name,
-                              price: item.price,
-                              id: item.id,
-                            });
+                      {product
+                        ?.filter((item) => item.quantity !== 0)
+                        .map((item) => (
+                          <CommandItem
+                            key={item.id}
+                            onSelect={() => {
+                              setInput({
+                                name: item.name,
+                                price: item.price,
+                                id: item.id,
+                              });
 
-                            setOpenName(false);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              input.id === item.id ? 'opacity-100' : 'opacity-0'
-                            )}
-                          />
-                          {item.name}
-                        </CommandItem>
-                      ))}
+                              setOpenName(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                input.id === item.id
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            {item.name}
+                          </CommandItem>
+                        ))}
                     </CommandGroup>
                   </ScrollArea>
                 </Command>

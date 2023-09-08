@@ -24,7 +24,7 @@ export const fetchAllProduct = async () => {
 
 export const useAllProductQuery = () =>
   useQuery(['product'], fetchAllProduct, {
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
 
