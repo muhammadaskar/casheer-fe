@@ -36,3 +36,32 @@ export const columns: ColumnDef<TransactionParseType>[] = [
     header: 'Kode Transaksi',
   },
 ];
+
+export const reportColumnMobile: ColumnDef<TransactionParseType>[] = [
+  {
+    accessorKey: 'id',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant={'ghost'}
+          className="text-xs sm:text-base"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          No
+          <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    enableHiding: false,
+  },
+
+  {
+    accessorKey: 'member_code',
+    header: 'Member',
+  },
+
+  {
+    accessorKey: 'casheer_name',
+    header: 'Kasir',
+  },
+];

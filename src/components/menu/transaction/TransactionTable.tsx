@@ -155,21 +155,25 @@ const TransactionTable = () => {
         <ScrollArea className="space-y-2 h-[86%] overflow-hidden">
           <CardContent>
             <Table className="w-full">
-              <TableHeader>
+              <TableHeader className="text-xs sm:text-base">
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Qty</TableHead>
-                  <TableHead>Price</TableHead>
+                  <TableHead className="hidden sm:flex sm:items-center">
+                    Price
+                  </TableHead>
                   <TableHead>Total</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="w-full h-fit">
+              <TableBody className="w-full h-fit text-xs sm:text-base">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
                     <TableCell>{invoices.name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
-                    <TableCell>{rupiahFormat(invoices.price)}</TableCell>
+                    <TableCell className="hidden sm:flex sm:items-center">
+                      {rupiahFormat(invoices.price)}
+                    </TableCell>
                     <TableCell>{rupiahFormat(invoices.total)}</TableCell>
                     <TableCell>
                       <Button

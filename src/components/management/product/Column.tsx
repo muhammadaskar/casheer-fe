@@ -126,6 +126,7 @@ export const columnMobile: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant={'ghost'}
+          className="text-xs sm:text-base"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           No
@@ -142,6 +143,7 @@ export const columnMobile: ColumnDef<ProductData>[] = [
       return (
         <Button
           variant="ghost"
+          className="text-xs sm:text-base"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Nama

@@ -148,7 +148,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openName}
-                  className="w-full justify-between "
+                  className="w-full justify-between text-xs sm:text-base"
                 >
                   {input.name
                     ? product?.find((item) => item.id === input.id)?.name
@@ -156,7 +156,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-36 md:w-72 lg:w-72 p-0">
+              <PopoverContent className="w-36 md:w-72 lg:w-72 p-0 ">
                 <Command>
                   <CommandInput placeholder="Cari produk..." />
                   <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
@@ -167,6 +167,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                         .map((item) => (
                           <CommandItem
                             key={item.id}
+                            className="text-xs sm:text-base"
                             onSelect={() => {
                               setInput({
                                 name: item.name,
@@ -202,7 +203,7 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                   variant="outline"
                   role="combobox"
                   aria-expanded={openId}
-                  className="w-36 md:w-[12.5rem] justify-between "
+                  className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-base"
                 >
                   {input.id
                     ? product?.find((item) => item.id === input.id)?.id
@@ -216,28 +217,33 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
                   <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
                   <ScrollArea className="h-52">
                     <CommandGroup>
-                      {product?.map((item) => (
-                        <CommandItem
-                          key={item.id}
-                          onSelect={() => {
-                            setInput({
-                              name: item.name,
-                              price: item.price,
-                              id: item.id,
-                            });
+                      {product
+                        ?.filter((item) => item.quantity !== 0)
+                        .map((item) => (
+                          <CommandItem
+                            key={item.id}
+                            className="text-xs sm:text-base"
+                            onSelect={() => {
+                              setInput({
+                                name: item.name,
+                                price: item.price,
+                                id: item.id,
+                              });
 
-                            setOpenId(false);
-                          }}
-                        >
-                          <Check
-                            className={cn(
-                              'mr-2 h-4 w-4',
-                              input.id === item.id ? 'opacity-100' : 'opacity-0'
-                            )}
-                          />
-                          {item.id}
-                        </CommandItem>
-                      ))}
+                              setOpenId(false);
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                'mr-2 h-4 w-4',
+                                input.id === item.id
+                                  ? 'opacity-100'
+                                  : 'opacity-0'
+                              )}
+                            />
+                            {item.id}
+                          </CommandItem>
+                        ))}
                     </CommandGroup>
                   </ScrollArea>
                 </Command>

@@ -59,7 +59,7 @@ export function UserTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4 space-x-5">
+      <div className="flex items-center justify-between py-3 space-x-2">
         <Input
           placeholder="Filter username..."
           value={
@@ -74,7 +74,7 @@ export function UserTable<TData, TValue>({
 
       <div className="rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-xs sm:text-base">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -92,7 +92,7 @@ export function UserTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-xs sm:text-base">
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

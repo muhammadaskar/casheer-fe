@@ -17,7 +17,7 @@ const Customer = () => {
         <title>Customer</title>
       </Helmet>
 
-      <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
+      <main className="px-2 md:px-5 mx-auto md:py-5 space-y-3">
         <h1 className="hidden md:block font-semibold tracking-tight text-2xl">
           Customer
         </h1>

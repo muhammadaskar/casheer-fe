@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { columns } from '@/components/management/stock/StockColumn';
+import {
+  columns,
+  stockColumnMobile,
+} from '@/components/management/stock/StockColumn';
 import { StockTable } from '@/components/management/stock/StockTable';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -38,7 +41,7 @@ const Stock = () => {
       <Helmet>
         <title>Stok</title>
       </Helmet>
-      <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
+      <main className="px-2 md:px-5 mx-auto md:py-5 space-y-3">
         <h1 className="hidden md:block font-semibold tracking-tight text-2xl">
           Stock
         </h1>
@@ -46,33 +49,65 @@ const Stock = () => {
           Lorem ipsum dolor amet.
         </p>
         <Separator className="my-4 hidden md:block" />
-        {query ? (
-          <StockTable
-            columns={columns}
-            data={searchData?.data.products}
-            status={status}
-            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-            disableNext={isPreviousData || data?.data.is_last_page}
-            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
-            disablePrev={page === 1}
-            onSearch={(e: ChangeEvent<HTMLInputElement>) =>
-              setQuery(e.target.value)
-            }
-          />
-        ) : (
-          <StockTable
-            columns={columns}
-            data={data?.data.products}
-            status={status}
-            onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
-            disableNext={isPreviousData || data?.data.is_last_page}
-            onPrev={() => setPage((old) => Math.max(old - 1, 0))}
-            disablePrev={page === 1}
-            onSearch={(e: ChangeEvent<HTMLInputElement>) =>
-              setQuery(e.target.value)
-            }
-          />
-        )}
+        <div className="hidden sm:block">
+          {query ? (
+            <StockTable
+              columns={columns}
+              data={searchData?.data.products}
+              status={status}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData || data?.data.is_last_page}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+            />
+          ) : (
+            <StockTable
+              columns={columns}
+              data={data?.data.products}
+              status={status}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData || data?.data.is_last_page}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+            />
+          )}
+        </div>
+
+        <div className="block sm:hidden">
+          {query ? (
+            <StockTable
+              columns={stockColumnMobile}
+              data={searchData?.data.products}
+              status={status}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData || data?.data.is_last_page}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+            />
+          ) : (
+            <StockTable
+              columns={stockColumnMobile}
+              data={data?.data.products}
+              status={status}
+              onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
+              disableNext={isPreviousData || data?.data.is_last_page}
+              onPrev={() => setPage((old) => Math.max(old - 1, 0))}
+              disablePrev={page === 1}
+              onSearch={(e: ChangeEvent<HTMLInputElement>) =>
+                setQuery(e.target.value)
+              }
+            />
+          )}
+        </div>
       </main>
     </>
   );

@@ -69,7 +69,7 @@ export function StockTable<TData, TValue>({
       <div className="rounded-md border">
         {status !== 'loading' ? (
           <Table>
-            <TableHeader>
+            <TableHeader className="text-xs sm:text-base">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
@@ -87,7 +87,7 @@ export function StockTable<TData, TValue>({
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody className="text-xs sm:text-base">
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow

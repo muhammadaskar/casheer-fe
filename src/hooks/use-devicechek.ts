@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 const useDeviceCheck = () => {
-  const [mobile, setMobile] = useState(window.innerWidth <= 500);
+  const [mobile, setMobile] = useState(window.innerWidth <= 639);
 
   const handleWindowSizeChange = () => {
-    setMobile(window.innerWidth <= 500);
+    setMobile(window.innerWidth <= 639);
   };
 
   useEffect(() => {

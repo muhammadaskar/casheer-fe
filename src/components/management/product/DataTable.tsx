@@ -93,7 +93,10 @@ export function DataTable<TData, TValue>({
         <div className="flex space-x-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
+              <Button
+                variant="outline"
+                className="ml-auto text-xs sm:text-base"
+              >
                 Columns <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -105,7 +108,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
-                      className="capitalize"
+                      className="capitalize text-xs sm:text-base"
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)
@@ -138,7 +141,10 @@ export function DataTable<TData, TValue>({
             <Table>
               <TableHeader>
                 {table?.getHeaderGroups()?.map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
+                  <TableRow
+                    key={headerGroup.id}
+                    className="text-xs sm:text-base"
+                  >
                     {headerGroup?.headers?.map((header) => {
                       return (
                         <TableHead key={header.id}>
@@ -154,7 +160,7 @@ export function DataTable<TData, TValue>({
                   </TableRow>
                 ))}
               </TableHeader>
-              <TableBody>
+              <TableBody className="text-xs sm:text-base">
                 {table?.getRowModel()?.rows?.length ? (
                   table.getRowModel().rows?.map((row) => (
                     <TableRow

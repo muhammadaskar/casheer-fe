@@ -100,14 +100,14 @@ const Customize = () => {
       </Helmet>
 
       <main className="space-y-6">
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <h3 className="text-lg font-medium">Customize</h3>
           <p className="text-sm text-muted-foreground">
             Customize the appearance of the app. Automatically switch between
             day and night themes.
           </p>
         </div>
-        <Separator className="hidden md:block" />
+        <Separator className="hidden sm:block" />
         <form className="space-y-8" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label>App name</Label>
@@ -132,24 +132,24 @@ const Customize = () => {
               <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
                 {isImage === undefined ? (
                   <>
-                    <p className="hidden md:block">Right click here</p>
+                    <p className="hidden sm:block">Right click here</p>
                     <Button
                       variant="ghost"
                       type="button"
                       onClick={() => imageInput.current?.click()}
-                      className="block md:hidden"
+                      className="block sm:hidden"
                     >
                       Upload image...
                     </Button>
                   </>
                 ) : (
                   <>
-                    <p className="hidden md:block">{isImage}</p>
+                    <p className="hidden sm:block">{isImage}</p>
                     <Button
                       variant="ghost"
                       type="button"
                       onClick={() => imageInput.current?.click()}
-                      className="block md:hidden"
+                      className="block sm:hidden"
                     >
                       {isImage}
                     </Button>
@@ -160,7 +160,7 @@ const Customize = () => {
                   type="file"
                   ref={imageInput}
                   onChange={handleFileChange}
-                  className="flex md:hidden"
+                  className="flex sm:hidden"
                   style={{ display: 'none' }}
                   id="picture"
                 />
@@ -177,7 +177,7 @@ const Customize = () => {
                   type="file"
                   ref={imageInput}
                   onChange={handleFileChange}
-                  className="hidden md:flex"
+                  className="hidden sm:flex"
                   style={{ display: 'none' }}
                   id="picture"
                 />

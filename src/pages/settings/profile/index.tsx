@@ -39,13 +39,13 @@ const Profile = () => {
         <title>Profile</title>
       </Helmet>
       <main className="space-y-6">
-        <div className="hidden md:block">
+        <div className="hidden sm:block">
           <h3 className="text-lg font-medium">Profile</h3>
           <p className="text-sm text-muted-foreground">
             This is how others will see you on the site.
           </p>
         </div>
-        <Separator className="hidden md:block" />
+        <Separator className="hidden sm:block" />
         <form className="space-y-8">
           <div className="space-y-2">
             <Label>Username</Label>
@@ -67,11 +67,11 @@ const Profile = () => {
             <Label>Profile picture</Label>
             <ContextMenu>
               <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm">
-                <p className="hidden md:block">Right click here</p>
+                <p className="hidden sm:block">Right click here</p>
                 <Button
                   variant="ghost"
                   type="button"
-                  className="block md:hidden"
+                  className="block sm:hidden"
                 >
                   Upload image...
                 </Button>

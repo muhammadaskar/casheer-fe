@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   BellIcon,
-  Cloud,
-  Github,
-  LifeBuoy,
   LogOut,
   Mail,
   MessageSquare,
   Moon,
-  Plus,
   PlusCircle,
   Settings,
   Sun,
@@ -208,7 +204,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                      <DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('user')}>
                         <Users className="mr-2 h-4 w-4" />
                         <span>Team</span>
                       </DropdownMenuItem>
@@ -235,25 +231,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                           </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
-                      <DropdownMenuItem>
-                        <Plus className="mr-2 h-4 w-4" />
-                        <span>New Team</span>
-                        <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                      </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Github className="mr-2 h-4 w-4" />
-                      <span>GitHub</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <LifeBuoy className="mr-2 h-4 w-4" />
-                      <span>Support</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem disabled>
-                      <Cloud className="mr-2 h-4 w-4" />
-                      <span>API</span>
-                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       className=" cursor-pointer"

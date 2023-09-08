@@ -3,8 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import { columns } from '@/components/menu/report/ReportColumn';
+import {
+  columns,
+  reportColumnMobile,
+} from '@/components/menu/report/ReportColumn';
 import ReportTable from '@/components/menu/report/ReportTable';
+import SkeletonTable from '@/components/skeleton-loader/SkeletonTable';
 import { Separator } from '@/components/ui/separator';
 import { useTransactionQuery } from '@/hooks/use-transaction';
 import { TransactionType } from '@/types/product-type';
@@ -56,7 +60,21 @@ const Report = () => {
           </p>
         </div>
         <Separator className="my-4 hidden md:block" />
-        <ReportTable data={transaction} columns={columns} />
+        <div className="hidden sm:block space-y-3">
+          {status !== 'loading' ? (
+            <ReportTable data={transaction} columns={columns} />
+          ) : (
+            <SkeletonTable />
+          )}
+        </div>
+
+        <div className="block space-y-3 sm:hidden">
+          {status !== 'loading' ? (
+            <ReportTable data={transaction} columns={reportColumnMobile} />
+          ) : (
+            <SkeletonTable />
+          )}
+        </div>
       </main>
     </>
   );

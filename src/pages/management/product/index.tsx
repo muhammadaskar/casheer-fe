@@ -46,11 +46,11 @@ const Product = () => {
       <Helmet>
         <title>Produk</title>
       </Helmet>
-      <main className="px-2 md:px-5 mx-auto py-2 md:py-5 space-y-3">
-        <h1 className="hidden md:block font-semibold tracking-tight text-2xl">
+      <main className="px-2 sm:px-5 mx-auto sm:py-5 space-y-3">
+        <h1 className="hidden sm:block font-semibold tracking-tight text-2xl">
           Product
         </h1>
-        <h1 className="font-semibold tracking-tight text-2xl block md:hidden">
+        <h1 className="font-semibold tracking-tight text-2xl block sm:hidden">
           {value.charAt(0).toUpperCase() + value.slice(1)}
         </h1>
         <p className="text-sm text-muted-foreground">Lorem ipsum dolor amet.</p>

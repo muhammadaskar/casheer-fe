@@ -25,12 +25,12 @@ const SettingLayout: FC<LayoutProps> = ({ mode, toggle }) => {
   return (
     <>
       <Header mode={mode} toggle={toggle} />
-      <div className="hidden space-y-6 px-10 py-16 md:block">
+      <div className="hidden space-y-6 px-10 py-16 sm:block">
         <div className="space-y-0.5">
-          <h1 className="hidden font-semibold tracking-tight text-2xl md:block">
+          <h1 className="hidden font-semibold tracking-tight text-2xl sm:block">
             Settings
           </h1>
-          <p className="text-sm text-muted-foreground hidden md:block">
+          <p className="text-sm text-muted-foreground hidden sm:block">
             Manage your account settings and set e-mail preferences.
           </p>
         </div>
