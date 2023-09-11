@@ -1,5 +1,5 @@
 # Gunakan node:alpine sebagai base image
-FROM node:alpine
+FROM node:latest
 
 # Set working directory di dalam container
 WORKDIR /app
