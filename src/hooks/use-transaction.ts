@@ -54,7 +54,7 @@ export const useTransactionQuery = () =>
 const fetchTransactionsThisYear = async () => {
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
   const user: UserType = JSON.parse(localStorage.getItem('user') || '');
-  const response = await axios.get(baseURL + 'transaction/this-year', {
+  const response = await axios.get(baseURL + 'transaction/count/this-year', {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import SkeletonForm from '@/components/skeleton-loader/SkeletonForm';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -25,7 +26,6 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
 import { cn, numericValue, rupiahFormat } from '@/lib/utils';
 import { useInvoiceStore } from '@/store/useInvoiceStore';
 import { useOrderStore } from '@/store/useOrderStore';
@@ -44,6 +44,7 @@ import { shallow } from 'zustand/shallow';
 
 type OrderProps = {
   product?: Product[];
+  status: string;
 };
 
 type OrderFormType = {
@@ -54,7 +55,7 @@ type OrderFormType = {
   total: number;
 };
 
-const OrderForm: FC<OrderProps> = ({ product }) => {
+const OrderForm: FC<OrderProps> = ({ product, status }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
   const [disable, setDisable] = useState(true);
@@ -139,153 +140,158 @@ const OrderForm: FC<OrderProps> = ({ product }) => {
         <hr />
       </CardHeader>
       <CardContent className="flex flex-col space-y-3">
-        <div className="flex flex-row space-x-2">
-          <div className="flex flex-col space-y-2 w-full">
-            <Label htmlFor="productName">Nama produk</Label>
-            <Popover open={openName} onOpenChange={setOpenName}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={openName}
-                  className="w-full justify-between text-xs sm:text-base"
-                >
-                  {input.name
-                    ? product?.find((item) => item.id === input.id)?.name
-                    : 'Cari produk...'}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-36 md:w-72 lg:w-72 p-0 ">
-                <Command>
-                  <CommandInput placeholder="Cari produk..." />
-                  <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
-                  <ScrollArea className="h-52">
-                    <CommandGroup>
-                      {product
-                        ?.filter((item) => item.quantity !== 0)
-                        .map((item) => (
-                          <CommandItem
-                            key={item.id}
-                            className="text-xs sm:text-base"
-                            onSelect={() => {
-                              setInput({
-                                name: item.name,
-                                price: item.price,
-                                id: item.id,
-                              });
+        {status !== 'loading' ? (
+          <>
+            <div className="flex flex-row space-x-2">
+              <div className="flex flex-col space-y-2 w-full">
+                <Label htmlFor="productName">Nama produk</Label>
+                <Popover open={openName} onOpenChange={setOpenName}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openName}
+                      className="w-full justify-between text-xs sm:text-base"
+                    >
+                      {input.name
+                        ? product?.find((item) => item.id === input.id)?.name
+                        : 'Cari produk...'}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-36 md:w-72 lg:w-72 p-0 ">
+                    <Command>
+                      <CommandInput placeholder="Cari produk..." />
+                      <CommandEmpty>Produk tidak ditemukan.</CommandEmpty>
+                      <ScrollArea className="h-52">
+                        <CommandGroup>
+                          {product
+                            ?.filter((item) => item.quantity !== 0)
+                            .map((item) => (
+                              <CommandItem
+                                key={item.id}
+                                className="text-xs sm:text-base"
+                                onSelect={() => {
+                                  setInput({
+                                    name: item.name,
+                                    price: item.price,
+                                    id: item.id,
+                                  });
 
-                              setOpenName(false);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                'mr-2 h-4 w-4',
-                                input.id === item.id
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                            {item.name}
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                  </ScrollArea>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="productId">ID</Label>
-            <Popover open={openId} onOpenChange={setOpenId}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={openId}
-                  className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-base"
-                >
-                  {input.id
-                    ? product?.find((item) => item.id === input.id)?.id
-                    : 'Cari ID...'}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-32 md:w-60 lg:w-[12.5rem] p-0">
-                <Command>
-                  <CommandInput placeholder="Cari ID..." />
-                  <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
-                  <ScrollArea className="h-52">
-                    <CommandGroup>
-                      {product
-                        ?.filter((item) => item.quantity !== 0)
-                        .map((item) => (
-                          <CommandItem
-                            key={item.id}
-                            className="text-xs sm:text-base"
-                            onSelect={() => {
-                              setInput({
-                                name: item.name,
-                                price: item.price,
-                                id: item.id,
-                              });
+                                  setOpenName(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    input.id === item.id
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
+                                  )}
+                                />
+                                {item.name}
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      </ScrollArea>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="flex flex-col space-y-2">
+                <Label htmlFor="productId">ID</Label>
+                <Popover open={openId} onOpenChange={setOpenId}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={openId}
+                      className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-base"
+                    >
+                      {input.id
+                        ? product?.find((item) => item.id === input.id)?.id
+                        : 'Cari ID...'}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-32 md:w-60 lg:w-[12.5rem] p-0">
+                    <Command>
+                      <CommandInput placeholder="Cari ID..." />
+                      <CommandEmpty>ID tidak ditemukan.</CommandEmpty>
+                      <ScrollArea className="h-52">
+                        <CommandGroup>
+                          {product
+                            ?.filter((item) => item.quantity !== 0)
+                            .map((item) => (
+                              <CommandItem
+                                key={item.id}
+                                className="text-xs sm:text-base"
+                                onSelect={() => {
+                                  setInput({
+                                    name: item.name,
+                                    price: item.price,
+                                    id: item.id,
+                                  });
 
-                              setOpenId(false);
-                            }}
-                          >
-                            <Check
-                              className={cn(
-                                'mr-2 h-4 w-4',
-                                input.id === item.id
-                                  ? 'opacity-100'
-                                  : 'opacity-0'
-                              )}
-                            />
-                            {item.id}
-                          </CommandItem>
-                        ))}
-                    </CommandGroup>
-                  </ScrollArea>
-                </Command>
-              </PopoverContent>
-            </Popover>
-          </div>
-        </div>
-
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="price">Harga</Label>
-          <Input
-            name="price"
-            type="text"
-            placeholder="Rp.500,00-,"
-            value={rupiahFormat(input.price)}
-            readOnly
-          />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="pcs">Jumlah</Label>
-          <Input
-            name="qty"
-            type="text"
-            placeholder="1 Pcs"
-            value={input.quantity}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setInput({
-                quantity: Number(numericValue(e.target.value)),
-              });
-            }}
-          />
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="total">Total</Label>
-          <Input
-            name="total"
-            type="text"
-            placeholder="Rp.500,00-,"
-            value={rupiahFormat(input.price * input.quantity)}
-            readOnly
-          />
-        </div>
+                                  setOpenId(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    input.id === item.id
+                                      ? 'opacity-100'
+                                      : 'opacity-0'
+                                  )}
+                                />
+                                {item.id}
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      </ScrollArea>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="price">Harga</Label>
+              <Input
+                name="price"
+                type="text"
+                placeholder="Rp.500,00-,"
+                value={rupiahFormat(input.price)}
+                readOnly
+              />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="pcs">Jumlah</Label>
+              <Input
+                name="qty"
+                type="text"
+                placeholder="1 Pcs"
+                value={input.quantity}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setInput({
+                    quantity: Number(numericValue(e.target.value)),
+                  });
+                }}
+              />
+            </div>
+            <div className="flex flex-col space-y-2">
+              <Label htmlFor="total">Total</Label>
+              <Input
+                name="total"
+                type="text"
+                placeholder="Rp.500,00-,"
+                value={rupiahFormat(input.price * input.quantity)}
+                readOnly
+              />
+            </div>
+          </>
+        ) : (
+          <SkeletonForm />
+        )}
       </CardContent>
       <CardFooter>
         <Button

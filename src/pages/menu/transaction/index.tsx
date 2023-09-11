@@ -23,11 +23,8 @@ const Transaction = () => {
         <Separator className="my-4 hidden md:block" />
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="flex flex-col space-y-8">
-            {status !== 'loading' ? (
-              <OrderForm product={product?.data} />
-            ) : (
-              <div>Loading...</div>
-            )}
+            <OrderForm product={product?.data} status={status} />
+
             {/* <PayForm /> */}
           </div>
           <TransactionTable />
