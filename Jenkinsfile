@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Pull Repositories') {
             steps {
-                echo 'Hello, World Koding!'
+                echo 'Pull Repo'
             }
         }
         
