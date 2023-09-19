@@ -151,7 +151,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       variant="outline"
                       role="combobox"
                       aria-expanded={openName}
-                      className="w-full justify-between text-xs sm:text-base"
+                      className="w-full justify-between text-xs sm:text-sm"
                     >
                       {input.name
                         ? product?.find((item) => item.id === input.id)?.name
@@ -170,7 +170,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                             .map((item) => (
                               <CommandItem
                                 key={item.id}
-                                className="text-xs sm:text-base"
+                                className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
                                     name: item.name,
@@ -206,7 +206,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       variant="outline"
                       role="combobox"
                       aria-expanded={openId}
-                      className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-base"
+                      className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-sm"
                     >
                       {input.id
                         ? product?.find((item) => item.id === input.id)?.id
@@ -225,7 +225,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                             .map((item) => (
                               <CommandItem
                                 key={item.id}
-                                className="text-xs sm:text-base"
+                                className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
                                     name: item.name,

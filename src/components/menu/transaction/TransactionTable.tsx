@@ -154,14 +154,13 @@ const TransactionTable = () => {
       <Sheet>
         <ScrollArea className="space-y-2 h-[86%] overflow-hidden">
           <CardContent>
-            <Table className="w-full">
+            {/* Desktop */}
+            <Table className="hidden sm:block w-full">
               <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Qty</TableHead>
-                  <TableHead className="hidden sm:flex sm:items-center">
-                    Price
-                  </TableHead>
+                  <TableHead>Price</TableHead>
                   <TableHead>Total</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
@@ -171,9 +170,42 @@ const TransactionTable = () => {
                   <TableRow key={invoices.id}>
                     <TableCell>{invoices.name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
-                    <TableCell className="hidden sm:flex sm:items-center">
-                      {rupiahFormat(invoices.price)}
+                    <TableCell>{rupiahFormat(invoices.price)}</TableCell>
+                    <TableCell>{rupiahFormat(invoices.total)}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant={'ghost'}
+                        onClick={() => deleteInvoiceItem(invoices.id)}
+                      >
+                        <XIcon className="h-4 w-4 text-red-500" />
+                      </Button>
                     </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {/* Mobile */}
+            <Table className="block sm:hidden w-full">
+              <TableHeader className="text-xs sm:text-sm">
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Qty</TableHead>
+                  {/* <TableHead className="hidden sm:flex sm:items-center">
+                    Price
+                  </TableHead> */}
+                  <TableHead>Total</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody className="w-full h-fit text-xs sm:text-sm">
+                {invoiceForm.map((invoices: Invoice) => (
+                  <TableRow key={invoices.id}>
+                    <TableCell>{invoices.name}</TableCell>
+                    <TableCell>{invoices.quantity}</TableCell>
+                    {/* <TableCell className="hidden sm:grid sm:items-center">
+                      {rupiahFormat(invoices.price)}
+                    </TableCell> */}
                     <TableCell>{rupiahFormat(invoices.total)}</TableCell>
                     <TableCell>
                       <Button
