@@ -67,8 +67,8 @@ export const useAcceptRegistrationMutation = () => {
     },
 
     onSuccess: async (accept) => {
-      await queryClient.invalidateQueries(['registration']);
-      queryClient.setQueryData(['registration'], accept);
+      await queryClient.invalidateQueries(['unprocess-users']);
+      queryClient.setQueryData(['unprocess-users'], accept);
     },
   });
 };
@@ -94,8 +94,8 @@ export const useRejectRegistrationMutation = () => {
     },
 
     onSuccess: async (reject) => {
-      await queryClient.invalidateQueries(['registration']);
-      queryClient.setQueryData(['registration'], reject);
+      await queryClient.invalidateQueries(['unprocess-users']);
+      queryClient.setQueryData(['unprocess-users'], reject);
     },
   });
 };

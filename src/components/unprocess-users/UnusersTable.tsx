@@ -26,7 +26,7 @@ interface UserTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function UserTable<TData, TValue>({
+export function UnprocessUserTable<TData, TValue>({
   columns,
   data,
 }: UserTableProps<TData, TValue>) {

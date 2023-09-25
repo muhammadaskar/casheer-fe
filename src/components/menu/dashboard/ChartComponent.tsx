@@ -4,6 +4,7 @@
 import SkeletonTable from '@/components/skeleton-loader/SkeletonTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTransactionThisYearQuery } from '@/hooks/use-transaction';
+import { rupiahFormat } from '@/lib/utils';
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from 'recharts';
 
 const ChartComponent = () => {
@@ -27,10 +28,11 @@ const ChartComponent = () => {
               />
               <YAxis
                 stroke="#888888"
-                fontSize={12}
+                fontSize={8}
                 tickLine={false}
                 axisLine={false}
-                // tickFormatter={(value): any => `${rupiahFormat(value)}.000`}
+                // tickCount={5}
+                tickFormatter={(value): any => `${rupiahFormat(value)}.000.000`}
               />
               <Bar dataKey="count" fill="#adfa1d" radius={[4, 4, 0, 0]} />
             </BarChart>

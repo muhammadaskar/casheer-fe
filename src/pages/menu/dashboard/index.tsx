@@ -120,7 +120,7 @@ const Dashboard = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
-            <div className="flex md:hidden flex-col space-y-5">
+            <div className="flex md:hidden flex-col space-y-5 mt-7">
               <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
                 {dashboardData.map((item) => (
                   <OverviewComponent

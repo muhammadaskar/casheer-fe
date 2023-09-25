@@ -215,7 +215,9 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                           <DropdownMenuSubContent>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => navigate('unprocess-users')}
+                            >
                               <Mail className="mr-2 h-4 w-4" />
                               <span>Email</span>
                             </DropdownMenuItem>

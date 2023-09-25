@@ -17,14 +17,48 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { toast } from '@/components/ui/use-toast';
 import useDeviceCheck from '@/hooks/use-devicechek';
-import { useEffect } from 'react';
+import { useUserProfileMutation } from '@/hooks/use-user';
+import { UserType } from '@/types/user-type';
+import { ChangeEvent, FormEvent, useEffect, useReducer } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
+
+type ProfileInputType = {
+  name: string;
+  email: string;
+};
 
 const Profile = () => {
   const mobile = useDeviceCheck();
   const navigate = useNavigate();
+  const [input, setInput] = useReducer(
+    (current: ProfileInputType, update: Partial<ProfileInputType>) => ({
+      ...current,
+      ...update,
+    }),
+    {
+      name: '',
+      email: '',
+    }
+  );
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+  const profileUpdate = useUserProfileMutation();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    profileUpdate.mutate(input, {
+      onSuccess: () => {
+        toast({
+          variant: 'default',
+          description: 'Update profile success',
+        });
+        setTimeout(() => window.location.reload(), 1000);
+      },
+    });
+  };
 
   useEffect(() => {
     if (mobile) {
@@ -46,10 +80,19 @@ const Profile = () => {
           </p>
         </div>
         <Separator className="hidden sm:block" />
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
           <div className="space-y-2">
-            <Label>Username</Label>
-            <Input type="text" name="username" placeholder="casherapp" />
+            <Label>Your Name</Label>
+            <Input
+              type="text"
+              name="Name"
+              placeholder={user.name}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setInput({
+                  name: event.target.value,
+                })
+              }
+            />
             <p className="text-sm text-muted-foreground">
               This is your public display name. It can be your real name or a
               pseudonym. You can only change this once every 30 days.
@@ -57,7 +100,16 @@ const Profile = () => {
           </div>
           <div className="space-y-2">
             <Label>Email</Label>
-            <Input type="email" name="email" placeholder="casherapp@mail.com" />
+            <Input
+              type="email"
+              name="email"
+              placeholder={user.email}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setInput({
+                  email: event.target.value,
+                })
+              }
+            />
             <p className="text-sm text-muted-foreground">
               You can manage verified email addresses in your email settings.
             </p>

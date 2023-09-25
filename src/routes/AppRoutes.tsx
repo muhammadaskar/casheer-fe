@@ -22,6 +22,7 @@ import { useDarkModeStore } from '@/store/useDarkModeStore';
 
 import InvoicePage from '@/pages/invoice';
 import User from '@/pages/management/user';
+import UnrpocessUser from '@/pages/unprocess-users';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();
@@ -51,6 +52,7 @@ const AppRoutes = () => {
           <Route path="user" element={<User />} />
 
           {/* Settings */}
+          <Route path="unprocess-users" element={<UnrpocessUser />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 
