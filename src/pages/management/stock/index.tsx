@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-floating-promises */
@@ -53,7 +55,9 @@ const Stock = () => {
           {query ? (
             <StockTable
               columns={columns}
-              data={searchData?.data.products}
+              data={searchData?.data.products.filter(
+                (item: any) => item.is_deleted === 1
+              )}
               status={status}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
               disableNext={isPreviousData || data?.data.is_last_page}
@@ -66,7 +70,9 @@ const Stock = () => {
           ) : (
             <StockTable
               columns={columns}
-              data={data?.data.products}
+              data={data?.data.products.filter(
+                (item: any) => item.is_deleted === 1
+              )}
               status={status}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
               disableNext={isPreviousData || data?.data.is_last_page}

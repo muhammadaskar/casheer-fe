@@ -47,7 +47,11 @@ const Dashboard = () => {
     },
     {
       title: 'Barang keluar',
-      value: `${itemOut?.data.total_quantity}`,
+      value: `${
+        itemOut?.data.total_quantity === undefined
+          ? 0
+          : itemOut?.data.total_quantity
+      }`,
       desc: '1 bulan terakhir',
       icon: <FolderOutputIcon className="w-3 h-3 md:w-4 md:h-4" />,
     },

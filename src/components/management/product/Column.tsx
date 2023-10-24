@@ -21,6 +21,7 @@ import DeleteProduct from './DeleteProduct';
 export type ProductData = {
   id: number;
   category_id: number;
+  code: string;
   name: string;
   category: string;
   price: number;
@@ -99,6 +100,7 @@ export const columns: ColumnDef<ProductData>[] = [
                 id={product.id}
                 category={product.category}
                 category_id={product.category_id}
+                product_code={product.code}
                 name={product.name}
                 price={product.price}
                 qty={product.quantity}
@@ -187,6 +189,7 @@ export const columnMobile: ColumnDef<ProductData>[] = [
                 id={product.id}
                 category={product.category}
                 category_id={product.category_id}
+                product_code={product.code}
                 name={product.name}
                 price={product.price}
                 qty={product.quantity}

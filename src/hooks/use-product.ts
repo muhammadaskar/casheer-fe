@@ -84,6 +84,7 @@ export const useCreateProductMutation = () => {
     mutationFn: async (input: {
       category_id: number;
       name: string;
+      product_code: string;
       price: number;
       quantity: number;
       description: string;
@@ -112,6 +113,7 @@ export const useUpdateProductMutation = (id: number) => {
   return useMutation({
     mutationFn: async (input: {
       category_id: number;
+      product_code: string;
       name: string;
       price: number;
       quantity: number;
@@ -119,6 +121,7 @@ export const useUpdateProductMutation = (id: number) => {
     }) => {
       const sendData = {
         category_id: input.category_id,
+        product_code: input.product_code,
         name: input.name,
         price: input.price,
         quantity: input.quantity,

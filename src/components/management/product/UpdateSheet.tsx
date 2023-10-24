@@ -25,6 +25,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
+import { ToastAction } from '@/components/ui/toast';
+import { toast } from '@/components/ui/use-toast';
 import { useCategoryQuery } from '@/hooks/use-order';
 import { useUpdateProductMutation } from '@/hooks/use-product';
 import { cn } from '@/lib/utils';
@@ -34,6 +36,7 @@ import { ChangeEvent, FC, useReducer, useState } from 'react';
 type Props = {
   id: number;
   category_id: number;
+  product_code: string;
   category: string;
   name: string;
   price: number;
@@ -43,6 +46,7 @@ type Props = {
 
 type InputType = {
   category_id: number;
+  product_code: string;
   name: string;
   price: number;
   quantity: number;
@@ -52,6 +56,7 @@ type InputType = {
 const UpdateSheet: FC<Props> = ({
   id,
   category_id,
+  product_code,
   name,
   price,
   qty,
@@ -65,6 +70,7 @@ const UpdateSheet: FC<Props> = ({
     }),
     {
       category_id: category_id,
+      product_code: product_code,
       name: name,
       price: price,
       quantity: qty,
@@ -143,6 +149,23 @@ const UpdateSheet: FC<Props> = ({
         </div>
 
         <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="product-code" className="text-right">
+            Kode Produk
+          </Label>
+          <Input
+            id="product-code"
+            name="product-code"
+            defaultValue={input.product_code}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setInput({
+                product_code: e.target.value,
+              })
+            }
+            className="col-span-3"
+          />
+        </div>
+
+        <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="name" className="text-right">
             Name
           </Label>
@@ -209,7 +232,29 @@ const UpdateSheet: FC<Props> = ({
       </div>
       <SheetFooter>
         <SheetClose asChild>
-          <Button onClick={() => updateProductMutation.mutate(input)}>
+          <Button
+            onClick={() =>
+              updateProductMutation.mutate(input, {
+                onSuccess: () => {
+                  toast({
+                    variant: 'default',
+                    description: 'Berhasil mengubah produk',
+                  });
+                },
+                onError: (error: any) => {
+                  const message = JSON.parse(error?.response?.request.response);
+
+                  toast({
+                    variant: 'destructive',
+                    description: message?.data.errors,
+                    action: (
+                      <ToastAction altText="Try again">Try again</ToastAction>
+                    ),
+                  });
+                },
+              })
+            }
+          >
             Save changes
           </Button>
         </SheetClose>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   Table,
@@ -13,7 +14,7 @@ import { useCasheerInfoQuery } from '@/hooks/use-casheer';
 import { rupiahFormat } from '@/lib/utils';
 import { Helmet } from 'react-helmet';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type InvoiceListType = {
   id: number;
@@ -26,6 +27,7 @@ type InvoiceListType = {
 type AmountType = {
   Amount: number;
   UpdatedAt: string;
+  CreatedAt: string;
 };
 
 const InvoicePage = () => {
@@ -33,8 +35,9 @@ const InvoicePage = () => {
   const invoiceList: [InvoiceListType] = data;
   const amountPrice: AmountType = amount;
   const { data: storeInfo } = useCasheerInfoQuery();
+  const navigate = useNavigate();
 
-  // console.log(amount);
+  const dateInvoice = new Date(amountPrice.CreatedAt);
 
   return (
     <>
@@ -43,7 +46,10 @@ const InvoicePage = () => {
       </Helmet>
 
       {/* <div>{status !== 'loading' ? <h1>{storeInfo?.data.Name}</h1> : ''}</div> */}
-      <div className="flex items-center space-x-2 hover:cursor-pointer">
+      <div
+        className="flex items-center space-x-2 hover:cursor-pointer"
+        onClick={() => navigate('/')}
+      >
         <img
           className="h-6 w-auto"
           src={storeInfo?.data.Image}
@@ -52,7 +58,10 @@ const InvoicePage = () => {
         <h1 className="font-semibold text-lg tracking-tighter ">
           {storeInfo?.data.Name}
         </h1>
-        {/* <p className="">{Date(amountPrice?.UpdatedAt)}</p> */}
+      </div>
+
+      <div className="py-5 flex flex-col items-end">
+        <p className="font-medium text-sm">{dateInvoice.toString()}</p>
       </div>
 
       <Table>

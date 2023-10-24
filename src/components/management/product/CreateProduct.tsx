@@ -35,6 +35,8 @@ import { cn, numericValue, rupiahFormat } from '@/lib/utils';
 import { Check, ChevronsUpDown, PlusIcon } from 'lucide-react';
 import React, { ChangeEvent, FC, useEffect, useReducer, useState } from 'react';
 import AddCategory from './AddCategory';
+import { toast } from '@/components/ui/use-toast';
+import { ToastAction } from '@/components/ui/toast';
 
 type Props = {
   children: React.ReactNode;
@@ -42,6 +44,7 @@ type Props = {
 
 type InputCreateProduct = {
   category_id: number;
+  product_code: string;
   name: string;
   price: number;
   quantity: number;
@@ -63,6 +66,7 @@ const CreateProduct: FC<Props> = ({ children }) => {
     }),
     {
       category_id: 0,
+      product_code: '',
       name: '',
       price: 0,
       quantity: 0,
@@ -72,6 +76,7 @@ const CreateProduct: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (
+      input.product_code === '' &&
       input.name === '' &&
       input.price === 0 &&
       input.quantity === 0 &&
@@ -161,6 +166,24 @@ const CreateProduct: FC<Props> = ({ children }) => {
           </div>
 
           <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="product-code" className="text-right">
+              Kode Produk
+            </Label>
+            <Input
+              id="product-code"
+              name="product-code"
+              placeholder="DBX6788"
+              maxLength={8}
+              className="col-span-3"
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setInput({
+                  product_code: e.target.value,
+                })
+              }
+            />
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Nama Produk
             </Label>
@@ -236,7 +259,36 @@ const CreateProduct: FC<Props> = ({ children }) => {
             <Button
               type="submit"
               disabled={disable}
-              onClick={() => createProduct.mutate(input)}
+              onClick={() =>
+                createProduct.mutate(input, {
+                  onSuccess: () => {
+                    input.category_id = 0;
+                    input.name = '';
+                    input.product_code = '';
+                    input.price = 0;
+                    input.quantity = 0;
+                    input.description = '';
+
+                    toast({
+                      variant: 'default',
+                      description: 'Berhasil menambahkan produk',
+                    });
+                  },
+                  onError: (error: any) => {
+                    const message = JSON.parse(
+                      error?.response?.request.response
+                    );
+
+                    toast({
+                      variant: 'destructive',
+                      description: message?.data.errors,
+                      action: (
+                        <ToastAction altText="Try again">Try again</ToastAction>
+                      ),
+                    });
+                  },
+                })
+              }
             >
               Save changes
             </Button>
