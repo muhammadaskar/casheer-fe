@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy the .env.example file to the container
 COPY .env.example .env
 
-RUN sed -i 's/oldhost_url/http://38.47.69.131:2020/api/v1/g' .env
+ENV VITE_REACT_APP_BASE_URL=http://38.47.69.131:2020/api/v1/
 
 # Tambahkan package.json dan package-lock.json
 COPY package*.json ./
