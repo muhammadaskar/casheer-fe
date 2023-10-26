@@ -11,8 +11,8 @@ pipeline {
         stage('Stop Container') {
             steps {
                 echo 'Stopping the running container...'
-                sh 'docker stop dev-casheer-fe-container || true'
-                sh 'docker rm dev-casheer-fe-container || true'
+                sh 'docker stop prod-casheer-fe-container || true'
+                sh 'docker rm prod-casheer-fe-container || true'
                 echo 'Container stopped.'
             }
         }
@@ -27,7 +27,7 @@ pipeline {
         stage('Set Environment Variables') {
             steps {
                 // Use Jenkins environment variables to replace values in the .env file
-                sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL}/' .env"
+                sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL_PROD}/' .env"
             }
         }
         
@@ -36,10 +36,10 @@ pipeline {
                 echo 'Building Docker images...'
                 
                 // Menghapus image sebelumnya
-                sh 'docker rmi dev-casheer-fe-image:latest || true'
+                sh 'docker rmi prod-casheer-fe-image:latest || true'
                 
                 echo 'Proses Build'
-                sh 'docker build -t dev-casheer-fe-image:latest .'
+                sh 'docker build -t prod-casheer-fe-image:latest -f Dockerfile.prod .'
                 echo 'Menampilkan hasil images'
                 sh 'docker images'
             }
@@ -48,7 +48,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Running the container...'
-                sh 'docker run -d --name dev-casheer-fe-container -p 2000:2000 dev-casheer-fe-image:latest'
+                sh 'docker run -d --name prod-casheer-fe-container -p 3000:3000 prod-casheer-fe-image:latest'
                 echo 'Container is now running.'
                 sh 'docker ps'
             }
@@ -57,11 +57,11 @@ pipeline {
     post {
         success {
             // Script to be executed if the deployment is successful
-            slackSend color: 'good', message: 'Deployment successful for *dev-casheer-fe* :white_check_mark:. The application has been deployed successfully.'
+            slackSend color: 'good', message: 'Deployment successful for *prod-casheer-fe* :white_check_mark:. The application has been deployed successfully.'
         }
         failure {
             // Script to be executed if the deployment fails
-            slackSend color: 'danger', message: 'Deployment failed for *dev-casheer-fe* :x:. There was an issue during the deployment process.'
+            slackSend color: 'danger', message: 'Deployment failed for *prod-casheer-fe* :x:. There was an issue during the deployment process.'
         }
     }
 }
