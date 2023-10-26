@@ -17,19 +17,19 @@ pipeline {
             }
         }
 
-        stage('Copy .env.example to .env') {
-            steps {
-                // Use cat to read the content of .env.example and tee to write it to .env
-                sh 'cat .env.example | tee .env'
-            }
-        }
+        // stage('Copy .env.example to .env') {
+        //     steps {
+        //         // Use cat to read the content of .env.example and tee to write it to .env
+        //         sh 'cat .env.example | tee .env'
+        //     }
+        // }
 
-        stage('Set Environment Variables') {
-            steps {
-                // Use Jenkins environment variables to replace values in the .env file
-                sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL}/' .env"
-            }
-        }
+        // stage('Set Environment Variables') {
+        //     steps {
+        //         // Use Jenkins environment variables to replace values in the .env file
+        //         sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL}/' .env"
+        //     }
+        // }
         
         stage('Docker Images') {
             steps {
