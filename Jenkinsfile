@@ -24,12 +24,11 @@ pipeline {
             }
         }
 
-        // stage('Set Environment Variables') {
-        //     steps {
-        //         // Use Jenkins environment variables to replace values in the .env file
-        //         sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL}/' .env"
-        //     }
-        // }
+        stage('Set Environment Variables') {
+            steps {
+                sh "sed -i 's/VITE_REACT_APP_BASE_URL=.*/VITE_REACT_APP_BASE_URL=${VITE_REACT_APP_BASE_URL}/' .env"
+            }
+        }
         
         stage('Docker Images') {
             steps {
