@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { useEffect } from 'react';
 
 const useDarkMode = () => {
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light'
-  );
+  const { darkMode, setDarkMode } = useDarkModeStore();
   const htmlClasses = document.querySelector('html');
 
   const toggleDarkMode = () => {
-    darkMode === 'light' ? setDarkMode('dark') : setDarkMode('light');
+    darkMode === 'dark' ? setDarkMode('light') : setDarkMode('dark');
   };
 
   useEffect(() => {
@@ -23,7 +22,6 @@ const useDarkMode = () => {
   }, [darkMode, htmlClasses]);
 
   return {
-    darkMode,
     toggleDarkMode,
   };
 };

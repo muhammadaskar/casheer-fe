@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import LayoutIndex from '@/components/layout';
 import Customer from '@/pages/management/customer';
 import Product from '@/pages/management/product';
@@ -7,28 +8,42 @@ import Report from '@/pages/menu/report';
 import Transaction from '@/pages/menu/transaction';
 import Customize from '@/pages/settings/customize';
 import Profile from '@/pages/settings/profile';
-import { User } from 'lucide-react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import Login from '@/pages/login';
 import PublicRoute from './PublicRoute';
 import NotFound from '@/pages/NotFound';
 import useDarkMode from '@/hooks/use-darkmode';
+import SettingLayout from '@/components/layout/SettingLayout';
+import Account from '@/pages/settings/account';
+import Settings from '@/pages/settings';
+import NotificationPage from '@/pages/notification';
+import { useDarkModeStore } from '@/store/useDarkModeStore';
+
+import InvoicePage from '@/pages/invoice';
+import User from '@/pages/management/user';
+import UnrpocessUser from '@/pages/unprocess-users';
 
 const AppRoutes = () => {
-  const { darkMode, toggleDarkMode } = useDarkMode();
+  const { darkMode } = useDarkModeStore();
+  const { toggleDarkMode } = useDarkMode();
 
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute />}>
         <Route
           path="/"
-          element={<LayoutIndex mode={darkMode} toggle={toggleDarkMode} />}
+          element={<LayoutIndex mode={darkMode!} toggle={toggleDarkMode} />}
         >
           {/* Menu */}
           <Route path="/" element={<Dashboard />} />
           <Route path="transaction" element={<Transaction />} />
           <Route path="report" element={<Report />} />
+
+          {/* Notification */}
+          <Route path="notification">
+            <Route path=":id" element={<NotificationPage />} />
+          </Route>
 
           {/* Management */}
           <Route path="product" element={<Product />} />
@@ -37,7 +52,18 @@ const AppRoutes = () => {
           <Route path="user" element={<User />} />
 
           {/* Settings */}
+          <Route path="unprocess-users" element={<UnrpocessUser />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+
+        <Route path="invoice" element={<InvoicePage />} />
+
+        <Route
+          path="settings"
+          element={<SettingLayout mode={darkMode!} toggle={toggleDarkMode} />}
+        >
           <Route path="profile" element={<Profile />} />
+          <Route path="account" element={<Account />} />
           <Route path="customize" element={<Customize />} />
         </Route>
       </Route>

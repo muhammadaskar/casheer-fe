@@ -13,6 +13,7 @@ import {
 
 import { FC, ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
+import Header from './Header';
 
 type SidebarSubmenu = {
   icon: ReactNode;
@@ -23,6 +24,11 @@ type SidebarSubmenu = {
 type SidebarItemType = {
   title: string;
   submenu: Array<SidebarSubmenu>;
+};
+
+type LayoutProps = {
+  mode: string | null;
+  toggle: () => void;
 };
 
 const sidebarItem: Array<SidebarItemType> = [
@@ -75,44 +81,49 @@ const sidebarItem: Array<SidebarItemType> = [
     title: 'Settings',
     submenu: [
       {
-        icon: <MonitorDotIcon className="mr-2 w-4 h-4" />,
-        name: 'Customize',
-        path: 'customize',
-      },
-      {
         icon: <UserCogIcon className="mr-2 w-4 h-4" />,
         name: 'Profile',
-        path: 'profile',
+        path: 'settings/profile',
+      },
+      {
+        icon: <MonitorDotIcon className="mr-2 w-4 h-4" />,
+        name: 'Customize',
+        path: 'settings/customize',
       },
     ],
   },
 ];
 
-const Sidebar: FC = () => {
+const Sidebar: FC<LayoutProps> = ({ mode, toggle }) => {
   return (
-    <div className="hidden w-64 pt-10 border-r p-4 scrollbar-hide overflow-auto hover:overflow-scroll h-screen sm:block lg:block transition-all">
-      {sidebarItem.map((item) => (
-        <div className="py-3" key={item.title}>
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            {item.title}
-          </h2>
-          <div className="space-y-1">
-            {item.submenu.map((subItem) => (
-              <NavLink
-                key={subItem.path}
-                to={subItem.path}
-                className={({ isActive }) =>
-                  isActive ? buttonStyle.buttonActive : buttonStyle.buttonGhost
-                }
-              >
-                {subItem.icon}
-                {subItem.name}
-              </NavLink>
-            ))}
+    <>
+      <Header mode={mode} toggle={toggle} />
+      <aside className="hidden w-64 border-r px-4 py-12 scrollbar-hide overflow-auto hover:overflow-scroll h-screen md:block ">
+        {sidebarItem.map((item) => (
+          <div className="py-3" key={item.title}>
+            <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+              {item.title}
+            </h2>
+            <div className="space-y-1">
+              {item.submenu.map((subItem) => (
+                <NavLink
+                  key={subItem.path}
+                  to={subItem.path}
+                  className={({ isActive }) =>
+                    isActive
+                      ? buttonStyle.buttonActive
+                      : buttonStyle.buttonGhost
+                  }
+                >
+                  {subItem.icon}
+                  {subItem.name}
+                </NavLink>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </aside>
+    </>
   );
 };
 

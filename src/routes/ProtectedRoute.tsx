@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { UserType } from '@/types/user-type';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -12,9 +14,24 @@ const ProtectedRoute = () => {
     token = user.token;
   }
 
+  const parseJwt = (token: string) => {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
   const useAuth = () => {
     if (token) {
-      return true;
+      const decodeJwt = parseJwt(token);
+
+      if (decodeJwt?.exp * 1000 < Date.now()) {
+        localStorage.removeItem('user');
+        return window.location.reload();
+      } else {
+        return true;
+      }
     }
 
     return false;

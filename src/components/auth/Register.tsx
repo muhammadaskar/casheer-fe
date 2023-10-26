@@ -1,4 +1,12 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+/* eslint-disable @typescript-eslint/await-thenable */
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+} from 'react';
 import { Button } from '../ui/button';
 import {
   Card,
@@ -11,6 +19,8 @@ import {
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { TabsContent } from '../ui/tabs';
+import { useToast } from '../ui/use-toast';
+import { ToastAction } from '../ui/toast';
 
 type RegisterProps = {
   title: string;
@@ -27,7 +37,9 @@ type RegisterProps = {
   confirmPasswordOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
   disableButton: boolean;
-  buttonClick: () => void;
+  message: string;
+  response: number;
+  setResponse: Dispatch<SetStateAction<number>>;
 };
 
 const Register: FC<RegisterProps> = (props) => {
@@ -46,22 +58,40 @@ const Register: FC<RegisterProps> = (props) => {
     confirmPasswordOnChange,
     onSubmit,
     disableButton,
-    buttonClick,
+    message,
+    response,
+    setResponse,
   } = props;
+
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (message !== '' && response !== 0) {
+      if (response >= 200 && response < 300) {
+        toast({
+          description: message,
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          description: message,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }
+      setResponse(0);
+    }
+  }, [message, response, setResponse, toast]);
 
   return (
     <TabsContent value="register">
       <Card>
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{desc}</CardDescription>
+          <CardTitle className="text-lg md:text-2xl">{title}</CardTitle>
+          <CardDescription className="text-xs md:text-sm">
+            {desc}
+          </CardDescription>
         </CardHeader>
-        <form
-          onSubmit={(e: FormEvent<HTMLFormElement>) => {
-            onSubmit(e);
-            buttonClick();
-          }}
-        >
+        <form onSubmit={onSubmit}>
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="name">Nama</Label>

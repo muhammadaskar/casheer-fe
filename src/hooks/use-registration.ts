@@ -1,8 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+import { UserType } from '@/types/user-type';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 import { FormEvent, useState } from 'react';
 
-const useRegistration = () => {
-  const [message, setMessage] = useState('');
+export const useRegistration = () => {
+  const [message, setMessage] = useState<string>('');
+  const [responseStatus, setResponseStatus] = useState<number>(0);
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
 
   const onRegistration = async (
@@ -16,11 +23,6 @@ const useRegistration = () => {
     try {
       const response = await fetch(baseURL + 'auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
         body: JSON.stringify({
           name,
           username,
@@ -28,19 +30,72 @@ const useRegistration = () => {
           password,
         }),
       });
+
       const result = await response.json();
+      setResponseStatus(response.status);
       if (response.status >= 200 && response.status < 300) {
-        console.log(result.meta.message);
+        setMessage(result.meta.message);
       } else {
-        console.log(result.meta.message);
+        setMessage(result.data.errors);
       }
-    } catch (error) {
-      console.log(error);
-      setMessage('Registration Failed');
+    } catch (error: any) {
+      setMessage(error);
     }
   };
 
-  return { onRegistration, message };
+  return { onRegistration, message, responseStatus, setResponseStatus };
 };
 
-export default useRegistration;
+export const useAcceptRegistrationMutation = () => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      await axios.put(
+        baseURL + `user/activate/${id}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+    },
+
+    onSuccess: async (accept) => {
+      await queryClient.invalidateQueries(['unprocess-users']);
+      queryClient.setQueryData(['unprocess-users'], accept);
+    },
+  });
+};
+
+export const useRejectRegistrationMutation = () => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      await axios.put(
+        baseURL + `user/reject/${id}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+    },
+
+    onSuccess: async (reject) => {
+      await queryClient.invalidateQueries(['unprocess-users']);
+      queryClient.setQueryData(['unprocess-users'], reject);
+    },
+  });
+};

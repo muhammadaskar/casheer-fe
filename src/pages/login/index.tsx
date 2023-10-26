@@ -1,11 +1,8 @@
 import LoginTabs from '@/components/auth/Login';
 import Register from '@/components/auth/Register';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ToastAction } from '@/components/ui/toast';
-import { Toaster } from '@/components/ui/toaster';
-import { useToast } from '@/components/ui/use-toast';
 import useAuthentication from '@/hooks/use-auth';
-import useRegistration from '@/hooks/use-registration';
+import { useRegistration } from '@/hooks/use-registration';
 import { ChangeEvent, FormEvent, useEffect, useReducer, useState } from 'react';
 
 type RegisterType = {
@@ -32,7 +29,6 @@ const Login = () => {
   const [disableLogin, setDisableLogin] = useState<boolean>(false);
   const [disableRegisterButton, setDisableRegisterButton] =
     useState<boolean>(false);
-
   const [registerInput, setRegisterInput] = useReducer(
     (current: RegisterType, update: Partial<RegisterType>) => ({
       ...current,
@@ -41,9 +37,10 @@ const Login = () => {
     registerInitialState
   );
 
-  const { toast } = useToast();
-  const { authLogin } = useAuthentication();
-  const { onRegistration, message } = useRegistration();
+  const { authLogin, setResponseStatusAuth, responseStatusAuth, messageAuth } =
+    useAuthentication();
+  const { onRegistration, message, responseStatus, setResponseStatus } =
+    useRegistration();
 
   const handleLoginInput = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -80,8 +77,8 @@ const Login = () => {
   }, [registerInput, loginInput]);
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Tabs defaultValue="signin" className="w-[400px]">
+    <div className="flex justify-center items-center h-screen px-5 md:px-0">
+      <Tabs defaultValue="signin" className="w-full lg:w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign in</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
@@ -99,11 +96,17 @@ const Login = () => {
           passwordValue={loginInput.password}
           buttonText="Sign in"
           disableButton={disableLogin}
+          message={messageAuth}
+          responseStatus={responseStatusAuth}
+          setResponseStatus={setResponseStatusAuth}
         />
 
         <Register
           title="Register"
           desc="Register your account"
+          message={message}
+          response={responseStatus}
+          setResponse={setResponseStatus}
           nameValue={registerInput.name}
           nameOnChange={(event: ChangeEvent<HTMLInputElement>) =>
             setRegisterInput({
@@ -144,16 +147,8 @@ const Login = () => {
               registerInput.password
             )
           }
-          buttonClick={() =>
-            toast({
-              variant: 'destructive',
-              description: message,
-              action: <ToastAction altText="Try again">Try again</ToastAction>,
-            })
-          }
         />
       </Tabs>
-      <Toaster />
     </div>
   );
 };

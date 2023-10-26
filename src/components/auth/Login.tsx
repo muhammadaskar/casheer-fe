@@ -1,4 +1,11 @@
-import { ChangeEvent, FC, FormEvent } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  FC,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+} from 'react';
 import { TabsContent } from '../ui/tabs';
 import {
   Card,
@@ -11,6 +18,8 @@ import {
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
+import { ToastAction } from '../ui/toast';
 
 type LoginProps = {
   title: string;
@@ -22,6 +31,9 @@ type LoginProps = {
   passwordValue: string;
   buttonText: string;
   disableButton: boolean;
+  message: string;
+  responseStatus: number;
+  setResponseStatus: Dispatch<SetStateAction<number>>;
 };
 
 const LoginTabs: FC<LoginProps> = ({
@@ -34,13 +46,37 @@ const LoginTabs: FC<LoginProps> = ({
   passwordValue,
   buttonText,
   disableButton,
+  message,
+  responseStatus,
+  setResponseStatus,
 }) => {
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (message !== '' && responseStatus !== 0) {
+      if (responseStatus >= 200 && responseStatus < 300) {
+        return;
+      } else {
+        toast({
+          variant: 'destructive',
+          description: message,
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }
+      setResponseStatus(0);
+    }
+  }, [message, responseStatus, setResponseStatus, toast]);
+
+  
+
   return (
     <TabsContent value="signin">
       <Card>
         <CardHeader>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+          <CardTitle className="text-lg md:text-2xl">{title}</CardTitle>
+          <CardDescription className="text-xs md:text-sm">
+            {description}
+          </CardDescription>
         </CardHeader>
         <form onSubmit={onSubmit}>
           <CardContent className="space-y-2">

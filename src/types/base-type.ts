@@ -1,3 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface BaseType {
-  data: [];
+  meta: MetaType;
+  data: any;
+}
+
+interface MetaType {
+  code: number;
+  message: string;
 }
