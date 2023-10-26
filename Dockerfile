@@ -6,6 +6,8 @@ WORKDIR /app
 # Copy the .env.example file to the container
 COPY .env.example .env
 
+RUN sed -i 's/oldhost_url/http://38.47.69.131:2020/api/v1/g' .env
+
 # Tambahkan package.json dan package-lock.json
 COPY package*.json ./
 
