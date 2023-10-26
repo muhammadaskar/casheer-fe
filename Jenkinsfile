@@ -24,14 +24,12 @@ pipeline {
             }
         }
 
-        stages {
-            stage('Modify .env File') {
-                steps {
-                    script {
-                        def envFile = readFile('.env')
-                        def modifiedEnvFile = envFile.replaceAll('VITE_REACT_APP_BASE_URL=.*', 'VITE_REACT_APP_BASE_URL=http://38.47.69.131:2020/api/v1/')
-                        writeFile(file: '.env', text: modifiedEnvFile)
-                    }
+        stage('Modify .env File') {
+            steps {
+                script {
+                    def envFile = readFile('.env')
+                    def modifiedEnvFile = envFile.replaceAll('VITE_REACT_APP_BASE_URL=.*', 'VITE_REACT_APP_BASE_URL=http://38.47.69.131:2020/api/v1/')
+                    writeFile(file: '.env', text: modifiedEnvFile)
                 }
             }
         }
