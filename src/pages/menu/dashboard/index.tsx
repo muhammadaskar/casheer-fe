@@ -35,13 +35,17 @@ const Dashboard = () => {
   const dashboardData = [
     {
       title: 'Keuntungan',
-      value: rupiahFormat(sale?.data.amount),
+      value: rupiahFormat(
+        sale?.data.amount === undefined ? 0 : sale?.data.amount
+      ),
       desc: '1 bulan terakhir',
       icon: <LineChartIcon className="w-3 h-3 md:w-4 md:h-4" />,
     },
     {
       title: 'Penjualan',
-      value: rupiahFormat(sale?.data.amount),
+      value: rupiahFormat(
+        sale?.data.amount === undefined ? 0 : sale?.data.amount
+      ),
       desc: '1 bulan terakhir',
       icon: <Wallet className="w-3 h-3 md:w-4 md:h-4" />,
     },

@@ -43,4 +43,5 @@ export type TransactionParseType = {
   total_quantity: number;
   amount: number;
   casheer_name: string;
+  created_at: string;
 };

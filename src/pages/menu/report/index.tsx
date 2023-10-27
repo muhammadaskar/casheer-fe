@@ -30,7 +30,7 @@ const Report = () => {
 
   useEffect(() => {
     if (status !== 'loading') {
-      const newData = data?.data.map((item: TransactionType) => {
+      const newData = data?.data?.map((item: TransactionType) => {
         const parsedProducts = parseToJSON(item.product_and_quantity);
         return {
           ...item,
