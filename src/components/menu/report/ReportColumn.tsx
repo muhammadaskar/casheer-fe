@@ -50,8 +50,6 @@ export const columns: ColumnDef<TransactionParseType>[] = [
     cell: ({ row }) => {
       const invoice = row.original;
 
-      // console.log(invoice);
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -74,8 +72,8 @@ export const columns: ColumnDef<TransactionParseType>[] = [
               <Link
                 to={'/invoice'}
                 state={{
-                  data: invoice,
-                  amount: invoice.created_at,
+                  data: invoice.product_and_quantity,
+                  amount: invoice,
                 }}
               >
                 View payment details

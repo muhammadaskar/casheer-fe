@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 type InvoiceListType = {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;
@@ -26,6 +26,7 @@ type InvoiceListType = {
 
 type AmountType = {
   Amount: number;
+  amount: number;
   UpdatedAt: string;
   CreatedAt: string;
   created_at: string;
@@ -37,8 +38,6 @@ const InvoicePage = () => {
   const amountPrice: AmountType = amount;
   const { data: storeInfo } = useCasheerInfoQuery();
   const navigate = useNavigate();
-
-  console.log(invoiceList);
 
   const dateInvoice = new Date(amountPrice.CreatedAt || amountPrice.created_at);
 
@@ -79,10 +78,10 @@ const InvoicePage = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoiceList?.map((item) => (
+          {invoiceList?.map((item, index) => (
             <TableRow key={item.id}>
-              <TableCell className="font-medium">{item.id}</TableCell>
-              <TableCell>{item.name}</TableCell>
+              <TableCell className="font-medium">{index + 1}</TableCell>
+              <TableCell>{item.product_name}</TableCell>
               <TableCell>{item.quantity}</TableCell>
               <TableCell>{rupiahFormat(item.price)}</TableCell>
               <TableCell className="text-right">
@@ -97,7 +96,7 @@ const InvoicePage = () => {
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell className="text-right">
-            {rupiahFormat(amountPrice?.Amount)}
+            {rupiahFormat(amountPrice?.Amount || amountPrice?.amount)}
           </TableCell>
         </TableFooter>
       </Table>
