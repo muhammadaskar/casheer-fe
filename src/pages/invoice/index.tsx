@@ -28,6 +28,7 @@ type AmountType = {
   Amount: number;
   UpdatedAt: string;
   CreatedAt: string;
+  created_at: string;
 };
 
 const InvoicePage = () => {
@@ -37,7 +38,9 @@ const InvoicePage = () => {
   const { data: storeInfo } = useCasheerInfoQuery();
   const navigate = useNavigate();
 
-  const dateInvoice = new Date(amountPrice.CreatedAt);
+  console.log(invoiceList);
+
+  const dateInvoice = new Date(amountPrice.CreatedAt || amountPrice.created_at);
 
   return (
     <>

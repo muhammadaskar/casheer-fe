@@ -44,6 +44,8 @@ const Report = () => {
     }
   }, [data, status]);
 
+  console.log(data);
+
   return (
     <>
       <Helmet>

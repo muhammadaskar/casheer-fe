@@ -1,8 +1,17 @@
 import { ColumnDef } from '@tanstack/react-table';
 // import { ProductData } from '../product/Column';
 import { Button } from '@/components/ui/button';
-import { ArrowUpDownIcon } from 'lucide-react';
+import { ArrowUpDownIcon, MoreHorizontal } from 'lucide-react';
 import { TransactionParseType } from '@/types/product-type';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<TransactionParseType>[] = [
   {
@@ -34,6 +43,48 @@ export const columns: ColumnDef<TransactionParseType>[] = [
   {
     accessorKey: 'transaction_code',
     header: 'Kode Transaksi',
+  },
+  {
+    accessorKey: 'action',
+    enableHiding: false,
+    cell: ({ row }) => {
+      const invoice = row.original;
+
+      // console.log(invoice);
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(invoice.transaction_code)
+              }
+            >
+              Copy payment ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link
+                to={'/invoice'}
+                state={{
+                  data: invoice,
+                  amount: invoice.created_at,
+                }}
+              >
+                View payment details
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];
 
