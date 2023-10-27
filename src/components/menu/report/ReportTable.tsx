@@ -74,7 +74,9 @@ export default function ReportTable<TData, TValue>({
         className="max-w-sm"
       />
       <div className="rounded-md border">
-        {data !== null ? (
+        {data === null ? (
+          <p className="p-5">Laporan belum tersedia</p>
+        ) : (
           <Table>
             <TableHeader className="text-xs sm:text-sm">
               {table.getHeaderGroups().map((headerGroup) => (
@@ -124,8 +126,6 @@ export default function ReportTable<TData, TValue>({
               )}
             </TableBody>
           </Table>
-        ) : (
-          <p className="p-5">Belum ada laporan</p>
         )}
       </div>
 
