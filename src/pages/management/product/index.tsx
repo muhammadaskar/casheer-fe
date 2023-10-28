@@ -113,7 +113,9 @@ const Product = () => {
               <DataTable
                 columns={columnMobile}
                 status={status}
-                data={searchData?.data.products}
+                data={searchData?.data.products.filter(
+                  (item: any) => item.is_deleted === 1
+                )}
                 onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
                 disableNext={isPreviousData || data?.data.is_last_page}
                 onPrev={() => setPage((old) => Math.max(old - 1, 0))}
@@ -126,7 +128,9 @@ const Product = () => {
               <DataTable
                 columns={columnMobile}
                 status={status}
-                data={data?.data.products}
+                data={data?.data.products.filter(
+                  (item: any) => item.is_deleted === 1
+                )}
                 onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
                 disableNext={isPreviousData || data?.data.is_last_page}
                 onPrev={() => setPage((old) => Math.max(old - 1, 0))}
