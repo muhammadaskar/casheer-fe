@@ -19,7 +19,7 @@ export interface CombineInvoice {
 }
 export interface Invoice {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;

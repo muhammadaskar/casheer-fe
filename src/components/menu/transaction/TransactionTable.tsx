@@ -168,7 +168,7 @@ const TransactionTable = () => {
               <TableBody className="w-full h-fit text-xs sm:text-sm">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
-                    <TableCell>{invoices.name}</TableCell>
+                    <TableCell>{invoices.product_name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
                     <TableCell>{rupiahFormat(invoices.price)}</TableCell>
                     <TableCell>{rupiahFormat(invoices.total)}</TableCell>
@@ -201,7 +201,7 @@ const TransactionTable = () => {
               <TableBody className="w-full h-fit text-xs sm:text-sm">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
-                    <TableCell>{invoices.name}</TableCell>
+                    <TableCell>{invoices.product_name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
                     {/* <TableCell className="hidden sm:grid sm:items-center">
                       {rupiahFormat(invoices.price)}

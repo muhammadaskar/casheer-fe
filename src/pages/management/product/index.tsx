@@ -42,8 +42,6 @@ const Product = () => {
     }
   }, [data, isPreviousData, page, queryClient]);
 
-  console.log(data?.data.products.filter((item: any) => item.is_deleted === 0));
-
   return (
     <>
       <Helmet>

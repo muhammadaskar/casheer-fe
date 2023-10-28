@@ -47,7 +47,7 @@ const fetchTransactions = async () => {
 
 export const useTransactionQuery = () =>
   useQuery(['transaction-list'], fetchTransactions, {
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
 

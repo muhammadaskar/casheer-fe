@@ -2,7 +2,7 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 interface OrderFormValue {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;
@@ -19,7 +19,7 @@ export const useOrderStore = createWithEqualityFn<OrderStore>(
   (set) => ({
     orderForm: {
       id: 0,
-      name: '',
+      product_name: '',
       price: 0,
       quantity: 0,
       total: 0,

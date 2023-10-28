@@ -49,7 +49,7 @@ type OrderProps = {
 
 type OrderFormType = {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;
@@ -84,7 +84,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
     }),
     {
       id: 0,
-      name: '',
+      product_name: '',
       price: 0,
       quantity: 0,
       total: 0,
@@ -153,7 +153,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       aria-expanded={openName}
                       className="w-full justify-between text-xs sm:text-sm"
                     >
-                      {input.name
+                      {input.product_name
                         ? product?.find((item) => item.id === input.id)?.name
                         : 'Cari produk...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -173,7 +173,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
-                                    name: item.name,
+                                    product_name: item.name,
                                     price: item.price,
                                     id: item.id,
                                   });
@@ -228,7 +228,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
-                                    name: item.name,
+                                    product_name: item.name,
                                     price: item.price,
                                     id: item.id,
                                   });
@@ -300,7 +300,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
           onClick={() => {
             setOrderForm({
               id: input.id,
-              name: input.name,
+              product_name: input.product_name,
               price: input.price,
               quantity: input.quantity,
               total: input.price * input.quantity,
