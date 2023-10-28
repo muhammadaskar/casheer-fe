@@ -102,6 +102,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="John Doe"
                 onChange={nameOnChange}
               />
+              <p className="text-sm text-muted-foreground">
+                Type your fullname.
+              </p>
             </div>
 
             <div className="space-y-1">
@@ -113,6 +116,7 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="@indraganteng"
                 onChange={usernameOnChange}
               />
+              <p className="text-sm text-muted-foreground">Username min 6.</p>
             </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
@@ -124,6 +128,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="johndoe@bingbing.com"
                 onChange={emailOnChange}
               />
+              <p className="text-sm text-muted-foreground">
+                Use your valid email.
+              </p>
             </div>
             <div className="space-y-1">
               <Label htmlFor="password">Password</Label>
@@ -135,6 +142,7 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="*********"
                 onChange={passwordOnChange}
               />
+              <p className="text-sm text-muted-foreground">Password min 8.</p>
             </div>
             <div className="space-y-1">
               <Label htmlFor="confirm">Confirm password</Label>
@@ -146,6 +154,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="*********"
                 onChange={confirmPasswordOnChange}
               />
+              <p className="text-sm text-muted-foreground">
+                Re-type your password.
+              </p>
             </div>
           </CardContent>
           <CardFooter>
