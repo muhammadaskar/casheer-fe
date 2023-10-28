@@ -65,7 +65,9 @@ const Login = () => {
       registerInput.username === '' ||
       registerInput.email === '' ||
       registerInput.password === '' ||
-      registerInput.confirm_password === ''
+      registerInput.confirm_password === '' ||
+      registerInput.username.length <= 6 ||
+      registerInput.password.length <= 8
     ) {
       return setDisableRegisterButton(true);
     }
