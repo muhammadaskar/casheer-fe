@@ -59,6 +59,8 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
   const [disable, setDisable] = useState(true);
+  const [qty, setQty] = useState(0);
+  const [warn, setWarn] = useState('');
 
   const { orderForm, setOrderForm, isClicked, setClick } = useOrderStore(
     (state) => ({
@@ -133,6 +135,17 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
     return setDisable(false);
   }, [input.quantity]);
 
+  useEffect(() => {
+    if (input.quantity >= qty) {
+      setInput({
+        quantity: qty,
+      });
+      setWarn(`Stok barang sisa ${qty}`);
+    } else {
+      setWarn('');
+    }
+  }, [input.quantity, qty]);
+
   return (
     <Card className="w-full">
       <CardHeader className="space-y-1">
@@ -177,7 +190,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                     price: item.price,
                                     id: item.id,
                                   });
-
+                                  setQty(item.quantity);
                                   setOpenName(false);
                                 }}
                               >
@@ -259,6 +272,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
               <Input
                 name="price"
                 type="text"
+                disabled={input.product_name === '' ? true : false}
                 placeholder="Rp.500,00-,"
                 value={rupiahFormat(input.price)}
                 readOnly
@@ -270,6 +284,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                 name="qty"
                 type="text"
                 placeholder="1 Pcs"
+                disabled={input.product_name === '' ? true : false}
                 value={input.quantity}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   setInput({
@@ -277,6 +292,11 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                   });
                 }}
               />
+              {warn === '' || input.product_name === '' ? (
+                <></>
+              ) : (
+                <p className="text-sm text-red-500">{warn}</p>
+              )}
             </div>
             <div className="flex flex-col space-y-2">
               <Label htmlFor="total">Total</Label>

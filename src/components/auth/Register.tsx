@@ -102,9 +102,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="John Doe"
                 onChange={nameOnChange}
               />
-              <p className="text-sm text-muted-foreground">
+              {/* <p className="text-sm text-muted-foreground">
                 Type your fullname.
-              </p>
+              </p> */}
             </div>
 
             <div className="space-y-1">
@@ -128,9 +128,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="johndoe@bingbing.com"
                 onChange={emailOnChange}
               />
-              <p className="text-sm text-muted-foreground">
+              {/* <p className="text-sm text-muted-foreground">
                 Use your valid email.
-              </p>
+              </p> */}
             </div>
             <div className="space-y-1">
               <Label htmlFor="password">Password</Label>
