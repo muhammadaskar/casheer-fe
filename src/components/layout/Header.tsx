@@ -3,7 +3,6 @@ import {
   BellIcon,
   LogOut,
   Mail,
-  MessageSquare,
   Moon,
   PlusCircle,
   Settings,
