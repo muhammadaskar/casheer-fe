@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ColumnDef } from '@tanstack/react-table';
 // import { ProductData } from '../product/Column';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,8 @@ import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<TransactionParseType>[] = [
   {
-    accessorKey: 'id',
+    accessorKey: 'number',
+
     header: ({ column }) => {
       return (
         <Button

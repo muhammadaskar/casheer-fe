@@ -1,9 +1,11 @@
 import { buttonStyle } from '@/styles';
 
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Separator } from '../ui/separator';
 import { FC } from 'react';
 import Header from './Header';
+import { ChevronLeft } from 'lucide-react';
+import { Button } from '../ui/button';
 
 type LayoutProps = {
   mode: string | null;
@@ -22,14 +24,25 @@ const layoutItem: Array<SettingLayoutType> = [
 ];
 
 const SettingLayout: FC<LayoutProps> = ({ mode, toggle }) => {
+  const navigation = useNavigate();
+
   return (
     <>
       <Header mode={mode} toggle={toggle} />
       <div className="hidden space-y-6 px-10 py-16 sm:block">
         <div className="space-y-0.5">
-          <h1 className="hidden font-semibold tracking-tight text-2xl sm:block">
-            Settings
-          </h1>
+          <div className="flex flex-row items-center space-x-2">
+            <Button
+              variant={'ghost'}
+              className="p-0 w-10"
+              onClick={() => navigation('/')}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="hidden font-semibold tracking-tight text-2xl sm:block">
+              Settings
+            </h1>
+          </div>
           <p className="text-sm text-muted-foreground hidden sm:block">
             Manage your account settings and set e-mail preferences.
           </p>

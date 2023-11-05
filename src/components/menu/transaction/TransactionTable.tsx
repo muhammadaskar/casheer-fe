@@ -152,16 +152,20 @@ const TransactionTable = () => {
   return (
     <Card className="w-full h-[29.5rem]">
       <Sheet>
-        <ScrollArea className="space-y-2 h-[86%] overflow-hidden">
+        <ScrollArea className="w-full space-y-2 h-[86%] overflow-hidden">
           <CardContent>
             {/* Desktop */}
             <Table className="hidden sm:block w-full">
               <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Total</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-8">Name</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">Qty</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">
+                    Price
+                  </TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">
+                    Total
+                  </TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
@@ -189,13 +193,10 @@ const TransactionTable = () => {
             <Table className="block sm:hidden w-full">
               <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Qty</TableHead>
-                  {/* <TableHead className="hidden sm:flex sm:items-center">
-                    Price
-                  </TableHead> */}
-                  <TableHead>Total</TableHead>
-                  <TableHead>Action</TableHead>
+                  <TableHead className="px-5">Name</TableHead>
+                  <TableHead className="px-5">Qty</TableHead>
+                  <TableHead className="px-5">Total</TableHead>
+                  <TableHead className="px-5">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="w-full h-fit text-xs sm:text-sm">

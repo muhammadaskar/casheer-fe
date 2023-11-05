@@ -8,7 +8,6 @@ import { FormEvent, useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 
 const useAuthentication = () => {
-  // const navigate = useNavigate();
   const [messageAuth, setMessageAuth] = useState<string>('');
   const [responseStatusAuth, setResponseStatusAuth] = useState<number>(0);
   const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;

@@ -100,7 +100,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
           </div>
         )}
 
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 flex-row items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div>
@@ -178,13 +178,17 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                   variant="ghost"
                   className="relative h-8 w-8 rounded-full"
                 > */}
-                    <Avatar className="h-7 w-7">
-                      <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
+                    <div className="flex items-center justify-center space-x-2 rounded-md p-2 hover:bg-accent transition-all">
+                      <Avatar className="h-6 w-6">
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+
+                      <h2 className="font-normal text-xs">{user.name}</h2>
+                    </div>
                     {/* </Button> */}
                   </DropdownMenuTrigger>
 
@@ -194,7 +198,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                     <DropdownMenuGroup>
                       <DropdownMenuItem
                         className="hover:cursor-pointer"
-                        onClick={() => navigate('settings/profile')}
+                        onClick={() => navigate('/settings/profile')}
                       >
                         <Settings className="mr-2 h-4 w-4" />
                         <span>Settings</span>

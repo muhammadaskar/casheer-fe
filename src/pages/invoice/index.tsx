@@ -63,7 +63,7 @@ const InvoicePage = () => {
       </div>
 
       <div className="py-5 flex flex-col items-end">
-        <p className="font-medium text-sm">{dateInvoice.toString()}</p>
+        <p className="font-medium text-sm">{dateInvoice.toDateString()}</p>
       </div>
 
       <Table>
