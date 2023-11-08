@@ -16,8 +16,7 @@ import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<TransactionParseType>[] = [
   {
-    accessorKey: 'number',
-
+    accessorKey: 'id',
     header: ({ column }) => {
       return (
         <Button
@@ -73,9 +72,13 @@ export const columns: ColumnDef<TransactionParseType>[] = [
             <DropdownMenuItem>
               <Link
                 to={'/invoice'}
-                state={{
-                  data: invoice.product_and_quantity,
-                  amount: invoice,
+                target="_blank"
+                onClick={() => {
+                  localStorage.setItem(
+                    'invoice-data',
+                    JSON.stringify(invoice.product_and_quantity)
+                  );
+                  localStorage.setItem('amount-data', JSON.stringify(invoice));
                 }}
               >
                 View payment details

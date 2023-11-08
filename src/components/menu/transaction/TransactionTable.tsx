@@ -80,20 +80,19 @@ const TransactionTable = () => {
 
   useEffect(() => {
     if (transactionMutation.isSuccess) {
+      localStorage.setItem('invoice-data', JSON.stringify(invoice));
+      localStorage.setItem(
+        'amount-data',
+        JSON.stringify(transactionMutation?.data?.data)
+      );
+
       toast({
         variant: 'default',
         description: 'Transaksi berhasil',
         action: (
           <ToastAction
             altText="Check Invoice"
-            onClick={() =>
-              navigate('/invoice', {
-                state: {
-                  data: invoice,
-                  amount: transactionMutation?.data?.data,
-                },
-              })
-            }
+            onClick={() => window.open('/invoice', '_blank')}
           >
             Cek Invoice
           </ToastAction>

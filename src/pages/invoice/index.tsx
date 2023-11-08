@@ -12,9 +12,10 @@ import {
 } from '@/components/ui/table';
 import { useCasheerInfoQuery } from '@/hooks/use-casheer';
 import { rupiahFormat } from '@/lib/utils';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type InvoiceListType = {
   id: number;
@@ -33,13 +34,20 @@ type AmountType = {
 };
 
 const InvoicePage = () => {
-  const { data, amount } = useLocation().state;
-  const invoiceList: [InvoiceListType] = data;
-  const amountPrice: AmountType = amount;
+  const invoiceList: [InvoiceListType] = JSON.parse(
+    localStorage.getItem('invoice-data') || ''
+  );
+  const amountPrice: AmountType = JSON.parse(
+    localStorage.getItem('amount-data') || ''
+  );
   const { data: storeInfo } = useCasheerInfoQuery();
   const navigate = useNavigate();
 
   const dateInvoice = new Date(amountPrice.CreatedAt || amountPrice.created_at);
+
+  useEffect(() => {
+    window.print();
+  }, []);
 
   return (
     <>
