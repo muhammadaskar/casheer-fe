@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<TransactionParseType>[] = [
   {
-    accessorKey: 'id',
+    id: 'No',
     header: ({ column }) => {
       return (
         <Button
@@ -26,6 +26,11 @@ export const columns: ColumnDef<TransactionParseType>[] = [
           No
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: (props) => {
+      return (
+        props?.table?.getSortedRowModel()?.flatRows?.indexOf(props?.row) + 1
       );
     },
     enableHiding: false,
