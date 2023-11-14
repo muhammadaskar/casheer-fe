@@ -76,11 +76,11 @@ const CreateProduct: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (
-      input.product_code === '' &&
-      input.name === '' &&
-      input.price === 0 &&
-      input.quantity === 0 &&
-      input.description === ''
+      input.category_id === 0 ||
+      input.product_code === '' ||
+      input.name === '' ||
+      input.price === 0 ||
+      input.quantity === 0
     ) {
       return setDisable(true);
     }

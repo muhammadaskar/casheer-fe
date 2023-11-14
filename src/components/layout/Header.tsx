@@ -47,6 +47,7 @@ import { NotificationType } from '@/types/notification-type';
 import { ScrollArea } from '../ui/scroll-area';
 import { useCasheerInfoQuery } from '@/hooks/use-casheer';
 import { Skeleton } from '../ui/skeleton';
+import { useUserPhotoQuery } from '@/hooks/use-user';
 
 type HeaderProps = {
   mode: string | null;
@@ -56,13 +57,19 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ mode, toggle }) => {
   const navigate = useNavigate();
   const { data } = useNotificationQuery();
+  const { data: userPhoto } = useUserPhotoQuery();
   const { data: storeInfo, status } = useCasheerInfoQuery();
   const [notifId, setNotifId] = useState(0);
   const [read, setRead] = useState(true);
 
   const notificationMutation = useNotificationMutation(notifId);
   const notification: NotificationType[] = data?.data;
-  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+  // const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+  const userData: UserType = JSON.parse(
+    localStorage.getItem('user-data') || ''
+  );
+
+  console.log(userPhoto);
 
   const truncate = (str: string, max: number, len: number) => {
     return str.length > max ? str.substring(0, len) + '...' : str;
@@ -181,13 +188,17 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                     <div className="flex items-center justify-center space-x-2 rounded-md p-2 hover:bg-accent transition-all">
                       <Avatar className="h-6 w-6">
                         <AvatarImage
-                          src="https://github.com/shadcn.png"
+                          src={
+                            userPhoto === undefined
+                              ? 'https://github.com/shadcn.png'
+                              : userPhoto?.data.image
+                          }
                           alt="@shadcn"
                         />
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
 
-                      <h2 className="font-normal text-xs">{user.name}</h2>
+                      <h2 className="font-normal text-xs">{userData.name}</h2>
                     </div>
                     {/* </Button> */}
                   </DropdownMenuTrigger>
@@ -237,6 +248,9 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                     <DropdownMenuItem
                       className=" cursor-pointer"
                       onClick={() => {
+                        localStorage.removeItem('amount-data');
+                        localStorage.removeItem('invoice-data');
+                        localStorage.removeItem('user-data');
                         localStorage.removeItem('user');
                         window.location.reload();
                       }}
@@ -248,7 +262,9 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TooltipTrigger>
-              <TooltipContent className="font-sans">{user.name}</TooltipContent>
+              <TooltipContent className="font-sans">
+                {userData.name}
+              </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>

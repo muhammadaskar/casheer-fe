@@ -33,7 +33,15 @@ const useAuthentication = () => {
       setResponseStatusAuth(response.status);
       if (response.status >= 200 && response.status < 300) {
         localStorage.setItem('user', JSON.stringify(result.data));
+        localStorage.setItem(
+          'user-data',
+          JSON.stringify({
+            email: result.data.email,
+            name: result.data.name,
+          })
+        );
         // navigate('/', { replace: true });
+
         window.location.reload();
       } else {
         setMessageAuth(result.data.errors);
