@@ -142,11 +142,11 @@ const TransactionTable = () => {
   }
 
   useEffect(() => {
-    if (input.total_pay !== 0) {
-      return setDisable(false);
+    if (input.total_pay === 0 || input.total_pay < total) {
+      return setDisable(true);
     }
-    return setDisable(true);
-  }, [input.total_pay]);
+    return setDisable(false);
+  }, [input.total_pay, total]);
 
   return (
     <Card className="w-full h-[29.5rem]">

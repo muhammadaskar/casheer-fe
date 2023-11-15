@@ -53,6 +53,7 @@ type OrderFormType = {
   price: number;
   quantity: number;
   total: number;
+  code: string;
 };
 
 const OrderForm: FC<OrderProps> = ({ product, status }) => {
@@ -90,8 +91,11 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
       price: 0,
       quantity: 0,
       total: 0,
+      code: '',
     }
   );
+
+  console.log(product);
 
   const saveToTable = useCallback(() => {
     const existingItem = invoiceForm?.find(
@@ -167,7 +171,8 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       className="w-full justify-between text-xs sm:text-sm"
                     >
                       {input.product_name
-                        ? product?.find((item) => item.id === input.id)?.name
+                        ? product?.find((item) => item.code === input.code)
+                            ?.name
                         : 'Cari produk...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -189,6 +194,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                     product_name: item.name,
                                     price: item.price,
                                     id: item.id,
+                                    code: item.code,
                                   });
                                   setQty(item.quantity);
                                   setOpenName(false);
@@ -197,7 +203,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 <Check
                                   className={cn(
                                     'mr-2 h-4 w-4',
-                                    input.id === item.id
+                                    input.code === item.code
                                       ? 'opacity-100'
                                       : 'opacity-0'
                                   )}
@@ -221,8 +227,9 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       aria-expanded={openId}
                       className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-sm"
                     >
-                      {input.id
-                        ? product?.find((item) => item.id === input.id)?.id
+                      {input.code
+                        ? product?.find((item) => item.code === input.code)
+                            ?.code
                         : 'Cari ID...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -244,6 +251,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                     product_name: item.name,
                                     price: item.price,
                                     id: item.id,
+                                    code: item.code,
                                   });
 
                                   setOpenId(false);
@@ -252,12 +260,12 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 <Check
                                   className={cn(
                                     'mr-2 h-4 w-4',
-                                    input.id === item.id
+                                    input.code === item.code
                                       ? 'opacity-100'
                                       : 'opacity-0'
                                   )}
                                 />
-                                {item.id}
+                                {item.code}
                               </CommandItem>
                             ))}
                         </CommandGroup>
