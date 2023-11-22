@@ -35,7 +35,7 @@ import {
 
 import { Button } from '../ui/button';
 import { FC, useState } from 'react';
-import { UserType } from '@/types/user-type';
+import { UserParseType, UserType } from '@/types/user-type';
 import { Badge } from '../ui/badge';
 // import useNotification from '@/hooks/use-notification';
 import { useNavigate } from 'react-router-dom';
@@ -64,12 +64,13 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
 
   const notificationMutation = useNotificationMutation(notifId);
   const notification: NotificationType[] = data?.data;
-  // const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  const userDataParse: UserParseType = JSON.parse(
+    localStorage.getItem('user-data-parse') || ''
+  );
   const userData: UserType = JSON.parse(
     localStorage.getItem('user-data') || ''
   );
-
-  console.log(userPhoto);
 
   const truncate = (str: string, max: number, len: number) => {
     return str.length > max ? str.substring(0, len) + '...' : str;
@@ -118,12 +119,24 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                 >
                   <BellIcon className="h-[1.2rem] w-[1.2rem]" />
 
-                  {notification?.filter((item) => item.is_read == true)
-                    .length ? (
+                  {userDataParse.role === 0 ? (
+                    notification?.filter((item) => item.is_read == true)
+                      .length ? (
+                      <Badge className=" absolute z-20 bg-red-500 h-5 w-1 text-xs top-[-0.25rem] text-white items-center justify-center left-5 hover:bg-red-500/80">
+                        {
+                          notification?.filter((item) => item.is_read == true)
+                            .length
+                        }
+                      </Badge>
+                    ) : null
+                  ) : notification?.filter(
+                      (item) => item.is_read == true && item.type === 2
+                    ).length ? (
                     <Badge className=" absolute z-20 bg-red-500 h-5 w-1 text-xs top-[-0.25rem] text-white items-center justify-center left-5 hover:bg-red-500/80">
                       {
-                        notification?.filter((item) => item.is_read == true)
-                          .length
+                        notification?.filter(
+                          (item) => item.is_read == true && item.type === 2
+                        ).length
                       }
                     </Badge>
                   ) : null}
@@ -135,28 +148,52 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
               <DropdownMenuLabel>Notification</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <ScrollArea className="h-52">
-                {notification
-                  ?.sort((a, b) => b.id - a.id)
-                  .map((item) => (
-                    <DropdownMenuItem
-                      key={item.id}
-                      onClick={() => {
-                        setNotifId(item.id);
-                        setRead(item.is_read);
-                        notificationRead();
-                        navigate(`notification/${item.id}`, {
-                          state: { notification: item },
-                        });
-                      }}
-                      className={
-                        item.is_read == true
-                          ? 'w-56 whitespace-break-spaces bg-accent'
-                          : 'w-56 whitespace-break-spaces'
-                      }
-                    >
-                      <p>{truncate(item.name, 100, 52)}</p>
-                    </DropdownMenuItem>
-                  ))}
+                {userDataParse.role === 0
+                  ? notification
+                      ?.sort((a, b) => b.id - a.id)
+                      .map((item) => (
+                        <DropdownMenuItem
+                          key={item.id}
+                          onClick={() => {
+                            setNotifId(item.id);
+                            setRead(item.is_read);
+                            notificationRead();
+                            navigate(`notification/${item.id}`, {
+                              state: { notification: item },
+                            });
+                          }}
+                          className={
+                            item.is_read == true
+                              ? 'w-56 whitespace-break-spaces bg-accent'
+                              : 'w-56 whitespace-break-spaces'
+                          }
+                        >
+                          <p>{truncate(item.name, 100, 52)}</p>
+                        </DropdownMenuItem>
+                      ))
+                  : notification
+                      ?.sort((a, b) => b.id - a.id)
+                      .filter((item) => item.type === 2)
+                      .map((item) => (
+                        <DropdownMenuItem
+                          key={item.id}
+                          onClick={() => {
+                            setNotifId(item.id);
+                            setRead(item.is_read);
+                            notificationRead();
+                            navigate(`notification/${item.id}`, {
+                              state: { notification: item },
+                            });
+                          }}
+                          className={
+                            item.is_read == true
+                              ? 'w-56 whitespace-break-spaces bg-accent'
+                              : 'w-56 whitespace-break-spaces'
+                          }
+                        >
+                          <p>{truncate(item.name, 100, 52)}</p>
+                        </DropdownMenuItem>
+                      ))}
               </ScrollArea>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -181,10 +218,6 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
               <TooltipTrigger>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    {/* <Button
-                  variant="ghost"
-                  className="relative h-8 w-8 rounded-full"
-                > */}
                     <div className="flex items-center justify-center space-x-2 rounded-md p-2 hover:bg-accent transition-all">
                       <Avatar className="h-6 w-6">
                         <AvatarImage
@@ -216,34 +249,40 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                         <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem onClick={() => navigate('user')}>
-                        <Users className="mr-2 h-4 w-4" />
-                        <span>Team</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>
-                          <UserPlus className="mr-2 h-4 w-4" />
-                          <span>Invite users</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent>
-                            <DropdownMenuItem
-                              onClick={() => navigate('unprocess-users')}
-                            >
-                              <Mail className="mr-2 h-4 w-4" />
-                              <span>Email</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                              <PlusCircle className="mr-2 h-4 w-4" />
-                              <span>More...</span>
-                            </DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                    </DropdownMenuGroup>
+                    {userDataParse?.role === 0 ? (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                          <DropdownMenuItem onClick={() => navigate('user')}>
+                            <Users className="mr-2 h-4 w-4" />
+                            <span>Team</span>
+                          </DropdownMenuItem>
+                          <DropdownMenuSub>
+                            <DropdownMenuSubTrigger>
+                              <UserPlus className="mr-2 h-4 w-4" />
+                              <span>Invite users</span>
+                            </DropdownMenuSubTrigger>
+                            <DropdownMenuPortal>
+                              <DropdownMenuSubContent>
+                                <DropdownMenuItem
+                                  onClick={() => navigate('unprocess-users')}
+                                >
+                                  <Mail className="mr-2 h-4 w-4" />
+                                  <span>Email</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                  <PlusCircle className="mr-2 h-4 w-4" />
+                                  <span>More...</span>
+                                </DropdownMenuItem>
+                              </DropdownMenuSubContent>
+                            </DropdownMenuPortal>
+                          </DropdownMenuSub>
+                        </DropdownMenuGroup>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       className=" cursor-pointer"

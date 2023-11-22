@@ -27,6 +27,9 @@ const Login = () => {
     password: '',
   });
   const [disableLogin, setDisableLogin] = useState<boolean>(false);
+  const [redBorder, setRedBorder] = useState<boolean>(false);
+  const [passwordRedBorder, setPasswordRedBorder] = useState<boolean>(false);
+  const [retypeRedBorder, setRetypeRedBorder] = useState<boolean>(false);
   const [disableRegisterButton, setDisableRegisterButton] =
     useState<boolean>(false);
   const [registerInput, setRegisterInput] = useReducer(
@@ -61,16 +64,47 @@ const Login = () => {
 
   useEffect(() => {
     if (
+      registerInput.username.length >= 1 &&
+      registerInput.username.length < 6
+    ) {
+      return setRedBorder(true);
+    }
+
+    return setRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (
+      registerInput.password.length >= 1 &&
+      registerInput.password.length < 8
+    ) {
+      return setPasswordRedBorder(true);
+    }
+
+    return setPasswordRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (registerInput.password !== registerInput.confirm_password) {
+      return setRetypeRedBorder(true);
+    }
+
+    return setRetypeRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (
       registerInput.name === '' ||
       registerInput.username === '' ||
       registerInput.email === '' ||
       registerInput.password === '' ||
       registerInput.confirm_password === '' ||
-      registerInput.username.length <= 6 ||
+      registerInput.username.length < 6 ||
       registerInput.password.length <= 8
     ) {
       return setDisableRegisterButton(true);
     }
+
     if (registerInput.password !== registerInput.confirm_password) {
       return setDisableRegisterButton(true);
     }
@@ -109,6 +143,9 @@ const Login = () => {
           message={message}
           response={responseStatus}
           setResponse={setResponseStatus}
+          redBorder={redBorder}
+          passwordRedBorder={passwordRedBorder}
+          retypeRedBorder={retypeRedBorder}
           nameValue={registerInput.name}
           nameOnChange={(event: ChangeEvent<HTMLInputElement>) =>
             setRegisterInput({

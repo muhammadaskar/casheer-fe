@@ -19,10 +19,10 @@ import Account from '@/pages/settings/account';
 import Settings from '@/pages/settings';
 import NotificationPage from '@/pages/notification';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
-
 import InvoicePage from '@/pages/invoice';
 import User from '@/pages/management/user';
 import UnrpocessUser from '@/pages/unprocess-users';
+import PermissionDenied from '@/pages/PermissionDenied';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();
@@ -72,6 +72,7 @@ const AppRoutes = () => {
         <Route path="login" element={<Login />} />
       </Route>
 
+      <Route path="/permissiondenied" element={<PermissionDenied />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -71,3 +71,24 @@ export const useTransactionThisYearQuery = () =>
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+const fetchTransactionsAmountThisYear = async () => {
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+  const response = await axios.get(baseURL + 'transaction/amount/this-year', {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${user.token}`,
+    },
+  });
+
+  const result: BaseType = response.data;
+  return result;
+};
+
+export const useTransactionAmountThisYearQuery = () =>
+  useQuery(['transaction-amount-year'], fetchTransactionsAmountThisYear, {
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+  });

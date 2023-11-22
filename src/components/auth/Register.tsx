@@ -26,6 +26,9 @@ type RegisterProps = {
   title: string;
   desc: string;
   nameValue: string;
+  redBorder: boolean;
+  passwordRedBorder: boolean;
+  retypeRedBorder: boolean;
   nameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   usernameValue: string;
   usernameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -47,6 +50,9 @@ const Register: FC<RegisterProps> = (props) => {
     title,
     desc,
     nameValue,
+    redBorder,
+    passwordRedBorder,
+    retypeRedBorder,
     nameOnChange,
     usernameValue,
     usernameOnChange,
@@ -112,8 +118,9 @@ const Register: FC<RegisterProps> = (props) => {
               <Input
                 id="username"
                 name="username"
+                className={`${redBorder ? 'border-red-500' : ''}`}
                 value={usernameValue}
-                placeholder="@indraganteng"
+                placeholder="@username"
                 onChange={usernameOnChange}
               />
               <p className="text-sm text-muted-foreground">Username min 6.</p>
@@ -139,6 +146,7 @@ const Register: FC<RegisterProps> = (props) => {
                 name="password"
                 type="password"
                 value={passwordValue}
+                className={`${passwordRedBorder ? 'border-red-500' : ''}`}
                 placeholder="*********"
                 onChange={passwordOnChange}
               />
@@ -151,6 +159,7 @@ const Register: FC<RegisterProps> = (props) => {
                 name="confirm_password"
                 type="password"
                 value={confirmPasswordValue}
+                className={`${retypeRedBorder ? 'border-red-500' : ''}`}
                 placeholder="*********"
                 onChange={confirmPasswordOnChange}
               />

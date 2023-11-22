@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ import { useCasheerMutation } from '@/hooks/use-casheer';
 import useDarkMode from '@/hooks/use-darkmode';
 import useDeviceCheck from '@/hooks/use-devicechek';
 import { useDarkModeStore } from '@/store/useDarkModeStore';
+import { UserParseType } from '@/types/user-type';
 import {
   ChangeEvent,
   FormEvent,
@@ -49,6 +51,9 @@ const Customize = () => {
   const storeInfoMutation = useCasheerMutation();
   const mobile = useDeviceCheck();
   const navigate = useNavigate();
+  const userDataParse: UserParseType = JSON.parse(
+    localStorage.getItem('user-data-parse') || ''
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -85,6 +90,13 @@ const Customize = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (userDataParse?.role === 0) {
+      return navigate('/settings/customize');
+    }
+    return navigate('/');
+  }, [navigate]);
 
   useEffect(() => {
     if (mobile) {

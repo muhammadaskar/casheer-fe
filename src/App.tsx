@@ -4,6 +4,9 @@ import { Toaster } from './components/ui/toaster';
 
 import AppRoutes from './routes/AppRoutes';
 import client from './client';
+import Chart, { CategoryScale } from 'chart.js/auto';
+
+Chart.register(CategoryScale);
 
 function App() {
   return (

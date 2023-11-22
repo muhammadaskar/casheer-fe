@@ -3,13 +3,13 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { ArrowUpDownIcon } from 'lucide-react';
 
+import UserDropdown from './UserDropdown';
+
 export type UserDataType = {
   id: number;
   name: string;
   username: string;
   email: string;
-  //   created_at: '2023-07-19T00:53:50.405Z';
-  //   updated_at: '2023-07-19T00:53:50.405Z';
 };
 
 export const columns: ColumnDef<UserDataType>[] = [
@@ -40,13 +40,20 @@ export const columns: ColumnDef<UserDataType>[] = [
   },
 
   {
-    accessorKey: 'username',
-    header: 'Username',
+    accessorKey: 'email',
+    header: 'Email',
   },
 
   {
-    accessorKey: 'email',
-    header: 'Email',
+    accessorKey: 'action',
+    enableHiding: false,
+    cell: ({ row }) => {
+      const users = row.original;
+
+      console.log(users);
+
+      return <UserDropdown id={users.id} />;
+    },
   },
 ];
 

@@ -67,8 +67,6 @@ const LoginTabs: FC<LoginProps> = ({
     }
   }, [message, responseStatus, setResponseStatus, toast]);
 
-  
-
   return (
     <TabsContent value="signin">
       <Card>
@@ -94,8 +92,8 @@ const LoginTabs: FC<LoginProps> = ({
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type="password"
                 name="password"
+                type="password"
                 value={passwordValue}
                 placeholder="*********"
                 onChange={passwordOnChange}

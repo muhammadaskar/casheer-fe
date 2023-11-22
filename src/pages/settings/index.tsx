@@ -5,11 +5,15 @@ import Profile from './profile';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDeviceCheck from '@/hooks/use-devicechek';
+import { UserParseType } from '@/types/user-type';
 
 const Settings = () => {
   const [value, setValue] = useState('Profile');
   const mobile = useDeviceCheck();
   const navigate = useNavigate();
+  const userData: UserParseType = JSON.parse(
+    localStorage.getItem('user-data-parse') || ''
+  );
 
   useEffect(() => {
     if (mobile) {
@@ -26,28 +30,47 @@ const Settings = () => {
       <p className="text-sm text-muted-foreground">
         This is for setting your profile and apps.
       </p>
-      <Tabs className="block sm:hidden space-y-3" defaultValue="profile">
-        <TabsList className="w-full grid grid-cols-3">
-          <TabsTrigger value="profile" onClick={() => setValue('Profile')}>
-            Profile
-          </TabsTrigger>
-          <TabsTrigger value="account" onClick={() => setValue('Account')}>
-            Account
-          </TabsTrigger>
-          <TabsTrigger value="customize" onClick={() => setValue('Customize')}>
-            Customize
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="profile">
-          <Profile />
-        </TabsContent>
-        <TabsContent value="account">
-          <Account />
-        </TabsContent>
-        <TabsContent value="customize">
-          <Customize />
-        </TabsContent>
-      </Tabs>
+      {userData?.role === 0 ? (
+        <Tabs className="block sm:hidden space-y-3" defaultValue="profile">
+          <TabsList className="w-full grid grid-cols-3">
+            <TabsTrigger value="profile" onClick={() => setValue('Profile')}>
+              Profile
+            </TabsTrigger>
+            <TabsTrigger value="account" onClick={() => setValue('Account')}>
+              Account
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="profile">
+            <Profile />
+          </TabsContent>
+          <TabsContent value="account">
+            <Account />
+          </TabsContent>
+          <TabsContent value="customize">
+            <Customize />
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <Tabs className="block sm:hidden space-y-3" defaultValue="profile">
+          <TabsList className="w-full grid grid-cols-2">
+            <TabsTrigger value="profile" onClick={() => setValue('Profile')}>
+              Profile
+            </TabsTrigger>
+            <TabsTrigger value="account" onClick={() => setValue('Account')}>
+              Account
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="profile">
+            <Profile />
+          </TabsContent>
+          <TabsContent value="account">
+            <Account />
+          </TabsContent>
+          <TabsContent value="customize">
+            <Customize />
+          </TabsContent>
+        </Tabs>
+      )}
     </main>
   );
 };

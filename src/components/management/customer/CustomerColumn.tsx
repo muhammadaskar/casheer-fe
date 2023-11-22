@@ -20,7 +20,8 @@ export type Customer = {
 
 export const columns: ColumnDef<Customer>[] = [
   {
-    accessorKey: 'ID',
+    // accessorKey: 'ID',
+    id: 'No',
     header: ({ column }) => {
       return (
         <Button
@@ -30,6 +31,11 @@ export const columns: ColumnDef<Customer>[] = [
           No
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: (props) => {
+      return (
+        props?.table?.getSortedRowModel()?.flatRows?.indexOf(props?.row) + 1
       );
     },
   },

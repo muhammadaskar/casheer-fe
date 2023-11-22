@@ -218,7 +218,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                 </Popover>
               </div>
               <div className="flex flex-col space-y-2">
-                <Label htmlFor="productId">ID</Label>
+                <Label htmlFor="productId">Kode Produk</Label>
                 <Popover open={openId} onOpenChange={setOpenId}>
                   <PopoverTrigger asChild>
                     <Button
@@ -228,9 +228,8 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-sm"
                     >
                       {input.code
-                        ? product?.find((item) => item.code === input.code)
-                            ?.code
-                        : 'Cari ID...'}
+                        ? product?.find((item) => item.id === input.id)?.code
+                        : 'Cari Kode Produk...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -253,7 +252,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                     id: item.id,
                                     code: item.code,
                                   });
-
+                                  setQty(item.quantity);
                                   setOpenId(false);
                                 }}
                               >

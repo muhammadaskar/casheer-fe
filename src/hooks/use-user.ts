@@ -140,3 +140,27 @@ export const useUserPhotoProfileMutation = () => {
     },
   });
 };
+
+export const useUserRoleMutation = () => {
+  const queryClient = useQueryClient();
+  const baseURL: string = import.meta.env.VITE_REACT_APP_BASE_URL;
+  const user: UserType = JSON.parse(localStorage.getItem('user') || '');
+
+  return useMutation({
+    mutationFn: async (id: number) => {
+      await fetch(baseURL + `users/change-to-admin/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    },
+
+    onSuccess: async (update) => {
+      await queryClient.invalidateQueries(['users']);
+      queryClient.setQueryData(['users'], update);
+    },
+  });
+};
