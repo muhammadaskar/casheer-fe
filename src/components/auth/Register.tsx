@@ -27,6 +27,7 @@ type RegisterProps = {
   desc: string;
   nameValue: string;
   redBorder: boolean;
+  emailRedBorder: boolean;
   passwordRedBorder: boolean;
   retypeRedBorder: boolean;
   nameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -51,6 +52,7 @@ const Register: FC<RegisterProps> = (props) => {
     desc,
     nameValue,
     redBorder,
+    emailRedBorder,
     passwordRedBorder,
     retypeRedBorder,
     nameOnChange,
@@ -132,6 +134,7 @@ const Register: FC<RegisterProps> = (props) => {
                 name="email"
                 type="email"
                 value={emailValue}
+                className={`${emailRedBorder ? 'border-red-500' : ''}`}
                 placeholder="johndoe@bingbing.com"
                 onChange={emailOnChange}
               />

@@ -28,6 +28,7 @@ const Login = () => {
   });
   const [disableLogin, setDisableLogin] = useState<boolean>(false);
   const [redBorder, setRedBorder] = useState<boolean>(false);
+  const [emailRedBorder, setEmailRedBorder] = useState<boolean>(false);
   const [passwordRedBorder, setPasswordRedBorder] = useState<boolean>(false);
   const [retypeRedBorder, setRetypeRedBorder] = useState<boolean>(false);
   const [disableRegisterButton, setDisableRegisterButton] =
@@ -74,9 +75,19 @@ const Login = () => {
   }, [registerInput]);
 
   useEffect(() => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!regex.test(registerInput.email)) {
+      return setEmailRedBorder(true);
+    }
+
+    return setEmailRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
     if (
       registerInput.password.length >= 1 &&
-      registerInput.password.length < 8
+      registerInput.password.length <= 8
     ) {
       return setPasswordRedBorder(true);
     }
@@ -144,6 +155,7 @@ const Login = () => {
           response={responseStatus}
           setResponse={setResponseStatus}
           redBorder={redBorder}
+          emailRedBorder={emailRedBorder}
           passwordRedBorder={passwordRedBorder}
           retypeRedBorder={retypeRedBorder}
           nameValue={registerInput.name}
