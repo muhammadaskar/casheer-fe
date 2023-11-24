@@ -46,6 +46,7 @@ type PayInput = {
   product_id: number;
   discount: number;
   total_pay: number;
+  payback: number;
 };
 
 const TransactionTable = () => {
@@ -64,6 +65,7 @@ const TransactionTable = () => {
       price_total: 0,
       discount: 0,
       total_pay: 0,
+      payback: 0,
     }
   );
   const { invoiceForm, setInvoiceForm } = useInvoiceStore(
@@ -81,6 +83,7 @@ const TransactionTable = () => {
   useEffect(() => {
     if (transactionMutation.isSuccess) {
       localStorage.setItem('invoice-data', JSON.stringify(invoice));
+
       localStorage.setItem(
         'amount-data',
         JSON.stringify(transactionMutation?.data?.data)
@@ -126,6 +129,13 @@ const TransactionTable = () => {
           });
         },
       }
+    );
+    localStorage.setItem(
+      'invoice-data-pay',
+      JSON.stringify({
+        total_pay: input.total_pay,
+        payback: input.total_pay - (total - input.discount),
+      })
     );
     setInvoice(invoiceForm);
     setInvoiceForm([]);

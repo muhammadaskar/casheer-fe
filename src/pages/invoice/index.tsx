@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/table';
 import { useCasheerInfoQuery } from '@/hooks/use-casheer';
 import { rupiahFormat } from '@/lib/utils';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
 import { useNavigate } from 'react-router-dom';
@@ -33,6 +33,11 @@ type AmountType = {
   created_at: string;
 };
 
+type PayInfo = {
+  total_pay: number;
+  payback: number;
+};
+
 const InvoicePage = () => {
   const invoiceList: [InvoiceListType] = JSON.parse(
     localStorage.getItem('invoice-data') || ''
@@ -40,14 +45,21 @@ const InvoicePage = () => {
   const amountPrice: AmountType = JSON.parse(
     localStorage.getItem('amount-data') || ''
   );
+  const invoicePayInfo: PayInfo = JSON.parse(
+    localStorage.getItem('invoice-data-pay') || ''
+  );
   const { data: storeInfo } = useCasheerInfoQuery();
   const navigate = useNavigate();
 
   const dateInvoice = new Date(amountPrice.CreatedAt || amountPrice.created_at);
 
-  useEffect(() => {
-    window.print();
+  const printInvoice = useCallback(() => {
+    setTimeout(window.print, 1500);
   }, []);
+
+  useEffect(() => {
+    printInvoice();
+  }, [printInvoice]);
 
   return (
     <>
@@ -99,12 +111,20 @@ const InvoicePage = () => {
           ))}
         </TableBody>
         <TableFooter>
-          <TableCell>Amount</TableCell>
+          <TableCell className="flex flex-col justify-center w-32 space-y-2">
+            <div>Amount</div>
+            <div>Total Bayar</div>
+            <div>Kembalian</div>
+          </TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>
-          <TableCell className="text-right">
-            {rupiahFormat(amountPrice?.Amount || amountPrice?.amount)}
+          <TableCell className="text-right flex flex-col justify-center space-y-2">
+            <div>
+              {rupiahFormat(amountPrice?.Amount || amountPrice?.amount)}
+            </div>
+            <div>{rupiahFormat(invoicePayInfo.total_pay)}</div>
+            <div>{rupiahFormat(invoicePayInfo.payback)}</div>
           </TableCell>
         </TableFooter>
       </Table>
