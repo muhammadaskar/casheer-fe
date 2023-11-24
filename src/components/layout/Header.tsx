@@ -158,7 +158,7 @@ const Header: FC<HeaderProps> = ({ mode, toggle }) => {
                             setNotifId(item.id);
                             setRead(item.is_read);
                             notificationRead();
-                            navigate(`notification/${item.id}`, {
+                            navigate(`/notification/${item.id}`, {
                               state: { notification: item },
                             });
                           }}
