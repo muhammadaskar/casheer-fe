@@ -77,6 +77,10 @@ const Login = () => {
   useEffect(() => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    if (registerInput.email.length === 0) {
+      return setEmailRedBorder(false);
+    }
+
     if (!regex.test(registerInput.email)) {
       return setEmailRedBorder(true);
     }
@@ -87,7 +91,7 @@ const Login = () => {
   useEffect(() => {
     if (
       registerInput.password.length >= 1 &&
-      registerInput.password.length <= 8
+      registerInput.password.length < 8
     ) {
       return setPasswordRedBorder(true);
     }
@@ -111,7 +115,7 @@ const Login = () => {
       registerInput.password === '' ||
       registerInput.confirm_password === '' ||
       registerInput.username.length < 6 ||
-      registerInput.password.length <= 8
+      registerInput.password.length < 8
     ) {
       return setDisableRegisterButton(true);
     }
