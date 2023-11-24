@@ -75,7 +75,6 @@ export const columns: ColumnDef<Customer>[] = [
               Copy Customer Code
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
             <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
