@@ -76,7 +76,7 @@ export const columns: ColumnDef<TransactionParseType>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link
-                to={'/invoice'}
+                to={'/report-invoice'}
                 target="_blank"
                 onClick={() => {
                   localStorage.setItem(

@@ -95,8 +95,6 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
     }
   );
 
-  console.log(product);
-
   const saveToTable = useCallback(() => {
     const existingItem = invoiceForm?.find(
       (item: Invoice) => item.id === orderForm.id

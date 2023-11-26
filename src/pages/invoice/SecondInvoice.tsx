@@ -33,21 +33,14 @@ type AmountType = {
   created_at: string;
 };
 
-type PayInfo = {
-  total_pay: number;
-  payback: number;
-};
-
-const InvoicePage = () => {
+const SecondInvoicePage = () => {
   const invoiceList: [InvoiceListType] = JSON.parse(
     localStorage.getItem('invoice-data') || ''
   );
   const amountPrice: AmountType = JSON.parse(
     localStorage.getItem('amount-data') || ''
   );
-  const invoicePayInfo: PayInfo = JSON.parse(
-    localStorage.getItem('invoice-data-pay') || ''
-  );
+
   const { data: storeInfo } = useCasheerInfoQuery();
   const navigate = useNavigate();
 
@@ -98,7 +91,7 @@ const InvoicePage = () => {
         </TableHeader>
         <TableBody>
           {invoiceList?.map((item, index) => (
-            <TableRow key={item.id}>
+            <TableRow key={index}>
               <TableCell className="font-medium">{index + 1}</TableCell>
               <TableCell>{item.product_name}</TableCell>
               <TableCell>{item.quantity}</TableCell>
@@ -111,19 +104,13 @@ const InvoicePage = () => {
         </TableBody>
         <TableFooter>
           <TableCell className="flex flex-col justify-center w-32 space-y-2">
-            <div>Amount</div>
-            <div>Total Bayar</div>
-            <div>Kembalian</div>
+            Amount
           </TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell className="text-right flex flex-col justify-center space-y-2">
-            <div>
-              {rupiahFormat(amountPrice?.Amount || amountPrice?.amount)}
-            </div>
-            <div>{rupiahFormat(invoicePayInfo.total_pay)}</div>
-            <div>{rupiahFormat(invoicePayInfo.payback)}</div>
+            {rupiahFormat(amountPrice?.Amount || amountPrice?.amount)}
           </TableCell>
         </TableFooter>
       </Table>
@@ -131,4 +118,4 @@ const InvoicePage = () => {
   );
 };
 
-export default InvoicePage;
+export default SecondInvoicePage;

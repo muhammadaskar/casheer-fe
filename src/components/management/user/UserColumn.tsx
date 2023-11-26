@@ -36,7 +36,17 @@ export const columns: ColumnDef<UserDataType>[] = [
 
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant={'ghost'}
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Name
+          <ArrowUpDownIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
 
   {
@@ -49,8 +59,6 @@ export const columns: ColumnDef<UserDataType>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const users = row.original;
-
-      console.log(users);
 
       return <UserDropdown id={users.id} />;
     },

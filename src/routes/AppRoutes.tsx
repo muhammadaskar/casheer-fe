@@ -23,6 +23,7 @@ import InvoicePage from '@/pages/invoice';
 import User from '@/pages/management/user';
 import UnrpocessUser from '@/pages/unprocess-users';
 import PermissionDenied from '@/pages/PermissionDenied';
+import SecondInvoicePage from '@/pages/invoice/SecondInvoice';
 
 const AppRoutes = () => {
   const { darkMode } = useDarkModeStore();
@@ -56,6 +57,7 @@ const AppRoutes = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
 
+        <Route path="report-invoice" element={<SecondInvoicePage />} />
         <Route path="invoice" element={<InvoicePage />} />
 
         <Route
