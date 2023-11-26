@@ -49,16 +49,19 @@ type OrderProps = {
 
 type OrderFormType = {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;
+  code: string;
 };
 
 const OrderForm: FC<OrderProps> = ({ product, status }) => {
   const [openName, setOpenName] = useState(false);
   const [openId, setOpenId] = useState(false);
   const [disable, setDisable] = useState(true);
+  const [qty, setQty] = useState(0);
+  const [warn, setWarn] = useState('');
 
   const { orderForm, setOrderForm, isClicked, setClick } = useOrderStore(
     (state) => ({
@@ -84,10 +87,11 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
     }),
     {
       id: 0,
-      name: '',
+      product_name: '',
       price: 0,
       quantity: 0,
       total: 0,
+      code: '',
     }
   );
 
@@ -133,6 +137,17 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
     return setDisable(false);
   }, [input.quantity]);
 
+  useEffect(() => {
+    if (input.quantity >= qty) {
+      setInput({
+        quantity: qty,
+      });
+      setWarn(`Stok barang sisa ${qty}`);
+    } else {
+      setWarn('');
+    }
+  }, [input.quantity, qty]);
+
   return (
     <Card className="w-full">
       <CardHeader className="space-y-1">
@@ -153,8 +168,9 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       aria-expanded={openName}
                       className="w-full justify-between text-xs sm:text-sm"
                     >
-                      {input.name
-                        ? product?.find((item) => item.id === input.id)?.name
+                      {input.product_name
+                        ? product?.find((item) => item.code === input.code)
+                            ?.name
                         : 'Cari produk...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -173,18 +189,19 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
-                                    name: item.name,
+                                    product_name: item.name,
                                     price: item.price,
                                     id: item.id,
+                                    code: item.code,
                                   });
-
+                                  setQty(item.quantity);
                                   setOpenName(false);
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     'mr-2 h-4 w-4',
-                                    input.id === item.id
+                                    input.code === item.code
                                       ? 'opacity-100'
                                       : 'opacity-0'
                                   )}
@@ -199,7 +216,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                 </Popover>
               </div>
               <div className="flex flex-col space-y-2">
-                <Label htmlFor="productId">ID</Label>
+                <Label htmlFor="productId">Kode Produk</Label>
                 <Popover open={openId} onOpenChange={setOpenId}>
                   <PopoverTrigger asChild>
                     <Button
@@ -208,9 +225,9 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                       aria-expanded={openId}
                       className="w-36 md:w-[12.5rem] justify-between text-xs sm:text-sm"
                     >
-                      {input.id
-                        ? product?.find((item) => item.id === input.id)?.id
-                        : 'Cari ID...'}
+                      {input.code
+                        ? product?.find((item) => item.id === input.id)?.code
+                        : 'Cari Kode Produk...'}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -228,23 +245,24 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                                 className="text-xs sm:text-sm"
                                 onSelect={() => {
                                   setInput({
-                                    name: item.name,
+                                    product_name: item.name,
                                     price: item.price,
                                     id: item.id,
+                                    code: item.code,
                                   });
-
+                                  setQty(item.quantity);
                                   setOpenId(false);
                                 }}
                               >
                                 <Check
                                   className={cn(
                                     'mr-2 h-4 w-4',
-                                    input.id === item.id
+                                    input.code === item.code
                                       ? 'opacity-100'
                                       : 'opacity-0'
                                   )}
                                 />
-                                {item.id}
+                                {item.code}
                               </CommandItem>
                             ))}
                         </CommandGroup>
@@ -259,6 +277,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
               <Input
                 name="price"
                 type="text"
+                disabled={input.product_name === '' ? true : false}
                 placeholder="Rp.500,00-,"
                 value={rupiahFormat(input.price)}
                 readOnly
@@ -270,6 +289,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                 name="qty"
                 type="text"
                 placeholder="1 Pcs"
+                disabled={input.product_name === '' ? true : false}
                 value={input.quantity}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   setInput({
@@ -277,6 +297,11 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
                   });
                 }}
               />
+              {warn === '' || input.product_name === '' ? (
+                <></>
+              ) : (
+                <p className="text-sm text-red-500">{warn}</p>
+              )}
             </div>
             <div className="flex flex-col space-y-2">
               <Label htmlFor="total">Total</Label>
@@ -300,7 +325,7 @@ const OrderForm: FC<OrderProps> = ({ product, status }) => {
           onClick={() => {
             setOrderForm({
               id: input.id,
-              name: input.name,
+              product_name: input.product_name,
               price: input.price,
               quantity: input.quantity,
               total: input.price * input.quantity,

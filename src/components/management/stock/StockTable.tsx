@@ -124,10 +124,10 @@ export function StockTable<TData, TValue>({
       {data?.length ? (
         <div className="flex items-center justify-end px-2 py-3">
           <div className="flex items-center space-x-6 lg:space-x-8">
-            <div className="flex w-[100px] items-center justify-center text-xs md:text-sm font-medium">
+            {/* <div className="flex w-[100px] items-center justify-center text-xs md:text-sm font-medium">
               Page {table.getState().pagination.pageIndex + 1} of{' '}
               {table.getPageCount()}
-            </div>
+            </div> */}
             <div className="flex items-center space-x-2">
               <Button
                 variant="outline"

@@ -31,7 +31,8 @@ export type ProductData = {
 
 export const columns: ColumnDef<ProductData>[] = [
   {
-    accessorKey: 'id',
+    // accessorKey: 'id',
+    id: 'No',
     header: ({ column }) => {
       return (
         <Button
@@ -41,6 +42,11 @@ export const columns: ColumnDef<ProductData>[] = [
           No
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: (props) => {
+      return (
+        props?.table?.getSortedRowModel()?.flatRows?.indexOf(props?.row) + 1
       );
     },
     enableHiding: false,
@@ -123,17 +129,21 @@ export const columns: ColumnDef<ProductData>[] = [
 
 export const columnMobile: ColumnDef<ProductData>[] = [
   {
-    accessorKey: 'id',
+    id: 'No',
     header: ({ column }) => {
       return (
         <Button
           variant={'ghost'}
-          className="text-xs sm:text-base"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           No
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: (props) => {
+      return (
+        props?.table?.getSortedRowModel()?.flatRows?.indexOf(props?.row) + 1
       );
     },
     enableHiding: false,

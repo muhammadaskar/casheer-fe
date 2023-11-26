@@ -25,7 +25,7 @@ const ProtectedRoute = () => {
   const useAuth = () => {
     if (token) {
       const decodeJwt = parseJwt(token);
-
+      localStorage.setItem('user-data-parse', JSON.stringify(decodeJwt));
       if (decodeJwt?.exp * 1000 < Date.now()) {
         localStorage.removeItem('user');
         return window.location.reload();

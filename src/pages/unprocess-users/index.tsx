@@ -1,12 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import SkeletonTable from '@/components/skeleton-loader/SkeletonTable';
 import { Separator } from '@/components/ui/separator';
 import { unprocessUserColumns } from '@/components/unprocess-users/UnusersColumn';
 import { UnprocessUserTable } from '@/components/unprocess-users/UnusersTable';
 import { useUnprocessUserQuery } from '@/hooks/use-user';
+import { UserParseType } from '@/types/user-type';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 
 const UnprocessUser = () => {
   const { data, status } = useUnprocessUserQuery();
+  const navigate = useNavigate();
+  const userDataParse: UserParseType = JSON.parse(
+    localStorage.getItem('user-data-parse') || ''
+  );
+
+  useEffect(() => {
+    if (userDataParse?.role === 0) {
+      return navigate('/unprocess-users');
+    }
+    return navigate('/');
+  }, [navigate]);
 
   return (
     <>

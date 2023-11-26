@@ -8,6 +8,7 @@ export interface Product {
   name: string;
   price: number;
   quantity: number;
+  code: string;
 }
 
 export interface CombineInvoice {
@@ -19,7 +20,7 @@ export interface CombineInvoice {
 }
 export interface Invoice {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;

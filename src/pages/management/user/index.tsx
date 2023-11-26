@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   columns,
   userColumnMobile,
@@ -6,10 +7,24 @@ import { UserTable } from '@/components/management/user/UserTable';
 import SkeletonTable from '@/components/skeleton-loader/SkeletonTable';
 import { Separator } from '@/components/ui/separator';
 import { useUserQuery } from '@/hooks/use-user';
+import { UserParseType } from '@/types/user-type';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
 
 const User = () => {
   const { data, status } = useUserQuery();
+  const navigate = useNavigate();
+  const userDataParse: UserParseType = JSON.parse(
+    localStorage.getItem('user-data-parse') || ''
+  );
+
+  useEffect(() => {
+    if (userDataParse?.role === 0) {
+      return navigate('/user');
+    }
+    return navigate('/');
+  }, [navigate]);
 
   return (
     <>

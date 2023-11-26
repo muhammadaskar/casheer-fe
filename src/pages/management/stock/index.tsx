@@ -89,7 +89,9 @@ const Stock = () => {
           {query ? (
             <StockTable
               columns={stockColumnMobile}
-              data={searchData?.data.products}
+              data={searchData?.data.products.filter(
+                (item: any) => item.is_deleted === 1
+              )}
               status={status}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
               disableNext={isPreviousData || data?.data.is_last_page}
@@ -102,7 +104,9 @@ const Stock = () => {
           ) : (
             <StockTable
               columns={stockColumnMobile}
-              data={data?.data.products}
+              data={data?.data.products.filter(
+                (item: any) => item.is_deleted === 1
+              )}
               status={status}
               onNext={() => setPage((old) => (data?.data ? old + 1 : old))}
               disableNext={isPreviousData || data?.data.is_last_page}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { ColumnDef } from '@tanstack/react-table';
 // import { ProductData } from '../product/Column';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,7 @@ import { Link } from 'react-router-dom';
 
 export const columns: ColumnDef<TransactionParseType>[] = [
   {
-    accessorKey: 'id',
+    id: 'No',
     header: ({ column }) => {
       return (
         <Button
@@ -25,6 +26,11 @@ export const columns: ColumnDef<TransactionParseType>[] = [
           No
           <ArrowUpDownIcon className="ml-2 h-4 w-4" />
         </Button>
+      );
+    },
+    cell: (props) => {
+      return (
+        props?.table?.getSortedRowModel()?.flatRows?.indexOf(props?.row) + 1
       );
     },
     enableHiding: false,
@@ -60,20 +66,17 @@ export const columns: ColumnDef<TransactionParseType>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(invoice.transaction_code)
-              }
-            >
-              Copy payment ID
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link
-                to={'/invoice'}
-                state={{
-                  data: invoice.product_and_quantity,
-                  amount: invoice,
+                to={'/report-invoice'}
+                target="_blank"
+                onClick={() => {
+                  localStorage.setItem(
+                    'invoice-data',
+                    JSON.stringify(invoice.product_and_quantity)
+                  );
+                  localStorage.setItem('amount-data', JSON.stringify(invoice));
                 }}
               >
                 View payment details

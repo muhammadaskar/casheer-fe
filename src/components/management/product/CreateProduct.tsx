@@ -76,11 +76,11 @@ const CreateProduct: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (
-      input.product_code === '' &&
-      input.name === '' &&
-      input.price === 0 &&
-      input.quantity === 0 &&
-      input.description === ''
+      input.category_id === 0 ||
+      input.product_code === '' ||
+      input.name === '' ||
+      input.price === 0 ||
+      input.quantity === 0
     ) {
       return setDisable(true);
     }
@@ -89,7 +89,22 @@ const CreateProduct: FC<Props> = ({ children }) => {
 
   return (
     <Sheet>
-      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetTrigger
+        asChild
+        onClick={() => {
+          setValueCategory(0);
+          setInput({
+            category_id: 0,
+            product_code: '',
+            name: '',
+            price: 0,
+            quantity: 0,
+            description: '',
+          });
+        }}
+      >
+        {children}
+      </SheetTrigger>
       <SheetContent side={'bottom'}>
         <SheetHeader className="mb-4">
           <SheetTitle>Tambah Produk</SheetTitle>

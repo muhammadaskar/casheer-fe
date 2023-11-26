@@ -46,6 +46,7 @@ type PayInput = {
   product_id: number;
   discount: number;
   total_pay: number;
+  payback: number;
 };
 
 const TransactionTable = () => {
@@ -64,6 +65,7 @@ const TransactionTable = () => {
       price_total: 0,
       discount: 0,
       total_pay: 0,
+      payback: 0,
     }
   );
   const { invoiceForm, setInvoiceForm } = useInvoiceStore(
@@ -80,20 +82,20 @@ const TransactionTable = () => {
 
   useEffect(() => {
     if (transactionMutation.isSuccess) {
+      localStorage.setItem('invoice-data', JSON.stringify(invoice));
+
+      localStorage.setItem(
+        'amount-data',
+        JSON.stringify(transactionMutation?.data?.data)
+      );
+
       toast({
         variant: 'default',
         description: 'Transaksi berhasil',
         action: (
           <ToastAction
             altText="Check Invoice"
-            onClick={() =>
-              navigate('/invoice', {
-                state: {
-                  data: invoice,
-                  amount: transactionMutation?.data?.data,
-                },
-              })
-            }
+            onClick={() => window.open('/invoice', '_blank')}
           >
             Cek Invoice
           </ToastAction>
@@ -128,6 +130,13 @@ const TransactionTable = () => {
         },
       }
     );
+    localStorage.setItem(
+      'invoice-data-pay',
+      JSON.stringify({
+        total_pay: input.total_pay,
+        payback: input.total_pay - (total - input.discount),
+      })
+    );
     setInvoice(invoiceForm);
     setInvoiceForm([]);
     setInput({
@@ -143,32 +152,36 @@ const TransactionTable = () => {
   }
 
   useEffect(() => {
-    if (input.total_pay !== 0) {
-      return setDisable(false);
+    if (input.total_pay === 0 || input.total_pay < total) {
+      return setDisable(true);
     }
-    return setDisable(true);
-  }, [input.total_pay]);
+    return setDisable(false);
+  }, [input.total_pay, total]);
 
   return (
     <Card className="w-full h-[29.5rem]">
       <Sheet>
-        <ScrollArea className="space-y-2 h-[86%] overflow-hidden">
+        <ScrollArea className="w-full space-y-2 h-[86%] overflow-hidden">
           <CardContent>
             {/* Desktop */}
             <Table className="hidden sm:block w-full">
               <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Total</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-8">Name</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">Qty</TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">
+                    Price
+                  </TableHead>
+                  <TableHead className="px-14 md:px-14 xl:px-9">
+                    Total
+                  </TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="w-full h-fit text-xs sm:text-sm">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
-                    <TableCell>{invoices.name}</TableCell>
+                    <TableCell>{invoices.product_name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
                     <TableCell>{rupiahFormat(invoices.price)}</TableCell>
                     <TableCell>{rupiahFormat(invoices.total)}</TableCell>
@@ -189,19 +202,16 @@ const TransactionTable = () => {
             <Table className="block sm:hidden w-full">
               <TableHeader className="text-xs sm:text-sm">
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Qty</TableHead>
-                  {/* <TableHead className="hidden sm:flex sm:items-center">
-                    Price
-                  </TableHead> */}
-                  <TableHead>Total</TableHead>
-                  <TableHead>Action</TableHead>
+                  <TableHead className="px-5">Name</TableHead>
+                  <TableHead className="px-5">Qty</TableHead>
+                  <TableHead className="px-5">Total</TableHead>
+                  <TableHead className="px-5">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody className="w-full h-fit text-xs sm:text-sm">
                 {invoiceForm.map((invoices: Invoice) => (
                   <TableRow key={invoices.id}>
-                    <TableCell>{invoices.name}</TableCell>
+                    <TableCell>{invoices.product_name}</TableCell>
                     <TableCell>{invoices.quantity}</TableCell>
                     {/* <TableCell className="hidden sm:grid sm:items-center">
                       {rupiahFormat(invoices.price)}

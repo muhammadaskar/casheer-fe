@@ -26,6 +26,10 @@ type RegisterProps = {
   title: string;
   desc: string;
   nameValue: string;
+  redBorder: boolean;
+  emailRedBorder: boolean;
+  passwordRedBorder: boolean;
+  retypeRedBorder: boolean;
   nameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
   usernameValue: string;
   usernameOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -47,6 +51,10 @@ const Register: FC<RegisterProps> = (props) => {
     title,
     desc,
     nameValue,
+    redBorder,
+    emailRedBorder,
+    passwordRedBorder,
+    retypeRedBorder,
     nameOnChange,
     usernameValue,
     usernameOnChange,
@@ -102,9 +110,9 @@ const Register: FC<RegisterProps> = (props) => {
                 placeholder="John Doe"
                 onChange={nameOnChange}
               />
-              <p className="text-sm text-muted-foreground">
+              {/* <p className="text-sm text-muted-foreground">
                 Type your fullname.
-              </p>
+              </p> */}
             </div>
 
             <div className="space-y-1">
@@ -112,8 +120,9 @@ const Register: FC<RegisterProps> = (props) => {
               <Input
                 id="username"
                 name="username"
+                className={`${redBorder ? 'border-red-500' : ''}`}
                 value={usernameValue}
-                placeholder="@indraganteng"
+                placeholder="@username"
                 onChange={usernameOnChange}
               />
               <p className="text-sm text-muted-foreground">Username min 6.</p>
@@ -125,12 +134,13 @@ const Register: FC<RegisterProps> = (props) => {
                 name="email"
                 type="email"
                 value={emailValue}
+                className={`${emailRedBorder ? 'border-red-500' : ''}`}
                 placeholder="johndoe@bingbing.com"
                 onChange={emailOnChange}
               />
-              <p className="text-sm text-muted-foreground">
+              {/* <p className="text-sm text-muted-foreground">
                 Use your valid email.
-              </p>
+              </p> */}
             </div>
             <div className="space-y-1">
               <Label htmlFor="password">Password</Label>
@@ -139,6 +149,7 @@ const Register: FC<RegisterProps> = (props) => {
                 name="password"
                 type="password"
                 value={passwordValue}
+                className={`${passwordRedBorder ? 'border-red-500' : ''}`}
                 placeholder="*********"
                 onChange={passwordOnChange}
               />
@@ -151,6 +162,7 @@ const Register: FC<RegisterProps> = (props) => {
                 name="confirm_password"
                 type="password"
                 value={confirmPasswordValue}
+                className={`${retypeRedBorder ? 'border-red-500' : ''}`}
                 placeholder="*********"
                 onChange={confirmPasswordOnChange}
               />

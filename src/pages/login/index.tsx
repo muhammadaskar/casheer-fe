@@ -27,6 +27,10 @@ const Login = () => {
     password: '',
   });
   const [disableLogin, setDisableLogin] = useState<boolean>(false);
+  const [redBorder, setRedBorder] = useState<boolean>(false);
+  const [emailRedBorder, setEmailRedBorder] = useState<boolean>(false);
+  const [passwordRedBorder, setPasswordRedBorder] = useState<boolean>(false);
+  const [retypeRedBorder, setRetypeRedBorder] = useState<boolean>(false);
   const [disableRegisterButton, setDisableRegisterButton] =
     useState<boolean>(false);
   const [registerInput, setRegisterInput] = useReducer(
@@ -61,16 +65,61 @@ const Login = () => {
 
   useEffect(() => {
     if (
+      registerInput.username.length >= 1 &&
+      registerInput.username.length < 6
+    ) {
+      return setRedBorder(true);
+    }
+
+    return setRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (registerInput.email.length === 0) {
+      return setEmailRedBorder(false);
+    }
+
+    if (!regex.test(registerInput.email)) {
+      return setEmailRedBorder(true);
+    }
+
+    return setEmailRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (
+      registerInput.password.length >= 1 &&
+      registerInput.password.length < 8
+    ) {
+      return setPasswordRedBorder(true);
+    }
+
+    return setPasswordRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (registerInput.password !== registerInput.confirm_password) {
+      return setRetypeRedBorder(true);
+    }
+
+    return setRetypeRedBorder(false);
+  }, [registerInput]);
+
+  useEffect(() => {
+    if (
       registerInput.name === '' ||
       registerInput.username === '' ||
       registerInput.email === '' ||
       registerInput.password === '' ||
       registerInput.confirm_password === '' ||
-      registerInput.username.length <= 6 ||
-      registerInput.password.length <= 8
+      registerInput.username.length < 6 ||
+      registerInput.password.length < 8
     ) {
       return setDisableRegisterButton(true);
     }
+
     if (registerInput.password !== registerInput.confirm_password) {
       return setDisableRegisterButton(true);
     }
@@ -79,7 +128,7 @@ const Login = () => {
   }, [registerInput, loginInput]);
 
   return (
-    <div className="flex justify-center items-center h-screen px-5 md:px-0">
+    <div className="flex justify-center items-center h-full py-24 md:h-screen px-5 md:px-0 md:py-0">
       <Tabs defaultValue="signin" className="w-full lg:w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="signin">Sign in</TabsTrigger>
@@ -109,6 +158,10 @@ const Login = () => {
           message={message}
           response={responseStatus}
           setResponse={setResponseStatus}
+          redBorder={redBorder}
+          emailRedBorder={emailRedBorder}
+          passwordRedBorder={passwordRedBorder}
+          retypeRedBorder={retypeRedBorder}
           nameValue={registerInput.name}
           nameOnChange={(event: ChangeEvent<HTMLInputElement>) =>
             setRegisterInput({

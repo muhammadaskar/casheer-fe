@@ -3,7 +3,7 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 export interface InvoiceFormValue {
   id: number;
-  name: string;
+  product_name: string;
   price: number;
   quantity: number;
   total: number;

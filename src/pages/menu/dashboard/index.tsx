@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
@@ -7,6 +8,7 @@ import ChartComponent from '@/components/menu/dashboard/ChartComponent';
 import OverviewComponent from '@/components/menu/dashboard/OverviewComponent';
 import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Line } from 'react-chartjs-2';
 import { TabsContent } from '@radix-ui/react-tabs';
 import {
   FolderOutputIcon,
@@ -25,12 +27,22 @@ import {
 import { rupiahFormat } from '@/lib/utils';
 import SkeletonCard from '@/components/skeleton-loader/SkeletonCard';
 import { Helmet } from 'react-helmet';
+import { useTransactionAmountThisYearQuery } from '@/hooks/use-transaction';
+import SkeletonTable from '@/components/skeleton-loader/SkeletonTable';
 
 const Dashboard = () => {
   const [value, setValue] = useState('Dashboard');
   const { data: sale, status } = useSaleQuery();
   const { data: itemOut } = useItemOutQuery();
   const { data: casheer } = useCasheerTotalQuery();
+  const { data: amountThisYear, status: loadingChart } =
+    useTransactionAmountThisYearQuery();
+
+  const monthThisYear: string[] = amountThisYear?.data.map(
+    (item: any) => item.month
+  );
+
+  const amount: number[] = amountThisYear?.data.map((item: any) => item.amount);
 
   const dashboardData = [
     {
@@ -108,7 +120,26 @@ const Dashboard = () => {
               )
             )}
           </div>
-          <ChartComponent />
+          {loadingChart === 'loading' ? (
+            <SkeletonTable />
+          ) : (
+            <Line
+              className="w-1/2 border p-5 rounded-md"
+              datasetIdKey="id"
+              data={{
+                labels: monthThisYear,
+                datasets: [
+                  {
+                    label: 'Pemasukan',
+                    data: amount,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                  },
+                ],
+              }}
+            />
+          )}
         </div>
 
         {/* Mobile */}
