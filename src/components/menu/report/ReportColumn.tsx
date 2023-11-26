@@ -66,15 +66,6 @@ export const columns: ColumnDef<TransactionParseType>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={async () => {
-                if (navigator.clipboard && window.isSecureContext) {
-                  await navigator.clipboard.writeText(invoice.transaction_code);
-                }
-              }}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link
