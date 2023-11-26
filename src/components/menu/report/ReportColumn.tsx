@@ -67,9 +67,11 @@ export const columns: ColumnDef<TransactionParseType>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={async () =>
-                await navigator.clipboard.writeText(invoice.transaction_code)
-              }
+              onClick={async () => {
+                if (navigator.clipboard && window.isSecureContext) {
+                  await navigator.clipboard.writeText(invoice.transaction_code);
+                }
+              }}
             >
               Copy payment ID
             </DropdownMenuItem>
