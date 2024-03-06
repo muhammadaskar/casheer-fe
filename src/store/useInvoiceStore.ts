@@ -10,7 +10,7 @@ export interface InvoiceFormValue {
 }
 
 interface InvoiceStore {
-  invoiceForm: any;
+  invoiceForm: InvoiceFormValue[];
   setInvoiceForm: (value: any) => void;
 }
 

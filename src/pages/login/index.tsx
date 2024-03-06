@@ -33,6 +33,7 @@ const Login = () => {
   const [retypeRedBorder, setRetypeRedBorder] = useState<boolean>(false);
   const [disableRegisterButton, setDisableRegisterButton] =
     useState<boolean>(false);
+
   const [registerInput, setRegisterInput] = useReducer(
     (current: RegisterType, update: Partial<RegisterType>) => ({
       ...current,
