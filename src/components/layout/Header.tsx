@@ -37,7 +37,6 @@ import { Button } from '../ui/button';
 import { FC, useState } from 'react';
 import { UserParseType, UserType } from '@/types/user-type';
 import { Badge } from '../ui/badge';
-// import useNotification from '@/hooks/use-notification';
 import { useNavigate } from 'react-router-dom';
 import {
   useNotificationMutation,
